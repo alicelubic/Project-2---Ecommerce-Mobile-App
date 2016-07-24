@@ -1,0 +1,48 @@
+<string name="store_description">Welcome to the Passive Aggressive Girl's Guide to Spiting Your Suburban Neighbors. Are you seething at those narcisissts next door who spend thousands of dollars and hours ostentatiously manicuring their gardens, and yet are unaware of their ego's effect on the neighborhood? Who decide that 5am is the perfect time to use the leaf blower? Whose ten corgis just love to shit in your back yard? Who painted their house puke green, and then put up emergency flood lights that light up their horrible domicile like a sickly christmas tree? Whose tree fell on your house during a snowstorm, but your insurance refused to cover it and they refused to even file a claim? Who leaves their "classic" diesel Mercedes Benz running for an hour to "warm it up" on a cold morning, threatening your family with carbon monoxide poisoning? Whose asshole teenage son uses your pets as paintball targets? I know confrontation can be tough and often it's not worth the trouble, but that doesn't mean you're out of options. Some inventive landscaping might be just what you need to get under your neighbors' skin. Check out our exciting collection of aggressive, competitive, durable species guaranteed to invade their yard, usurp their soil nutrients, kill their trees, and eradicate those ugly little flowers they spent thousands of dollars on and countless hours planting. Happy avenging! </string>
+
+    <!--plant names and descriptions-->
+    <string name="wisteria_common_name">Chinese Wisteria</string>
+    <string name="wisteria_latin_name">Wisteria sinensis</string>
+    <string name="wisteria_description">Chinese Wisteria is a deciduous woody vine capable of growing to a height of 40 ft., good luck getting that down! In the spring, it produces lavender, purple or white flowers in fragrant, dangling blossoms,and it has been known to kill trees and shrubs by encircling them tightly and cutting through their bark.</string>
+
+    <string name="japanese_knotweed_common_name">Japanese Knotweed</string>
+    <string name="knotweed_latin_name">Reynoutria japonica</string>
+    <string name="knotweed_description">Japanese Knotweed is a member of the buckwheat family, that closely resembles (but not related to) bamboo. Growing up to 15 feet tall, this weed can handle harsh conditions and still spreads rapidly. It is classified as an invasive species in 39 of the 50 United States, so why not add yours to the list!</string>
+
+    <string name="english_ivy_common_name">English Ivy</string>
+    <string name="english_ivy_latin_name">Hedera helix</string>
+    <string name="english_ivy_description">English Ivy is a rampant, clinging evergreen vine that has been known to crowd out and choke other plants, creating an "ivy desert".</string>
+
+    <string name="ailanthus_common_name">Tree of Heaven</string>
+    <string name="ailanthus_latin_name"></string>
+    <string name="ailanthus_description">This rapid-growing tree can reach 50 feet in 25 years, can clone itself indefinitely to extend its lifespan, and has a foul smelling odor. Because it resprouts vigorously when cut, your neighbors' efforts to suppress this beast will drive them crazy for decades to come!</string>
+
+    <string name="garlic_mustard_common_name">Garlic Mustard</string>
+    <string name="garlic_mustard_latin_name">Alliaria petiolata</string>
+    <string name="garlic_mustard_description">Garlic Mustard is, as the name suggests, and odorous weed from the Mustard Family that is essentially impossible to suppress because nearly no animals eat it, and the insects and fungi that would normally do so are not native to its present North American habitat. It also produces chemicals that suppress the fungi most other plants need for optimum growth.</string>
+
+    <string name="daylily_common_name">Tiger daylily</string>
+    <string name="daylily_latin_name">Hemerocallis fulva</string>
+    <string name="daylily_description">Orange daylilies, also known as tiger lilies require no special care, and their beautiful bright orange flowers will dazzle your neighbors, who will never suspect that these plants behave just as maddeningly as any perennial weed.</string>
+
+    <string name="kudzu_common_name">Kudzu</string>
+    <string name="kudzu_latin_name">Pueraria lobata</string>
+    <string name="kudzu_description">Kudzu, also known as Japanese arrowroot, is a lovely vine that climbs over trees or shrubs and grows so rapidly that it kills them by depriving them of any light.</string>
+
+    <string name="paulownia_common_name">Princess Tree</string>
+    <string name="paulownia_latin_name">Paulownia tomentosa</string>
+    <string name="paulownia_description">Princess Tree is an showy and aggressive ornamental tree, so it should get along great with your neighbors!</string>
+
+    <string name="oriental_bittersweet_common_name">Oriental Bittersweet</string>
+    <string name="oriental_bittersweet_latin_name">Celastrus orbiculatus</string>
+    <string name="oriental_bittersweet_description">Oriental Bittersweet grows aggressively, smothering trees, shrubs, and other irritating entities like your neighbors. Just kidding.</string>
+
+    <string name="bamboo_common_name">Bamboo</string>
+    <string name="bamboo_latin_name">Bambusoideae</string>
+    <string name="bamboo_description">Bamboo is a giant grass, and a giant pain in the ass. Once established, it is impossible to control, for each sprout that shoots up from the ground can grow 12 inches a day. That'll teach 'em.</string>
+
+    <!--types-->
+    <string name="climbing_vine">climbing vine</string>
+    <string name="knotweed">knotweed or buckwheat</string>
+    <string name="tree">tree</string>
+    <string name="flowering_plants">flowering plants</string>

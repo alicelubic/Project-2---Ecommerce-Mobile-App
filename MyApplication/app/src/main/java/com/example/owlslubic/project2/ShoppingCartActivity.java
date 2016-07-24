@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class ShoppingCartActivity extends AppCompatActivity {
+    //recyclerview will show cardviews
+    //toolbar
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

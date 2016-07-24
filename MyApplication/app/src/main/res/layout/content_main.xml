@@ -8,11 +8,15 @@
     tools:context="com.example.owlslubic.project2.MainActivity"
     tools:showIn="@layout/activity_main">
 
+
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/text_margin"
         android:text="This will be a recyclerview filled with nice cardviews" />
+
+
 
 
 
