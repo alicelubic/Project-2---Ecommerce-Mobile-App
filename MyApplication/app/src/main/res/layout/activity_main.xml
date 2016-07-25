@@ -27,29 +27,38 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
+                    android:id="@+id/toolbar_main"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
-                    app:popupTheme="@style/AppTheme.PopupOverlay"/>
+                    app:popupTheme="@style/AppTheme.PopupOverlay" />
 
 
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
 
         <include layout="@layout/content_main" />
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/emptyshoppingcart"
             android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
             android:elevation="20dp"
-            />
+            android:src="@drawable/emptyshoppingcart" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_temp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|start"
+            android:layout_margin="@dimen/fab_margin"
+            android:elevation="20dp"
+            android:src="@drawable/ic_done_black_24dp" />
 
     </android.support.design.widget.CoordinatorLayout>
 
-        <!--app:layout_anchor="@id/app_bar"-->
-        <!--app:layout_anchorGravity="bottom|end"-->
+    <!--app:layout_anchor="@id/app_bar"-->
+    <!--app:layout_anchorGravity="bottom|end"-->
 </FrameLayout>

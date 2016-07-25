@@ -7,4 +7,6 @@
     <string name="wisteria_common_name">Chinese Wisteria</string>
     <string name="wisteria_latin_name">Wisteria sinensis</string>
     <string name="wisteria_description">This deciduous woody vine can grow to a height of 40 ft. Good luck getting that down!</string>
+    <string name="item_quantity_decrement">item quantity decrement</string>
+    <string name="item_quantity_increment">item quantity increment</string>
 </resources>

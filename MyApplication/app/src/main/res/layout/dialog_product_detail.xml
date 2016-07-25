@@ -14,7 +14,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="20dp"
+        android:layout_margin="16dp"
         android:orientation="vertical">
 
 
@@ -35,16 +35,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/wisteria_common_name"
-                android:textSize="27dp" />
+                android:textSize="30sp" />
+
             <TextView
                 android:id="@+id/textview_latin_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="2dp"
-                android:textSize="17dp"
-                android:textStyle="italic"
                 android:layout_below="@id/textview_common_name"
-                android:text="@string/wisteria_latin_name" />
+                android:paddingLeft="2dp"
+                android:text="@string/wisteria_latin_name"
+                android:textSize="16sp"
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/textview_price"
@@ -53,7 +54,7 @@
                 android:layout_alignBottom="@id/textview_common_name"
                 android:layout_alignParentRight="true"
                 android:text="$99.81"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
 
         </RelativeLayout>
@@ -61,10 +62,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:paddingLeft="15dp"
+            android:paddingLeft="16dp"
             android:paddingTop="5dp"
             android:text="@string/wisteria_description"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
     </LinearLayout>
 

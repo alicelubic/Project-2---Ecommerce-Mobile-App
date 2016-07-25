@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.owlslubic.project2.ShoppingCartActivity">
+
+    <!--<android.support.v7.widget.Toolbar-->
+        <!--android:id="@+id/toolbar_cart"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="?attr/colorPrimaryDark"-->
+        <!--android:elevation="4dp"-->
+        <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
+        <!--app:theme="@style/ThemeOverlay.AppCompat.ActionBar" />-->
 
 
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,10 +29,9 @@
         android:id="@+id/fab_shoppingcartactivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/emptyshoppingcart"
         android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
         android:elevation="20dp"
-        />
+        android:src="@drawable/ic_done_black_24dp" />
 
-</RelativeLayout>
+</FrameLayout>
