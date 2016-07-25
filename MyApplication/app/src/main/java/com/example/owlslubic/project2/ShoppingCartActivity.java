@@ -66,6 +66,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
         return super.onCreateOptionsMenu(menu);
+//        return true; i think the reason i used super here is because then it is the same menu as before.... maybe
     }
 
     @Override

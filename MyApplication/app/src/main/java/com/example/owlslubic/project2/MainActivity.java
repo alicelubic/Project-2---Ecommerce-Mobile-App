@@ -1,6 +1,8 @@
 package com.example.owlslubic.project2;
 
 import android.app.AlertDialog;
+import android.app.SearchManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,6 +108,16 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
         //in the demo we used return super.onCreateOptionsMenu(menu);
+
+        //associate searchable configuration with the SearchView
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+//        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+//        ComponentName componentName = new ComponentName(this,SearchResultsActivity.class);
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
+
+
+        //return true; at the end -- only need this once
+        
     }
 
     @Override
