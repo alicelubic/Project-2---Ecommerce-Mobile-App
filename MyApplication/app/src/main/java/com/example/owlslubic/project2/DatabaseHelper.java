@@ -26,7 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_PRICE = "price";
 
     //    public static final String COL_IMAGE_LARGE = "image_large"; associated with @drawable
-    //    public static final String COL_IMAGE_SMALL = "image_small";
+    //    public static final String COL_IMAGE_SMALL = "image_small"; these drawable resources will be INTs
 
     private static DatabaseHelper sInstance;
 
@@ -76,6 +76,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     //write helper methods to query the database for the searchview
+
+    //make a method that inserts the data and call it in oncreate in this class
+
+    //WRITE A METHOD for the mainact and the shoppingact recyclerviews: i will query the db and rather than return a cursor, i will go through and take each record in the cursor and turn it into an instance of Plant object, then put all those Plants into a collection list, and i will return the list rather than the cursor.
+    //call it like populateRecyclerView or something
 
     //use onStop method to close the cursors
     //make sure to close database when done

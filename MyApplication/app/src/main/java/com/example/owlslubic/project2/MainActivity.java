@@ -1,12 +1,15 @@
 package com.example.owlslubic.project2;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,18 +20,28 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //set up RecyclerView
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_main_store);
+        //tutorial suggests i use recyclerView.setHasFixedSize(true);, but im not sure if the size will be changing...
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(context,1);
+        recyclerView.setLayoutManager(gridLayoutManager);
+      //  MainRvAdapter adapter = new MainRvAdapter(THIS WILL HOLD THE VARIABLE FOR THE LIST OF PLANT ITEMS);
+      //  recyclerView.setAdapter(adapter);
+
+
         //set up toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(R.string.store_name);
 
-        //trying to change content on collapsing toolbar
+        //trying to change content on collapsing toolbar, no luck yet
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         collapsingToolbarLayout.setTitle("");
 

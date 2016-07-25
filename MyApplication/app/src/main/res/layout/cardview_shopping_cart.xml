@@ -27,7 +27,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="16dp"
-                android:src="@drawable/ic_help_outline_black_24dp" />
+                android:src="@drawable/wisteria" />
 
             <TextView
                 android:id="@+id/textview_name_card_cart"
@@ -46,7 +46,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="13dp"
                 android:layout_marginTop="40dp"
-                android:text="$19.99"
+                android:text="$99.99"
                 android:textSize="15sp"/>
 
             <LinearLayout
@@ -66,6 +66,7 @@
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:contentDescription="@string/item_quantity_decrement"
+                    android:backgroundTint="@android:color/white"
                     android:src="@drawable/ic_remove_black_24dp"
 
                     />
@@ -84,6 +85,7 @@
                     android:layout_width="10dp"
                     android:layout_height="10dp"
                     android:contentDescription="@string/item_quantity_increment"
+                    android:backgroundTint="@android:color/white"
                     android:src="@drawable/ic_add_black_24dp" />
 
             </LinearLayout>
@@ -94,6 +96,7 @@
 
         </RelativeLayout>
         <ImageButton
+            android:id="@+id/imagebutton_remove_item"
             android:layout_gravity="top|end"
             android:layout_width="24dp"
             android:layout_height="24dp"

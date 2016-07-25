@@ -5,6 +5,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,10 +18,21 @@ public class ShoppingCartActivity extends AppCompatActivity {
     //this activity will be populated by what is in the singleton
     //it will inflate the recyclerview
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
+
+        //set up RecyclerView
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_shopping_cart);
+        //tutorial suggests i use recyclerView.setHasFixedSize(true);
+        LinearLayoutManager llm= new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(llm);
+        //  ShoppingCartRvAdapter adapter = new ShoppingCartRvAdapter(THIS WILL HOLD THE VARIABLE FOR THE LIST OF PLANT ITEMS or maybe the singleton idk);
+        //  recyclerView.setAdapter(adapter);
+
+
         //had an error when I declared a toolbar here, but i don't think i need it anyway?
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_cart);
 //        setSupportActionBar(toolbar);
