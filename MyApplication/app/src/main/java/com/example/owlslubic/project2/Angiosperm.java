@@ -11,7 +11,7 @@ public class Angiosperm extends Plant {
     }
 
     @Override
-    public String getPlantType() {
-        return "Angiosperm";
+    public int getPlantType() {
+        return R.string.angiosperm;
     }
 }

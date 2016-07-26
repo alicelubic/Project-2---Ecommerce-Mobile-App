@@ -10,7 +10,7 @@ public class Weed extends Plant {
     }
 
     @Override
-    public String getPlantType() {
-        return "Weed";
+    public int getPlantType() {
+        return R.string.weed;
     }
 }

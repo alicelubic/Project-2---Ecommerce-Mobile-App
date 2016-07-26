@@ -9,7 +9,7 @@ public class Grass extends Plant {
     }
 
     @Override
-    public String getPlantType() {
-        return "Grass";
+    public int getPlantType() {
+        return R.string.grass;
     }
 }

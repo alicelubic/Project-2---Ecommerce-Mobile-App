@@ -9,7 +9,7 @@ public class Tree extends Plant {
     }
 
     @Override
-    public String getPlantType() {
-        return "Tree";
+    public int getPlantType() {
+        return R.string.tree;
     }
 }

@@ -18,7 +18,7 @@ public Plant(int commonName, int latinName, int description, int image, double p
         mPrice = price;
     }
 
-    public abstract String getPlantType();
+    public abstract int getPlantType();
 
 
     //getter methods that you will use to setText of a text view etc

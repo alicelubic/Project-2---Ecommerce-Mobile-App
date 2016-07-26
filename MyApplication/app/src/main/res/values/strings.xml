@@ -48,9 +48,10 @@
 
     <!--types-->
     <string name="vine">vine</string>
-    <string name="weed">buckwheat</string>
+    <string name="weed">weed</string>
     <string name="tree">tree</string>
-    <string name="angiosperm">flowering plant</string>
+    <string name="grass">grass</string>
+    <string name="angiosperm">angiosperm</string>
 
     <!--other stuff-->
     <string name="item_quantity_decrement">item quantity decrement</string>

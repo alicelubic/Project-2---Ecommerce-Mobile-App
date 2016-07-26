@@ -2,10 +2,14 @@ package com.example.owlslubic.project2;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.ContactsContract;
 import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by owlslubic on 7/23/16.
@@ -33,13 +37,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static DatabaseHelper sInstance;
 
     //constructor
-    private DatabaseHelper(Context context){
-        super(context,DATABASE_NAME,null,DATABASE_VERSION);
+    private DatabaseHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     //getInstance helper method
-    public static DatabaseHelper getInstance(Context context){
-        if (sInstance == null){
+    public static DatabaseHelper getInstance(Context context) {
+        if (sInstance == null) {
             sInstance = new DatabaseHelper(context);
         }
         return sInstance;
@@ -49,11 +53,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_PLANT_INFO_TABLE);
         db.execSQL(SQL_CREATE_SHOPPING_CART_TABLE);
-        Log.d("AddData", "Data added!");
+        Log.v("tag", "Data added!");
         insertPlantData();
 
 
     }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL(SQL_DELETE_PLANT_INFO_TABLE);
@@ -62,35 +67,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //create tables
     private static final String SQL_CREATE_PLANT_INFO_TABLE = "CREATE TABLE " +
-            PLANT_INFO_TABLE_NAME + " ("+
-            COL_PLANT_ID +" INTEGER PRIMARY KEY, "+
-
-                    /**HOW TO SET THIS ID TO INCEREMENT?**/
-
-            COL_COMMON_NAME+" TEXT, "+ //since i'm using R.string, will i have a string/int problem? look out for it
-            COL_LATIN_NAME+" TEXT, "+
-            COL_PLANT_TYPE+" TEXT, "+
-            COL_DESCRIPTION+" TEXT, "+
-            COL_IMAGE+" INT, "+
-            COL_PRICE+" DOUBLE)"; //making price a double rather than text because i'm going to need to manipulate it as quantity changes
+            PLANT_INFO_TABLE_NAME + " (" +
+            COL_PLANT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COL_COMMON_NAME + " TEXT, " + //since i'm using R.string, will i have a string/int problem? look out for it
+            COL_LATIN_NAME + " TEXT, " +
+            COL_PLANT_TYPE + " TEXT, " +
+            COL_DESCRIPTION + " TEXT, " +
+            COL_IMAGE + " INT, " +
+            COL_PRICE + " DOUBLE)"; //making price a double rather than text because i'm going to need to manipulate it as quantity changes
     private static final String SQL_CREATE_SHOPPING_CART_TABLE = "CREATE TABLE " +
-            SHOPPING_CART_TABLE+" ("+
-            COL_ITEM_ID+" INTEGER PRIMARY KEY, "+
-            COL_PLANT_REF_ID+" INTEGER, "+
-            COL_QUANTITY+" INT, "+
-            "FOREIGN KEY ("+COL_PLANT_REF_ID+") REFERENCES "+PLANT_INFO_TABLE_NAME+"("+COL_PLANT_ID+") )";
+            SHOPPING_CART_TABLE + " (" +
+            COL_ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COL_PLANT_REF_ID + " INTEGER, " +
+            COL_QUANTITY + " INT, " +
+            "FOREIGN KEY (" + COL_PLANT_REF_ID + ") REFERENCES " + PLANT_INFO_TABLE_NAME + "(" + COL_PLANT_ID + ") )";
 
-    private static final String SQL_DELETE_PLANT_INFO_TABLE = "DROP TABLE IF EXISTS "+PLANT_INFO_TABLE_NAME;
-    private static final String SQL_DELETE_SHOPPING_CART_TABLE = "DROP TABLE IF EXISTS "+SHOPPING_CART_TABLE;
+    private static final String SQL_DELETE_PLANT_INFO_TABLE = "DROP TABLE IF EXISTS " + PLANT_INFO_TABLE_NAME;
+    private static final String SQL_DELETE_SHOPPING_CART_TABLE = "DROP TABLE IF EXISTS " + SHOPPING_CART_TABLE;
 
 
     //instantiate the different plants, insert them into the table
-    public void insertPlantData(){
-        Plant wisteria = new Vine(R.string.wisteria_common_name,R.string.wisteria_latin_name, R.string.wisteria_description,R.drawable.wisteria,19.99);//and from here, i can do "wisteria.getPlantType which will return Vine and thats how i'll determine
-        Plant knotweed = new Weed(R.string.japanese_knotweed_common_name, R.string.knotweed_latin_name, R.string.knotweed_description, R.drawable.wisteria,24.99);
-        Plant ivy = new Vine(R.string.english_ivy_common_name, R.string.english_ivy_latin_name, R.string.english_ivy_description,R.drawable.wisteria, 12.99);
+    public void insertPlantData() {
+        Plant wisteria = new Vine(R.string.wisteria_common_name, R.string.wisteria_latin_name, R.string.wisteria_description, R.drawable.wisteria, 19.99);//and from here, i can do "wisteria.getPlantType which will return Vine and thats how i'll determine
+        Plant knotweed = new Weed(R.string.japanese_knotweed_common_name, R.string.knotweed_latin_name, R.string.knotweed_description, R.drawable.wisteria, 24.99);
+        Plant ivy = new Vine(R.string.english_ivy_common_name, R.string.english_ivy_latin_name, R.string.english_ivy_description, R.drawable.wisteria, 12.99);
         Plant ailanthus = new Tree(R.string.ailanthus_common_name, R.string.ailanthus_latin_name, R.string.ailanthus_description, R.drawable.wisteria, 99.99);
-        Plant garlicMustard = new Weed(R.string.garlic_mustard_common_name, R.string.garlic_mustard_latin_name, R.string.garlic_mustard_description, R.drawable.wisteria,10.98);
+        Plant garlicMustard = new Weed(R.string.garlic_mustard_common_name, R.string.garlic_mustard_latin_name, R.string.garlic_mustard_description, R.drawable.wisteria, 10.98);
         Plant daylily = new Angiosperm(R.string.daylily_common_name, R.string.daylily_latin_name, R.string.daylily_description, R.drawable.wisteria, 21.99);
         Plant kudzu = new Vine(R.string.kudzu_common_name, R.string.kudzu_latin_name, R.string.kudzu_description, R.drawable.wisteria, 110.00);
         Plant paulownia = new Tree(R.string.paulownia_common_name, R.string.paulownia_latin_name, R.string.paulownia_description, R.drawable.wisteria, 99.01);
@@ -109,49 +111,130 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         insertPlantTableRow(bamboo);
     }
 
-    public void insertPlantTableRow(Plant plant){
+    public void insertPlantTableRow(Plant plant) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COL_COMMON_NAME, plant.getmCommonName());
         values.put(COL_LATIN_NAME, plant.getmLatinName());
-        values.put(COL_PLANT_TYPE, plant.getPlantType()); //this is the abstract method that will return the string name of each subclass object type
+        values.put(COL_PLANT_TYPE, plant.getPlantType()); //this is the abstract method that will return the string res name (int) of each subclass object type
         values.put(COL_DESCRIPTION, plant.getmDescription());
         values.put(COL_IMAGE, plant.getmImage());
         values.put(COL_PRICE, plant.getmPrice());
-        db.insertOrThrow(PLANT_INFO_TABLE_NAME,null,values);
+        db.insertOrThrow(PLANT_INFO_TABLE_NAME, null, values);
+        db.close();
+    }
+
+
+    //this method is for getting a list of Plant objects that I will be assigning to CardViews
+    public List<Plant> getListOfAllPlants() {
+        List<Plant> plantList = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT FROM " +
+                PLANT_INFO_TABLE_NAME;
+        Cursor cursor = db.rawQuery(query, null);
+        int commonName = cursor.getColumnIndex(COL_COMMON_NAME);
+        int latinName = cursor.getColumnIndex(COL_LATIN_NAME);
+        int description = cursor.getColumnIndex(COL_DESCRIPTION);
+        int image = cursor.getColumnIndex(COL_IMAGE);
+        double price = (cursor.getColumnIndex(COL_PRICE));
+
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+
+                switch (COL_PLANT_TYPE) {//didnt use @strings res here because it got mad at me... idk
+                    case "angiosperm":
+                        Angiosperm angio = new Angiosperm(commonName, latinName, description, image, price);
+                        plantList.add(angio);
+                    case "grass":
+                        Grass grass = new Grass(commonName, latinName, description, image, price);
+                        plantList.add(grass);
+                    case "tree":
+                        Tree tree = new Tree(commonName, latinName, description, image, price);
+                        plantList.add(tree);
+                    case "vine"://this won't make them all be "vine" will it?..check to see how this turns out
+                        Vine vine = new Vine(commonName, latinName, description, image, price);
+                        plantList.add(vine);
+                    case "weed":
+                        Weed weed = new Weed(commonName, latinName, description, image, price);
+                        plantList.add(weed);
+                    default:
+                        //do i need a default?
+                }
+                cursor.moveToNext();
+            }
+        }
+        /**where do I close cursor?*/
+        return plantList;
+    }
+
+
+    //FOR SHOPPINGCART TABLE
+
+
+    //helper method adds a row to shopping cart table when "add to cart" fab is clicked
+    //takes in the plant object of whatever was displayed on the cardview/detaildialog
+    //here,"plant" should be whatever item was clicked on
+    public void addRowToCartTable(Plant plant){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_PLANT_REF_ID, getPlantId(plant));
+        values.put(COL_QUANTITY, 1); //then somewhere make a method that will change this value when increment buttons are hit
+        db.insertOrThrow(SHOPPING_CART_TABLE,null,values);
+        db.close();
+    }
+
+    //need to get plant id to add it to shopping cart table
+    /**shouldnt it take in whatever item was clicked on?*/
+    public int getPlantId(Plant plant){
+        SQLiteDatabase db = getReadableDatabase();
+        Integer result=0; //made this Integer because that's what the primary key is for that table...
+        int plantName = plant.getmCommonName();
+        String query = "SELECT "+
+                COL_PLANT_ID+" FROM " +
+                PLANT_INFO_TABLE_NAME +" WHERE "+COL_COMMON_NAME+" = "+ plantName;
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()){
+            while(!cursor.isAfterLast()){
+                result+=(cursor.getColumnIndex(COL_PLANT_ID));
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();//is this gonna fuck me up again like in that lab?
+        return result;//i feel like i did too much work for this method... can it be simplified?
+    }
+
+
+    //method that deletes a single row of data (representing an item) from the table when the "x" on the item is hit - this is independent of its quantity
+    //this one doesn't feel right, i'm sure i'll hvae to change it
+    public void deleteRowFromCartTableByPlantName(Plant plant){
+        SQLiteDatabase db = getWritableDatabase();
+        String selection = COL_COMMON_NAME + " = ?";
+        String[] selectionArgs = new String[]{String.valueOf(plant.getmCommonName())};//using the string resource is really fucking me up with the string/int stuff
+        db.delete(SHOPPING_CART_TABLE, selection, selectionArgs);
+        db.close();
+    }
+
+
+    //method that deletes the table data when "checkout" fab is hit
+    public void clearCartTableUponCheckout(){
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM "+SHOPPING_CART_TABLE);
         db.close();
     }
 
 
 
-//WRITE METHOD TO GETPLANTS -- GET A CURSOR,
-// THEN BEFORE MOVETONEXT, ADD EACH PLANT TO SOME LIST<PLANT>,
-// AND USING A SWITCH OR SOMETHING, IF PLANT TYPE = VINE, CREATE NEW VINE OBJECT INSTEAD OF PLANT
-// THEN RETURN THE LIST OF PLANTS
-    //does this conflict with my insertData above since i already made new plant objects?
 
 
-    //FOR SHOPPINGCART TABLE
-    //writ a method that adds a row when the "add to cart" fab is clicked
-    //write a method that deletes the table data when "checkout" fab is hit
-    //write a method that deletes a single row of data from the table when the "x" on the item is hit
+
+
+
+
 
     
-    
-    
-    /**don't look at these comments until you've done what's on your list from the 1:1**/
-    
-    
+
+
     //write helper methods to query the database for the searchview
-
-    //make a method that inserts the data and call it in oncreate in this class
-
-
-
-
-    //WRITE A METHOD for the mainact and the shoppingact recyclerviews: i will query the db and rather than return a cursor, i will go through and take each record in the cursor and turn it into an instance of Plant object, then put all those Plants into a collection list, and i will return the list rather than the cursor.
-    //call it like populateRecyclerView or something
-
 
 
     //use onStop method to close the cursors
