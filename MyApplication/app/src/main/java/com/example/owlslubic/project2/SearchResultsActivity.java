@@ -4,15 +4,16 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.provider.ContactsContract;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 public class SearchResultsActivity extends AppCompatActivity {
 
-    //query results get put in objects which are put in an arraylist in the singleton
 
-    //simplecursoradapter that inflates a listview of the results
+    //simplecursoradapter that inflates a listview of the results, or add the results to a string array and use an arrayadapter to display them
 
     //onitemclicklisteners on search result items will open the detail dialog
 
@@ -26,7 +27,13 @@ public class SearchResultsActivity extends AppCompatActivity {
 //        getSupportActionBar().setTitle(" ---- ");
 
 
-
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_searchresultactivity);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(SearchResultsActivity.this, ShoppingCartActivity.class));
+            }
+        });
 
 
 

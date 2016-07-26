@@ -6,10 +6,10 @@ import android.graphics.drawable.Drawable;
  * Created by owlslubic on 7/22/16.
  */
 public abstract class Plant {//don't think i need to attach the id here but maybe
-    int mCommonName, mLatinName, mDescription;
+    String mCommonName, mLatinName, mDescription;
     int mImage;
     double mPrice;
-public Plant(int commonName, int latinName, int description, int image, double price) {
+public Plant(String commonName, String latinName, String description, int image, double price) {
         mCommonName = commonName;
         mLatinName = latinName;
         mDescription = description;
@@ -18,22 +18,22 @@ public Plant(int commonName, int latinName, int description, int image, double p
         mPrice = price;
     }
 
-    public abstract int getPlantType();
+    public abstract String getPlantType();
     //returns R.string.vine or whatever
 
 
     //getter methods that you will use to setText of a text view etc
-    public int getmCommonName() {
+    public String getmCommonName() {
         return mCommonName;
     }
 
 
-    public int getmLatinName() {
+    public String getmLatinName() {
         return mLatinName;
     }
 
 
-    public int getmDescription() {
+    public String getmDescription() {
         return mDescription;
     }
 

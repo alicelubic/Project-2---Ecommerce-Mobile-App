@@ -74,6 +74,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(ShoppingCartActivity.this, MainActivity.class)); //would it be better to do finish() for this?
+                dialog.dismiss();
             }
         });
         dialog.show();

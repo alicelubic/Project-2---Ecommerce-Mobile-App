@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     Context context = this;
+    final DatabaseHelper helper = DatabaseHelper.getInstance(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,35 +72,47 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //build and set custom alert dialog for the item detail page
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-                View dialogLayout = inflater.inflate(R.layout.dialog_product_detail, null);
-                builder.setView(dialogLayout);
-                final AlertDialog dialog = builder.create();
-                dialog.show();
 
-                ImageButton button = (ImageButton) dialogLayout.findViewById(R.id.button_cancel_dialog);
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
+                helper.getListOfAllPlants();
+                Log.v("key", "got the list of all plants!");
 
-                FloatingActionButton addToCart = (FloatingActionButton) dialogLayout.findViewById(R.id.fab_detail_dialog);
-                addToCart.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(MainActivity.this, "Added to cart!", Toast.LENGTH_SHORT).show();
 
-//                        helper.addRowToCartTable(plant whose card this is);
 
-                        dialog.dismiss();
-                    }
-                });
+//                //build and set custom alert dialog for the item detail page
+//                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+//                LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+//                View dialogLayout = inflater.inflate(R.layout.dialog_product_detail, null);
+//                builder.setView(dialogLayout);
+//                final AlertDialog dialog = builder.create();
+//                dialog.show();
+//
+//                ImageButton button = (ImageButton) dialogLayout.findViewById(R.id.button_cancel_dialog);
+//                button.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//
+//                FloatingActionButton addToCart = (FloatingActionButton) dialogLayout.findViewById(R.id.fab_detail_dialog);
+//                addToCart.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Toast.makeText(MainActivity.this, "Added to cart!", Toast.LENGTH_SHORT).show();
+//
+////                        helper.addRowToCartTable(plant whose card this is);
+//
+//                        dialog.dismiss();
+//                    }
+//                });
             }
         });
+
+        //moved this method here instead of in the onCreate of the database helper, becuase calling it there led to getDatabase being called recursively because onCreate(db) already opens a db
+        DatabaseHelper helper = DatabaseHelper.getInstance(this);
+        helper.insertPlantData();
+        Log.v("tag", "Data added!");
+
     }
 
 
@@ -133,4 +148,11 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
+
 }
+
+

@@ -53,8 +53,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_PLANT_INFO_TABLE);
         db.execSQL(SQL_CREATE_SHOPPING_CART_TABLE);
-        Log.v("tag", "Data added!");
-        insertPlantData();
+
+
 
 
     }
@@ -86,30 +86,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_SHOPPING_CART_TABLE = "DROP TABLE IF EXISTS " + SHOPPING_CART_TABLE;
 
 
-    //instantiate the different plants, insert them into the table
-    public void insertPlantData() {
-        Plant wisteria = new Vine(R.string.wisteria_common_name, R.string.wisteria_latin_name, R.string.wisteria_description, R.drawable.wisteria, 19.99);//and from here, i can do "wisteria.getPlantType which will return Vine and thats how i'll determine
-        Plant knotweed = new Weed(R.string.japanese_knotweed_common_name, R.string.knotweed_latin_name, R.string.knotweed_description, R.drawable.wisteria, 24.99);
-        Plant ivy = new Vine(R.string.english_ivy_common_name, R.string.english_ivy_latin_name, R.string.english_ivy_description, R.drawable.wisteria, 12.99);
-        Plant ailanthus = new Tree(R.string.ailanthus_common_name, R.string.ailanthus_latin_name, R.string.ailanthus_description, R.drawable.wisteria, 99.99);
-        Plant garlicMustard = new Weed(R.string.garlic_mustard_common_name, R.string.garlic_mustard_latin_name, R.string.garlic_mustard_description, R.drawable.wisteria, 10.98);
-        Plant daylily = new Angiosperm(R.string.daylily_common_name, R.string.daylily_latin_name, R.string.daylily_description, R.drawable.wisteria, 21.99);
-        Plant kudzu = new Vine(R.string.kudzu_common_name, R.string.kudzu_latin_name, R.string.kudzu_description, R.drawable.wisteria, 110.00);
-        Plant paulownia = new Tree(R.string.paulownia_common_name, R.string.paulownia_latin_name, R.string.paulownia_description, R.drawable.wisteria, 99.01);
-        Plant bittersweet = new Vine(R.string.oriental_bittersweet_common_name, R.string.oriental_bittersweet_latin_name, R.string.oriental_bittersweet_description, R.drawable.wisteria, 82.99);
-        Plant bamboo = new Grass(R.string.bamboo_common_name, R.string.bamboo_latin_name, R.string.bamboo_description, R.drawable.wisteria, 20.00);
-
-        insertPlantTableRow(wisteria);
-        insertPlantTableRow(knotweed);
-        insertPlantTableRow(ivy);
-        insertPlantTableRow(ailanthus);
-        insertPlantTableRow(garlicMustard);
-        insertPlantTableRow(daylily);
-        insertPlantTableRow(kudzu);
-        insertPlantTableRow(paulownia);
-        insertPlantTableRow(bittersweet);
-        insertPlantTableRow(bamboo);
-    }
 
     public void insertPlantTableRow(Plant plant) {
         SQLiteDatabase db = getWritableDatabase();
@@ -124,17 +100,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    //instantiate the different plants, insert them into the table
+    public void insertPlantData() {
+
+//        int resouceId = context.getResources().getIdentifier("bamboo_common_name","string",context.getPackageName());
+//        String bamboo_common_name = context.getString(resouceId);
+
+        Plant wisteria = new Vine("Chinese Wisteria", "Wisteria sinensis", "This deciduous woody vine capable of growing to a height of 40 ft., good luck getting that down!", R.drawable.wisteria, 19.99);//and from here, i can do "wisteria.getPlantType which will return Vine and thats how i'll determine
+        Plant knotweed = new Weed("Japanese Knotweed", "Reynourtria japonica", "This weed is classified as an invasive species in 39 of the 50 United States, so why not add yours to the list!", R.drawable.wisteria, 24.99);
+        Plant ivy = new Vine("English Ivy", "Hedera helix", "English Ivy is a rampant, clinging evergreen vine that has been known to crowd out and choke other plants, creating an \"ivy desert\"", R.drawable.wisteria, 12.99);
+        Plant ailanthus = new Tree("Tree of Heaven", "Ailanthus altissima", "This tree resprouts vigorously when cut, your neighbors' efforts to suppress this beast will drive them crazy for decades to come!", R.drawable.wisteria, 99.99);
+        Plant garlicMustard = new Weed("Garlic Mustard", "Alliaria petiolata", "This stinky weed cannot be killed.", R.drawable.wisteria, 10.98);
+        Plant daylily = new Angiosperm("Orange Daylily", "Hemerocallis fulva", "Its beautiful bright orange flowers will dazzle your neighbors, who will never suspect that these plants behave just as maddeningly as any perennial weed.", R.drawable.wisteria, 21.99);
+        Plant kudzu = new Vine("Kudzu", "Pueraria lobata", "A lovely vine that will take over and deprive all other plants of resources", R.drawable.wisteria, 110.00);
+        Plant paulownia = new Tree("Princess Tree", "Paulownia tomentosa", "Princess Tree is an showy and aggressive ornamental tree, so it should get along great with your neighbors!", R.drawable.wisteria, 99.01);
+        Plant bittersweet = new Vine("Oriental Bittersweet", "Celastrus orbiculatus", "A vine that grows aggressively, smothering trees, shrubs, and other irritating entities like your neighbors. Just kidding.", R.drawable.wisteria, 82.99);
+        Plant bamboo = new Grass("Bamboo", "Bambusoidae", "Bamboo is a giant grass, and a giant pain in the ass. Once established, it is impossible to control, for each sprout that shoots up from the ground can grow 12 inches a day. That'll teach 'em.", R.drawable.wisteria, 20.00);
+
+        insertPlantTableRow(wisteria);
+        insertPlantTableRow(knotweed);
+        insertPlantTableRow(ivy);
+        insertPlantTableRow(ailanthus);
+        insertPlantTableRow(garlicMustard);
+        insertPlantTableRow(daylily);
+        insertPlantTableRow(kudzu);
+        insertPlantTableRow(paulownia);
+        insertPlantTableRow(bittersweet);
+        insertPlantTableRow(bamboo);
+    }
+
+
+
 
     //this method is for getting a list of Plant objects that I will be assigning to CardViews
     public List<Plant> getListOfAllPlants() {
         List<Plant> plantList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        String query = "SELECT FROM " +
+        String query = "SELECT * FROM " +
                 PLANT_INFO_TABLE_NAME;
         Cursor cursor = db.rawQuery(query, null);
-        int commonName = cursor.getColumnIndex(COL_COMMON_NAME);
-        int latinName = cursor.getColumnIndex(COL_LATIN_NAME);
-        int description = cursor.getColumnIndex(COL_DESCRIPTION);
+        String commonName = cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME));
+        String latinName = cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME));
+        String description = cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION));
         int image = cursor.getColumnIndex(COL_IMAGE);
         double price = (cursor.getColumnIndex(COL_PRICE));
 
@@ -142,20 +149,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             while (!cursor.isAfterLast()) {
 
 //                switch (String.valueOf(COL_PLANT_TYPE)) {
-                switch (COL_PLANT_TYPE) {//didnt use @strings res here because it got mad at me... idk
-                    case "angiosperm":
+                switch (COL_PLANT_TYPE) {
+                    case "Angiosperm":
                         Angiosperm angio = new Angiosperm(commonName, latinName, description, image, price);
                         plantList.add(angio);
-                    case "grass":
+                    case "Grass":
                         Grass grass = new Grass(commonName, latinName, description, image, price);
                         plantList.add(grass);
-                    case "tree":
+                    case "Tree":
                         Tree tree = new Tree(commonName, latinName, description, image, price);
                         plantList.add(tree);
-                    case "vine"://this won't make them all be "vine" will it?..check to see how this turns out
+                    case "Vine"://this won't make them all be "vine" will it?..check to see how this turns out
                         Vine vine = new Vine(commonName, latinName, description, image, price);
                         plantList.add(vine);
-                    case "weed":
+                    case "Weed":
                         Weed weed = new Weed(commonName, latinName, description, image, price);
                         plantList.add(weed);
                     default:
@@ -165,8 +172,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
         /**where do I close cursor?*/
+        db.close();
         return plantList;
     }
+
+
 
 
     //FOR SHOPPINGCART TABLE
@@ -186,10 +196,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //need to get plant id to add it to shopping cart table
     /**shouldnt it take in whatever item was clicked on?*/
-    public int getPlantId(Plant plant){
+    public Integer getPlantId(Plant plant){
         SQLiteDatabase db = getReadableDatabase();
         Integer result=0; //made this Integer because that's what the primary key is for that table...
-        int plantName = plant.getmCommonName();
+        String plantName = plant.getmCommonName();
         String query = "SELECT "+
                 COL_PLANT_ID+" FROM " +
                 PLANT_INFO_TABLE_NAME +" WHERE "+COL_COMMON_NAME+" = "+ plantName;
@@ -201,16 +211,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
         cursor.close();//is this gonna fuck me up again like in that lab?
-        return result;//i feel like i did too much work for this method... can it be simplified?
+        return result;
     }
 
 
     //method that deletes a single row of data (representing an item) from the table when the "x" on the item is hit - this is independent of its quantity
     //this one doesn't feel right, i'm sure i'll hvae to change it
     public void deleteRowFromCartTableByPlantName(Plant plant){
+
         SQLiteDatabase db = getWritableDatabase();
         String selection = COL_COMMON_NAME + " = ?";
-        String[] selectionArgs = new String[]{String.valueOf(plant.getmCommonName())};//using the string resource is really fucking me up with the string/int stuff
+        String[] selectionArgs = new String[]{plant.getmCommonName()};
         db.delete(SHOPPING_CART_TABLE, selection, selectionArgs);
         db.close();
     }
