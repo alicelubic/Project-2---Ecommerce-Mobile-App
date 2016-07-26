@@ -6,7 +6,12 @@ import android.graphics.drawable.Drawable;
  * Created by owlslubic on 7/25/16.
  */
 public class Angiosperm extends Plant {
-    public Angiosperm(String commonName, String latinName, Plant plantType, String description, int image, double price) {
-        super(commonName, latinName, plantType, description, image, price);
+    public Angiosperm(int commonName, int latinName, int description, int image, double price) {
+        super(commonName, latinName, description, image, price);
+    }
+
+    @Override
+    public String getPlantType() {
+        return "Angiosperm";
     }
 }

@@ -5,7 +5,12 @@ package com.example.owlslubic.project2;
  */
 public class Weed extends Plant {
 
-    public Weed(String commonName, String latinName, Plant plantType, String description, int image, double price) {
-        super(commonName, latinName, plantType, description, image, price);
+    public Weed(int commonName, int latinName, int description, int image, double price) {
+        super(commonName, latinName, description, image, price);
+    }
+
+    @Override
+    public String getPlantType() {
+        return "Weed";
     }
 }
