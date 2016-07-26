@@ -56,6 +56,9 @@
     <!--other stuff-->
     <string name="item_quantity_decrement">item quantity decrement</string>
     <string name="item_quantity_increment">item quantity increment</string>
+    <string name="empty_cart_dialog_message">Looks like you haven\'t added any plants to your cart yet. Why not check out our store?</string>
+    <string name="empty_cart_dialog_title">Shopping Cart is Empty!</string>
+    <string name="empty_cart_dialog_button">Take me there!</string>
 
 
 </resources>

@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         Toast.makeText(MainActivity.this, "Added to cart!", Toast.LENGTH_SHORT).show();
 
-                        //add item to shoppingcart singleton list
+//                        helper.addRowToCartTable(plant whose card this is);
 
                         dialog.dismiss();
                     }

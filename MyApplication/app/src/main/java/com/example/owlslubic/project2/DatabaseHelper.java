@@ -141,6 +141,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
 
+//                switch (String.valueOf(COL_PLANT_TYPE)) {
                 switch (COL_PLANT_TYPE) {//didnt use @strings res here because it got mad at me... idk
                     case "angiosperm":
                         Angiosperm angio = new Angiosperm(commonName, latinName, description, image, price);
@@ -231,7 +232,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    
+
 
 
     //write helper methods to query the database for the searchview

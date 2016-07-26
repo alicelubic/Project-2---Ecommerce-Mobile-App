@@ -28,6 +28,8 @@ public class SearchResultsActivity extends AppCompatActivity {
 
 
 
+
+
         //FOR SEARCHABILITY:
         //we will make a query that returns a cursor in the DBhelper, and then here, we tell this activity to handle our search:
 //        if(Intent.ACTION_SEARCH.equals(getIntent().getAction())){

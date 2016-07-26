@@ -19,6 +19,7 @@ public Plant(int commonName, int latinName, int description, int image, double p
     }
 
     public abstract int getPlantType();
+    //returns R.string.vine or whatever
 
 
     //getter methods that you will use to setText of a text view etc
