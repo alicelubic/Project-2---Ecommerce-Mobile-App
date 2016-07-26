@@ -28,8 +28,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
                 android:text="plant name"
-                android:paddingBottom="5dp"
-                android:textSize="19sp" />
+                android:paddingBottom="3dp"
+                android:textSize="15sp" />
 
 
     </android.support.v7.widget.CardView>

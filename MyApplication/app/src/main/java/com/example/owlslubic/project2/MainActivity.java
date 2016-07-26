@@ -22,6 +22,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
@@ -34,20 +36,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
-        List<Plant> plantList =  helper.getListOfAllPlants();//this might be a bad idea
-
-
-
-
-
+        List<Plant> plantList = helper.getListOfAllPlants();
 
         //set up RecyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_main_store);
-        //tutorial suggests i use recyclerView.setHasFixedSize(true);, but im not sure if the size will be changing...
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(context,2);
+        //tutorial suggests i use but im not sure if the size will be changing...
+        recyclerView.setHasFixedSize(true);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
-        MainRvAdapter adapter = new MainRvAdapter(plantList);
+        MainRvAdapter adapter = new MainRvAdapter(MainActivity.this, plantList);
         recyclerView.setAdapter(adapter);
 
 
@@ -75,47 +74,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //currently the dialog is set to this temp fab because i don't have the cardviews up yet
-//        FloatingActionButton fabTemp = (FloatingActionButton) findViewById(R.id.fab_temp);
-//        fabTemp.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-                //was using this temp button to test out the getList method - it works!
-//                helper.getListOfAllPlants();
-//                Log.v("key", "got the list of all plants!");
-
-
-
-//                //build and set custom alert dialog for the item detail page
-//                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-//                LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
-//                View dialogLayout = inflater.inflate(R.layout.dialog_product_detail, null);
-//                builder.setView(dialogLayout);
-//                final AlertDialog dialog = builder.create();
-//                dialog.show();
-//
-//                ImageButton button = (ImageButton) dialogLayout.findViewById(R.id.button_cancel_dialog);
-//                button.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        dialog.dismiss();
-//                    }
-//                });
-//
-//                FloatingActionButton addToCart = (FloatingActionButton) dialogLayout.findViewById(R.id.fab_detail_dialog);
-//                addToCart.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        Toast.makeText(MainActivity.this, "Added to cart!", Toast.LENGTH_SHORT).show();
-//
-////                        helper.addRowToCartTable(plant whose card this is);
-//
-//                        dialog.dismiss();
-//                    }
-//                });
-
-//        });
-
         //moved this method here instead of in the onCreate of the database helper, becuase calling it there led to getDatabase being called recursively because onCreate(db) already opens a db
         DatabaseHelper helper = DatabaseHelper.getInstance(this);
         helper.insertPlantData();
@@ -125,6 +83,36 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+    //method to launch dialog from here, then just call the method in the onclick for the card view?
+    public void launchDetailDialog(Plant plant){
+        //build and set custom alert dialog for the item detail page
+        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View dialogLayout = inflater.inflate(R.layout.dialog_product_detail, null);
+        builder.setView(dialogLayout);
+        final android.support.v7.app.AlertDialog dialog = builder.create();
+        dialog.show();
+        ImageButton button = (ImageButton) dialogLayout.findViewById(R.id.button_cancel_dialog);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        FloatingActionButton addToCart = (FloatingActionButton) dialogLayout.findViewById(R.id.fab_detail_dialog);
+        addToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Added to cart!", Toast.LENGTH_SHORT).show();
+
+                // helper.addRowToCartTable(plantList.get(position));
+
+                dialog.dismiss();
+            }
+        });
+    }
 
 
 
@@ -166,8 +154,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//gonna use something like this method to set up my detail dialog
-    public void getPlantInfo(Plant plant){
+    //gonna use something like this method to set up my detail dialog
+    public void getPlantInfo(Plant plant) {
         String commonName = plant.getmCommonName();
         String latinName = plant.getmLatinName();
         String plantType = plant.getPlantType();
@@ -175,6 +163,9 @@ public class MainActivity extends AppCompatActivity {
         int image = plant.getmImage();
         double price = plant.getmPrice();
     }
+
+
+
 
 }
 
