@@ -35,6 +35,7 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
         return 0;
         //return listname.size();
     }
+
     //the following method is included in the tutorial, although i have not seen it before
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView){

@@ -3,7 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="store_name">Invasive Species R Us</string>
     <string name="search">Search</string>
-    <string name="store_description">Welcome to the Passive Aggressive Girl's Guide to Spiting Your Suburban Neighbors. Are you seething at those narcisissts next door who spend thousands of dollars and hours ostentatiously manicuring their gardens, and yet are unaware of their ego's effect on the neighborhood? Who decide that 5am is the perfect time to use the leaf blower? Whose ten corgis just love to shit in your back yard? Who painted their house puke green, and then put up emergency flood lights that light up their horrible domicile like a sickly christmas tree? Whose tree fell on your house during a snowstorm, but your insurance refused to cover it and they refused to even file a claim? Who leaves their "classic" diesel Mercedes Benz running for an hour to "warm it up" on a cold morning, threatening your family with carbon monoxide poisoning? Whose asshole teenage son uses your pets as paintball targets? I know confrontation can be tough and often it's not worth the trouble, but that doesn't mean you're out of options. Some inventive landscaping might be just what you need to get under your neighbors' skin. Check out our exciting collection of aggressive, competitive, durable species guaranteed to invade their yard, usurp their soil nutrients, kill their trees, and eradicate those ugly little flowers they spent thousands of dollars on and countless hours planting. Happy avenging! </string>
+    <string name="store_description">Welcome to the Passive Aggressive Gardener\'s Guide to Spiting Your Suburban Neighbors. Are you seething at those narcisissts next door who spend thousands of dollars and hours ostentatiously manicuring their gardens, and yet are unaware of their ego's effect on the neighborhood? Who decide that 5am is the perfect time to use the leaf blower? Whose ten corgis just love to shit in your back yard? Who painted their house puke green, and then put up emergency flood lights that light up their horrible domicile like a sickly christmas tree? Whose tree fell on your house during a snowstorm, but your insurance refused to cover it and they refused to even file a claim? Who leaves their "classic" diesel Mercedes Benz running for an hour to "warm it up" on a cold morning, threatening your family with carbon monoxide poisoning? Whose asshole teenage son uses your pets as paintball targets? I know confrontation can be tough and often it's not worth the trouble, but that doesn't mean you're out of options. Some inventive landscaping might be just what you need to get under your neighbors' skin. Check out our exciting collection of aggressive, competitive, durable species guaranteed to invade their yard, usurp their soil nutrients, kill their trees, and eradicate those ugly little flowers they spent thousands of dollars on and countless hours planting. Happy avenging! </string>
 
     <!--plant names and descriptions-->
     <string name="wisteria_common_name">Chinese Wisteria</string>
@@ -47,8 +47,8 @@
     <string name="bamboo_description">Bamboo is a giant grass, and a giant pain in the ass. Once established, it is impossible to control, for each sprout that shoots up from the ground can grow 12 inches a day. That'll teach 'em.</string>
 
     <!--types-->
-    <string name="climbing_vine">climbing vine</string>
-    <string name="knotweed">knotweed or buckwheat</string>
+    <string name="vine">vine</string>
+    <string name="weed">buckwheat</string>
     <string name="tree">tree</string>
     <string name="flowering_plants">flowering plants</string>
 

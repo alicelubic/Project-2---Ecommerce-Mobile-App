@@ -28,5 +28,7 @@ public class ShoppingCartViewHolder extends RecyclerView.ViewHolder{
         mDecrement = (ImageButton) itemView.findViewById(R.id.imagebutton_decrement);
         mIncrement = (ImageButton) itemView.findViewById(R.id.imagebutton_increment);
         mRemove = (ImageButton) itemView.findViewById(R.id.imagebutton_remove_item);
+
+        /**is this where i can set onclicklisteners and stuff?**/
     }
 }
