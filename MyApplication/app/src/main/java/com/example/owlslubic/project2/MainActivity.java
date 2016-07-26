@@ -24,22 +24,31 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     Context context = this;
     final DatabaseHelper helper = DatabaseHelper.getInstance(this);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        List<Plant> plantList =  helper.getListOfAllPlants();//this might be a bad idea
+
+
+
+
+
 
         //set up RecyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_main_store);
         //tutorial suggests i use recyclerView.setHasFixedSize(true);, but im not sure if the size will be changing...
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(context,1);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(context,2);
         recyclerView.setLayoutManager(gridLayoutManager);
-      //  MainRvAdapter adapter = new MainRvAdapter(THIS WILL HOLD THE VARIABLE FOR THE LIST OF PLANT ITEMS);
-      //  recyclerView.setAdapter(adapter);
+        MainRvAdapter adapter = new MainRvAdapter(plantList);
+        recyclerView.setAdapter(adapter);
 
 
         //set up toolbar
@@ -67,14 +76,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         //currently the dialog is set to this temp fab because i don't have the cardviews up yet
-        FloatingActionButton fabTemp = (FloatingActionButton) findViewById(R.id.fab_temp);
-        fabTemp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-                helper.getListOfAllPlants();
-                Log.v("key", "got the list of all plants!");
+//        FloatingActionButton fabTemp = (FloatingActionButton) findViewById(R.id.fab_temp);
+//        fabTemp.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+                //was using this temp button to test out the getList method - it works!
+//                helper.getListOfAllPlants();
+//                Log.v("key", "got the list of all plants!");
 
 
 
@@ -105,8 +113,8 @@ public class MainActivity extends AppCompatActivity {
 //                        dialog.dismiss();
 //                    }
 //                });
-            }
-        });
+
+//        });
 
         //moved this method here instead of in the onCreate of the database helper, becuase calling it there led to getDatabase being called recursively because onCreate(db) already opens a db
         DatabaseHelper helper = DatabaseHelper.getInstance(this);
@@ -114,6 +122,14 @@ public class MainActivity extends AppCompatActivity {
         Log.v("tag", "Data added!");
 
     }
+
+
+
+
+
+
+
+
 
 
     //menu stuff
@@ -150,8 +166,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
+//gonna use something like this method to set up my detail dialog
+    public void getPlantInfo(Plant plant){
+        String commonName = plant.getmCommonName();
+        String latinName = plant.getmLatinName();
+        String plantType = plant.getPlantType();
+        String description = plant.getmDescription();
+        int image = plant.getmImage();
+        double price = plant.getmPrice();
+    }
 
 }
 

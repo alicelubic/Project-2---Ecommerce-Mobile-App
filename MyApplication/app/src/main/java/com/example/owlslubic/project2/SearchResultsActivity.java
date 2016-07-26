@@ -44,6 +44,15 @@ public class SearchResultsActivity extends AppCompatActivity {
 //            Cursor cursor = DatabaseHelper.getInstance(this).searchPlants(query); --ps you still hvae to make a method that does this and returns a cursor
 //                    then we set this query to the listview
 //        }
+
+
+
+
+
+
+
+
+//        i want to be able to search by COMMON NAME, LATIN NAME, or PLANT TYPE
     }
 
     //figure out if this already has a toolbar with the searchview, and if not, inflate the menu here

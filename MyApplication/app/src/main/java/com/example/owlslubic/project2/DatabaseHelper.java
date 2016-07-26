@@ -69,7 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_PLANT_INFO_TABLE = "CREATE TABLE " +
             PLANT_INFO_TABLE_NAME + " (" +
             COL_PLANT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COL_COMMON_NAME + " TEXT, " + //since i'm using R.string, will i have a string/int problem? look out for it
+            COL_COMMON_NAME + " TEXT, " +
             COL_LATIN_NAME + " TEXT, " +
             COL_PLANT_TYPE + " TEXT, " +
             COL_DESCRIPTION + " TEXT, " +
@@ -87,6 +87,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
+    //the Plant Table methods all seem to work
+
     public void insertPlantTableRow(Plant plant) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -102,11 +104,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //instantiate the different plants, insert them into the table
     public void insertPlantData() {
-
+//        if we were still talkin bout using the R.strings thing:
 //        int resouceId = context.getResources().getIdentifier("bamboo_common_name","string",context.getPackageName());
 //        String bamboo_common_name = context.getString(resouceId);
 
-        Plant wisteria = new Vine("Chinese Wisteria", "Wisteria sinensis", "This deciduous woody vine capable of growing to a height of 40 ft., good luck getting that down!", R.drawable.wisteria, 19.99);//and from here, i can do "wisteria.getPlantType which will return Vine and thats how i'll determine
+        Plant wisteria = new Vine("Chinese Wisteria", "Wisteria sinensis", "This deciduous woody vine capable of growing to a height of 40 ft., good luck getting that down!", R.drawable.wisteria, 19.99);
         Plant knotweed = new Weed("Japanese Knotweed", "Reynourtria japonica", "This weed is classified as an invasive species in 39 of the 50 United States, so why not add yours to the list!", R.drawable.wisteria, 24.99);
         Plant ivy = new Vine("English Ivy", "Hedera helix", "English Ivy is a rampant, clinging evergreen vine that has been known to crowd out and choke other plants, creating an \"ivy desert\"", R.drawable.wisteria, 12.99);
         Plant ailanthus = new Tree("Tree of Heaven", "Ailanthus altissima", "This tree resprouts vigorously when cut, your neighbors' efforts to suppress this beast will drive them crazy for decades to come!", R.drawable.wisteria, 99.99);
@@ -139,31 +141,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT * FROM " +
                 PLANT_INFO_TABLE_NAME;
         Cursor cursor = db.rawQuery(query, null);
-        String commonName = cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME));
-        String latinName = cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME));
-        String description = cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION));
-        int image = cursor.getColumnIndex(COL_IMAGE);
-        double price = (cursor.getColumnIndex(COL_PRICE));
 
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
-
-//                switch (String.valueOf(COL_PLANT_TYPE)) {
-                switch (COL_PLANT_TYPE) {
+                switch (cursor.getString(cursor.getColumnIndex(COL_PLANT_TYPE))) {
                     case "Angiosperm":
-                        Angiosperm angio = new Angiosperm(commonName, latinName, description, image, price);
+                        Angiosperm angio = new Angiosperm(cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
                         plantList.add(angio);
                     case "Grass":
-                        Grass grass = new Grass(commonName, latinName, description, image, price);
+                        Grass grass = new Grass(cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
                         plantList.add(grass);
                     case "Tree":
-                        Tree tree = new Tree(commonName, latinName, description, image, price);
+                        Tree tree = new Tree(cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
                         plantList.add(tree);
                     case "Vine"://this won't make them all be "vine" will it?..check to see how this turns out
-                        Vine vine = new Vine(commonName, latinName, description, image, price);
+                        Vine vine = new Vine(cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
                         plantList.add(vine);
                     case "Weed":
-                        Weed weed = new Weed(commonName, latinName, description, image, price);
+                        Weed weed = new Weed(cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
                         plantList.add(weed);
                     default:
                         //do i need a default?
@@ -179,12 +174,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    //FOR SHOPPINGCART TABLE
-
+    //FOR SHOPPING CART TABLE - have not tested these methods yet
 
     //helper method adds a row to shopping cart table when "add to cart" fab is clicked
-    //takes in the plant object of whatever was displayed on the cardview/detaildialog
-    //here,"plant" should be whatever item was clicked on
+    //takes in the plant object of whatever was displayed on the cardview/detaildialog -- so here,"plant" should be whatever item was clicked on
     public void addRowToCartTable(Plant plant){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
