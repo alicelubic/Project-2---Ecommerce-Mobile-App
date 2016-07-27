@@ -21,8 +21,8 @@ public class DetailDialog {
     public TextView commonNameDetail, latinNameDetail, priceDetail, descriptionDetail;
     public ImageView picDetail;
 
-   // final List<Plant> plantList took this bad boy outta the parameters below
-    public void launchDetailDialog(final Context context, final int position) {
+   // final List<Plant> plantList took this bad boy outta the parameters below then put it back
+    public void launchDetailDialog(final Context context, final int position,final List<Plant> plantList) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
         View dialogLayout = inflater.inflate(R.layout.dialog_product_detail, null);
@@ -44,8 +44,8 @@ public class DetailDialog {
             public void onClick(View view) {
                 Toast.makeText(context, "Added to cart!", Toast.LENGTH_SHORT).show();
                 DatabaseHelper helper = DatabaseHelper.getInstance(context);
-             //   helper.addToCart(plantList.get(position));
-                helper.addToCart(CartSingleton.getInstance().getCartList().get(position));
+                helper.addToCart(plantList.get(position));
+             //   helper.addToCart(CartSingleton.getInstance().getCartList().get(position));
                 Log.v("cart", "addToCart method worked from the dialog");
 
                 dialog.dismiss();
@@ -58,8 +58,8 @@ public class DetailDialog {
         descriptionDetail = (TextView) dialog.findViewById(R.id.textview_description_detail);
         picDetail = (ImageView) dialog.findViewById(R.id.imageview_dialog_detail);
 
-//        setDetailDialogInfo(plantList.get(position));
-        setDetailDialogInfo(CartSingleton.getInstance().getCartList().get(position));
+        setDetailDialogInfo(plantList.get(position));
+//        setDetailDialogInfo(CartSingleton.getInstance().getCartList().get(position));
 
     }
 

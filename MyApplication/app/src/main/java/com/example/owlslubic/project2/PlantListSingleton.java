@@ -6,6 +6,8 @@ import java.util.ArrayList;
  * Created by owlslubic on 7/27/16.
  */
 public class PlantListSingleton {
+    //DEFINITELY NOT DOING THIS, BUT IM AFRAID TO DELETE ANYTHING
+
     //ok im going to experiment and see if just having one isntance of my list will be good or nah
 
     private static PlantListSingleton plants = null;
@@ -13,12 +15,13 @@ public class PlantListSingleton {
 
     private PlantListSingleton() {
         plantList = new ArrayList<>();
+
     }
 
-    public static CartSingleton getInstance(){
-        if(cart == null){
-            cart = new CartSingleton();
+    public static PlantListSingleton getInstance(){
+        if(plants == null){
+            plants = new PlantListSingleton();
         }
-        return cart;
+        return plants;
     }
 }

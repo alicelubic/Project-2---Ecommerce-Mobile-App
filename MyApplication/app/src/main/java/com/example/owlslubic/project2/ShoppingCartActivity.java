@@ -31,7 +31,10 @@ public class ShoppingCartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
         //this will give me a list of items i can manipulate
-      List<Plant> cartItems = CartSingleton.getInstance().getCartList();
+   //   List<Plant> cartItems = CartSingleton.getInstance().getCartList();
+
+        //NEED TO FIND ALTERNATIVE WAY TO GET DATA FROM SHOPPING CART TABLE TO DISPLAY HERE
+
 
         //set up RecyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_shopping_cart);
@@ -53,7 +56,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
 
                 //this will, as the name suggests, clear the info from the cart table
                 helper.clearCartTableUponCheckout();
-                CartSingleton.getInstance().emptyCart();
+      //          CartSingleton.getInstance().emptyCart();
                 //must I then also clear the carviews from the recyclerview?
                 //will finish achieve that?
               finish();

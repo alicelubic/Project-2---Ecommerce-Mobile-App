@@ -30,15 +30,18 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     Context context = this;
-    final DatabaseHelper helper = DatabaseHelper.getInstance(this);
-    public final List<Plant> plantList = helper.getListOfAllPlants();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       //this method is where the items are instantiated and added to the list
+        //this method is where the items are instantiated and added to the list
+        DatabaseHelper helper = DatabaseHelper.getInstance(this);
+        List<Plant> plantList = helper.getListOfAllPlants();
+
+
 
         //set up RecyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_main_store);
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //moved this method here instead of in the onCreate of the database helper, becuase calling it there led to getDatabase being called recursively because onCreate(db) already opens a db
-        DatabaseHelper helper = DatabaseHelper.getInstance(this);
+     //   DatabaseHelper helper = DatabaseHelper.getInstance(this);
         helper.insertPlantData();
         Log.v("cart", "Data added! via insertPlantData()");
 

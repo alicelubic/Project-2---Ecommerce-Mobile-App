@@ -42,6 +42,7 @@ public class ShoppingCartViewHolder extends RecyclerView.ViewHolder {
         /**int quantity = plant. to get the quantity - gonna have to write a method that queries joined tables*/
         Log.v("cart", "it got and sot plant info to the cart cardview");
 
+
         mName.setText(commonName);
         mPlantImage.setImageResource(image);
         mPrice.setText(String.valueOf(price));

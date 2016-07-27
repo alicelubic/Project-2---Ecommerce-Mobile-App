@@ -194,8 +194,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //helper method adds a row to shopping cart table when "add to cart" fab is clicked
    //also adds the item to the shopping cart singleton-might not need both, but this is how it's workin so far, so, chill
     public void addToCart(Plant plant) {
-        cart.addToCartSingleton(plant);
-        Log.v("cart","Data added to singleton list");
+     //   cart.addToCartSingleton(plant);
+     //   Log.v("cart","Data added to singleton list");
 
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();

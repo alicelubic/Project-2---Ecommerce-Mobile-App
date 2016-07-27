@@ -39,23 +39,25 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
     //this specifies the contents of each item in the recyclerview
     @Override
     public void onBindViewHolder(final ShoppingCartViewHolder holder, final int position) {
-        if (CartSingleton.getInstance().getCartList().size() == 0) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-            builder.setNeutralButton(R.string.empty_cart_dialog_button, null)
-                    .setTitle(R.string.empty_cart_dialog_title)
-                    .setMessage(R.string.empty_cart_dialog_message);
-            final AlertDialog dialog = builder.create();
-            dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(mContext, "normally this would bring you to MainActivity", Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
-        } else {
+//        if (CartSingleton.getInstance().getCartList().size() == 0) {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+//            builder.setNeutralButton(R.string.empty_cart_dialog_button, null)
+//                    .setTitle(R.string.empty_cart_dialog_title)
+//                    .setMessage(R.string.empty_cart_dialog_message);
+//            final AlertDialog dialog = builder.create();
+//            dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Toast.makeText(mContext, "normally this would bring you to MainActivity", Toast.LENGTH_SHORT).show();
+//                    dialog.dismiss();
+//                }
+//            });
+//            dialog.show();
+//        } else {
 
-            holder.getAndSetPlantInfoToShoppingCartCardView(CartSingleton.getInstance().getCartList().get(position));
+        //this is where i grab the info from the list in the singleton and set it to the cards in shoppingcart recyclerview
+
+        /**    holder.getAndSetPlantInfoToShoppingCartCardView(CartSingleton.getInstance().getCartList().get(position));**/
 
 
 
@@ -68,7 +70,7 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
 //
 //                }
 //            });
-        }
+       // }
 
 
         holder.mRemove.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +82,9 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
               //  }
                 Log.v("cart","removeItemByPosition removed item from recyclerview from sc adapter");
                 //deletes the data from db and singleton
+
+
+                //problem
                 CartSingleton.getInstance().getCartList().remove(holder.getAdapterPosition());
                 Log.v("cart","removed from singlton via sc adapter");
 

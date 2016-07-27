@@ -6,6 +6,10 @@ import java.util.ArrayList;
  * Created by owlslubic on 7/27/16.
  */
 public class CartSingleton {
+    //GONNA TRY TO GET RID OF THIS
+
+
+
     private static CartSingleton cart = null;
     private static ArrayList<Plant> cartList;
 
