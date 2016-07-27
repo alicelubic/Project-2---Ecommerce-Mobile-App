@@ -31,6 +31,8 @@ public class ShoppingCartViewHolder extends RecyclerView.ViewHolder {
         mRemove = (ImageButton) itemView.findViewById(R.id.imagebutton_remove_item);
 
         /**is this where i can set onclicklisteners and stuff?**/
+
+
     }
 
     public void getAndSetPlantInfoToShoppingCartCardView(Plant plant) {
@@ -45,4 +47,7 @@ public class ShoppingCartViewHolder extends RecyclerView.ViewHolder {
         mPrice.setText(String.valueOf(price));
 //        mQuantity.setText(quantity);
     }
+
+
+
 }

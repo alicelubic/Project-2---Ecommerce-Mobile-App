@@ -20,12 +20,12 @@ import java.util.List;
  */
 public class MainRvAdapter extends RecyclerView.Adapter<MainViewHolder> {
 
-    List<Plant> plantList;
+//    List<Plant> plantList;
     Context mContext;
     DatabaseHelper helper = DatabaseHelper.getInstance(mContext);
 
     public MainRvAdapter(Context context, List<Plant> plants) {
-        plantList = plants;
+     //   plantList = plants;
         mContext = context;
 
     }
@@ -47,7 +47,8 @@ public class MainRvAdapter extends RecyclerView.Adapter<MainViewHolder> {
             @Override
             public void onClick(View view) {
                DetailDialog detailDialog = new DetailDialog();
-                detailDialog.launchDetailDialog(view.getContext(),position,plantList);
+             //   detailDialog.launchDetailDialog(view.getContext(),position,plantList);
+                detailDialog.launchDetailDialog(view.getContext(),position);
 
             }
         });

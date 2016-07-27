@@ -2,6 +2,7 @@ package com.example.owlslubic.project2;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -16,7 +17,7 @@ import java.util.List;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
     //constants
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "plant_store.db";
 
     public static final String PLANT_INFO_TABLE_NAME = "plant_table";
@@ -35,7 +36,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     private static DatabaseHelper sInstance;
-    public final List<Plant> cartItems = new ArrayList<>();
     CartSingleton cart = CartSingleton.getInstance();
 
     //constructor
@@ -104,28 +104,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        int resouceId = context.getResources().getIdentifier("bamboo_common_name","string",context.getPackageName());
 //        String bamboo_common_name = context.getString(resouceId);
 
-        Plant wisteria = new Vine("Chinese Wisteria", "Wisteria sinensis", "This deciduous woody vine capable of growing to a height of 40 ft., good luck getting that down!", R.drawable.daylily, 19.99);
-        Plant knotweed = new Weed("Japanese Knotweed", "Reynoutria japonica", "This weed is classified as an invasive species in 39 of the 50 United States, so why not add yours to the list!", R.drawable.daylily, 24.99);
-        Plant ivy = new Vine("English Ivy", "Hedera helix", "English Ivy is a rampant, clinging evergreen vine that has been known to crowd out and choke other plants, creating an \"ivy desert\"", R.drawable.daylily, 12.99);
-        Plant ailanthus = new Tree("Tree of Heaven", "Ailanthus altissima", "This tree resprouts vigorously when cut, your neighbors' efforts to suppress this beast will drive them crazy for decades to come!", R.drawable.daylily, 99.99);
-        Plant garlicMustard = new Weed("Garlic Mustard", "Alliaria petiolata", "This stinky weed cannot be killed.", R.drawable.daylily, 10.98);
-        Plant daylily = new Angiosperm("Orange Daylily", "Hemerocallis fulva", "Its beautiful bright orange flowers will dazzle your neighbors, who will never suspect that these plants behave just as maddeningly as any perennial weed.", R.drawable.daylily, 21.99);
-        Plant kudzu = new Vine("Kudzu", "Pueraria lobata", "A lovely vine that will take over and deprive all other plants of resources", R.drawable.daylily, 110.00);
-        Plant paulownia = new Tree("Princess Tree", "Paulownia tomentosa", "Princess Tree is an showy and aggressive ornamental tree, so it should get along great with your neighbors!", R.drawable.daylily, 99.01);
-        Plant bittersweet = new Vine("Oriental Bittersweet", "Celastrus orbiculatus", "A vine that grows aggressively, smothering trees, shrubs, and other irritating entities like your neighbors. Just kidding.", R.drawable.daylily, 82.99);
-        Plant bamboo = new Grass("Bamboo", "Bambusoidae", "Bamboo is a giant grass, and a giant pain in the ass. Once established, it is impossible to control, for each sprout that shoots up from the ground can grow 12 inches a day. That'll teach 'em.", R.drawable.daylily, 20.00);
+        //i wanna make it so that it doesnt duplicate the database
+//        if(cart.getNumberOfItemsInCart()<=10) {
+            Plant wisteria = new Vine("Chinese Wisteria", "Wisteria sinensis", "This deciduous woody vine capable of growing to a height of 40 ft., good luck getting that down!", R.drawable.daylily, 19.99);
+            Plant knotweed = new Weed("Japanese Knotweed", "Reynoutria japonica", "This weed is classified as an invasive species in 39 of the 50 United States, so why not add yours to the list!", R.drawable.daylily, 24.99);
+            Plant ivy = new Vine("English Ivy", "Hedera helix", "English Ivy is a rampant, clinging evergreen vine that has been known to crowd out and choke other plants, creating an \"ivy desert\"", R.drawable.daylily, 12.99);
+            Plant ailanthus = new Tree("Tree of Heaven", "Ailanthus altissima", "This tree resprouts vigorously when cut, your neighbors' efforts to suppress this beast will drive them crazy for decades to come!", R.drawable.daylily, 99.99);
+            Plant garlicMustard = new Weed("Garlic Mustard", "Alliaria petiolata", "This stinky weed cannot be killed.", R.drawable.daylily, 10.98);
+            Plant daylily = new Angiosperm("Orange Daylily", "Hemerocallis fulva", "Its beautiful bright orange flowers will dazzle your neighbors, who will never suspect that these plants behave just as maddeningly as any perennial weed.", R.drawable.daylily, 21.99);
+            Plant kudzu = new Vine("Kudzu", "Pueraria lobata", "A lovely vine that will take over and deprive all other plants of resources", R.drawable.daylily, 110.00);
+            Plant paulownia = new Tree("Princess Tree", "Paulownia tomentosa", "Princess Tree is an showy and aggressive ornamental tree, so it should get along great with your neighbors!", R.drawable.daylily, 99.01);
+            Plant bittersweet = new Vine("Oriental Bittersweet", "Celastrus orbiculatus", "A vine that grows aggressively, smothering trees, shrubs, and other irritating entities like your neighbors. Just kidding.", R.drawable.daylily, 82.99);
+            Plant bamboo = new Grass("Bamboo", "Bambusoidae", "Bamboo is a giant grass, and a giant pain in the ass. Once established, it is impossible to control, for each sprout that shoots up from the ground can grow 12 inches a day. That'll teach 'em.", R.drawable.daylily, 20.00);
 
-        insertPlantTableRow(wisteria);
-        insertPlantTableRow(knotweed);
-        insertPlantTableRow(ivy);
-        insertPlantTableRow(ailanthus);
-        insertPlantTableRow(garlicMustard);
-        insertPlantTableRow(daylily);
-        insertPlantTableRow(kudzu);
-        insertPlantTableRow(paulownia);
-        insertPlantTableRow(bittersweet);
-        insertPlantTableRow(bamboo);
-    }
+            insertPlantTableRow(wisteria);
+            insertPlantTableRow(knotweed);
+            insertPlantTableRow(ivy);
+            insertPlantTableRow(ailanthus);
+            insertPlantTableRow(garlicMustard);
+            insertPlantTableRow(daylily);
+            insertPlantTableRow(kudzu);
+            insertPlantTableRow(paulownia);
+            insertPlantTableRow(bittersweet);
+            insertPlantTableRow(bamboo);
+        }
+
+//    }
 
 
     //this method is for getting a list of Plant objects that I will be assigning to CardViews
@@ -167,50 +171,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     //FOR SHOPPING CART TABLE - have not tested these methods yet
-
-
-
-    //method that queries the database to get the plant info from its ref id
-//    public Plant getPlantInfoById(int id){
-//        SQLiteDatabase db = getReadableDatabase();
-//        String query = "SELECT "+ COL_COMMON_NAME+", "+COL_IMAGE+", "+COL_PRICE+ "," + COL_QUANTITY+
-//                " FROM " + PLANT_INFO_TABLE_NAME + " JOIN "+ SHOPPING_CART_TABLE+
-//                " ON "+PLANT_INFO_TABLE_NAME+"."+COL_PLANT_ID+" = "+SHOPPING_CART_TABLE+"."+COL_PLANT_REF_ID;
-//        Cursor cursor = db.rawQuery(query, null);
-//    }
-
-
-
-    //helper method adds a row to shopping cart table when "add to cart" fab is clicked
-    //takes in the plant object of whatever was displayed on the cardview/detaildialog -- so here,"plant" should be whatever item was clicked on
-    public void addToCart(Plant plant) {
-
-
-        cart.addToCartSingleton(plant);
-        Log.v("cart","Data added to singleton list");
-        SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        int plantId = getPlantId(plant);
-        values.put(COL_PLANT_REF_ID, plantId);
-        values.put(COL_QUANTITY, 1); //then somewhere make a method that will change this value when increment buttons are hit
-        db.insertOrThrow(SHOPPING_CART_TABLE, null, values);
-        Log.v("cart","Data added to shopping cart table");
-        db.close();
-      //?  notifyDataSetChange();
-
-
-
-
-
-    }
-    //once it is added to table, we need a method that will extract the plant data to put set it to the cardview
-
-
     //need to get plant id to add it to shopping cart table
-
-    /**
-     * shouldnt it take in whatever item was clicked on? maybe position.............?
-     */
     public Integer getPlantId(Plant plant) {
         SQLiteDatabase db = getReadableDatabase();
         Integer result = 0; //do i need to make this Integer because that's what the primary key is for that table...
@@ -230,15 +191,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    //method that deletes a single row of data (representing an item) from the table when the "x" on the item is hit - this is independent of its quantity
-    //this one doesn't feel right, i'm sure i'll hvae to change it
-    public void deleteRowFromCartTableByPlantName(Plant plant) {
+    //helper method adds a row to shopping cart table when "add to cart" fab is clicked
+   //also adds the item to the shopping cart singleton-might not need both, but this is how it's workin so far, so, chill
+    public void addToCart(Plant plant) {
+        cart.addToCartSingleton(plant);
+        Log.v("cart","Data added to singleton list");
 
         SQLiteDatabase db = getWritableDatabase();
-        String selection = COL_COMMON_NAME + " = ?";
-        String[] selectionArgs = new String[]{plant.getmCommonName()};
+        ContentValues values = new ContentValues();
+        int plantId = getPlantId(plant);
+        values.put(COL_PLANT_REF_ID, plantId);
+        values.put(COL_QUANTITY, 1); //then somewhere make a method that will change this value when increment buttons are hit
+        db.insertOrThrow(SHOPPING_CART_TABLE, null, values);
+        Log.v("cart","Data added to shopping cart table");
+        db.close();
+    }
+    //method that deletes a single row of data (representing an item) from the table when the "x" on the item is hit - this is independent of its quantity
+    //delete single item from cart singleton as well as cart table
+
+    /**must be a problem here because it doesn't just delete the item that i hit... so**/
+
+    public void deleteItemFromCart(Plant plant) {
+
+       int id = getPlantId(plant);
+
+        SQLiteDatabase db = getWritableDatabase();
+        String selection = COL_PLANT_REF_ID + " = ?";
+        String[] selectionArgs = new String[]{String.valueOf(id)};
+
         db.delete(SHOPPING_CART_TABLE, selection, selectionArgs);
         db.close();
+
+        Log.v("cart","deleteItemFromCart - runs deleteFromCartSingleton");
     }
 
 

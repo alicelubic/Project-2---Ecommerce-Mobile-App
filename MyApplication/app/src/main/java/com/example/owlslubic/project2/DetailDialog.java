@@ -1,6 +1,7 @@
 package com.example.owlslubic.project2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -20,8 +21,8 @@ public class DetailDialog {
     public TextView commonNameDetail, latinNameDetail, priceDetail, descriptionDetail;
     public ImageView picDetail;
 
-
-    public void launchDetailDialog(final Context context, final int position, final List<Plant> plantList) {
+   // final List<Plant> plantList took this bad boy outta the parameters below
+    public void launchDetailDialog(final Context context, final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
         View dialogLayout = inflater.inflate(R.layout.dialog_product_detail, null);
@@ -43,8 +44,8 @@ public class DetailDialog {
             public void onClick(View view) {
                 Toast.makeText(context, "Added to cart!", Toast.LENGTH_SHORT).show();
                 DatabaseHelper helper = DatabaseHelper.getInstance(context);
-                helper.addToCart(plantList.get(position));
-
+             //   helper.addToCart(plantList.get(position));
+                helper.addToCart(CartSingleton.getInstance().getCartList().get(position));
                 Log.v("cart", "addToCart method worked from the dialog");
 
                 dialog.dismiss();
@@ -57,7 +58,8 @@ public class DetailDialog {
         descriptionDetail = (TextView) dialog.findViewById(R.id.textview_description_detail);
         picDetail = (ImageView) dialog.findViewById(R.id.imageview_dialog_detail);
 
-        setDetailDialogInfo(plantList.get(position));
+//        setDetailDialogInfo(plantList.get(position));
+        setDetailDialogInfo(CartSingleton.getInstance().getCartList().get(position));
 
     }
 

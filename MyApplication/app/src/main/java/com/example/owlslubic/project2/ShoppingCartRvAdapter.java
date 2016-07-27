@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,23 +18,14 @@ import java.util.List;
  * Created by owlslubic on 7/25/16.
  */
 public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartViewHolder> {
-    CartSingleton cart = CartSingleton.getInstance();
-    List<Plant> mCartItems= cart.getCartList();
     Context mContext;
-    DatabaseHelper helper = DatabaseHelper.getInstance(mContext);
-
 
 
     //constructor
-    public ShoppingCartRvAdapter(Context context, List<Plant> cartItems) {
+    public ShoppingCartRvAdapter(Context context) {
         mContext = context;
-        mCartItems = cartItems;
+
     }
-
-
-    //here I will declare the object list to be displayed, and I will set the adapter to that list
-    //something like List<Plant> plants;
-    //ShoppingCartRvAdapter(List<Plant> plants){this.plants = plants;
 
 
     //this sets the layout for what each item in the recyclerview should use
@@ -46,43 +38,71 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
 
     //this specifies the contents of each item in the recyclerview
     @Override
-    public void onBindViewHolder(ShoppingCartViewHolder holder, final int position) {
-        //this is where i will include a collection of my plants -- i will call a method from the dbHelper that returns a list of Plant objects
-//        if (mCartItems.size() == 0) {
-//            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-//            builder.setNeutralButton(R.string.empty_cart_dialog_button, null)
-//                    .setTitle(R.string.empty_cart_dialog_title)
-//                    .setMessage(R.string.empty_cart_dialog_message);
-//            final AlertDialog dialog = builder.create();
-//            dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(final ShoppingCartViewHolder holder, final int position) {
+        if (CartSingleton.getInstance().getCartList().size() == 0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            builder.setNeutralButton(R.string.empty_cart_dialog_button, null)
+                    .setTitle(R.string.empty_cart_dialog_title)
+                    .setMessage(R.string.empty_cart_dialog_message);
+            final AlertDialog dialog = builder.create();
+            dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(mContext, "normally this would bring you to MainActivity", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        } else {
+
+            holder.getAndSetPlantInfoToShoppingCartCardView(CartSingleton.getInstance().getCartList().get(position));
+
+
+
+            //display the detail dialog when you click on a cart item
+//            holder.mCardView.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View view) {
-//                    //     startActivity(new Intent(mContext, MainActivity.class)); //would it be better to do finish() for this?
-//                    Toast.makeText(mContext, "normally this would bring you to MainActivity", Toast.LENGTH_SHORT).show();
-//                    dialog.dismiss();
+//                    DetailDialog detailDialog = new DetailDialog();
+//                    detailDialog.launchDetailDialog(view.getContext(), position, CartSingleton.getInstance().getCartList());
+//
 //                }
 //            });
-//            dialog.show();
-//        } else {
-            holder.getAndSetPlantInfoToShoppingCartCardView(mCartItems.get(position));
-        //this should display the detail dialog when you click on a cart item
-            //this part works
-        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+        }
+
+
+        holder.mRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DetailDialog detailDialog = new DetailDialog();
-                detailDialog.launchDetailDialog(view.getContext(), position, mCartItems);
+                //need to remove from recyclerview
+              //  if(view.equals(holder.mRemove)){
+                    removeItemByPosition(holder.getAdapterPosition());
+              //  }
+                Log.v("cart","removeItemByPosition removed item from recyclerview from sc adapter");
+                //deletes the data from db and singleton
+                CartSingleton.getInstance().getCartList().remove(holder.getAdapterPosition());
+                Log.v("cart","removed from singlton via sc adapter");
 
+
+             //   DatabaseHelper.getInstance(mContext).deleteItemFromCart(CartSingleton.getInstance().getCartList().get(position));
+             //   Log.v("cart","method deleteItemFromCart ran from sc adapter");
+                Toast.makeText(mContext, "Deleted item from cart!", Toast.LENGTH_SHORT).show();
             }
         });
+
+    }
+        @Override
+        public int getItemCount () {
+            return CartSingleton.getInstance().getCartList().size();
+        }
+
+
+    public void removeItemByPosition(int position){
+        CartSingleton.getInstance().getCartList().remove(position);
+        notifyItemRemoved(position);
+      //  notifyItemRangeChanged(position,mCartItems.size());
+    }
+
     }
 
 
-
-    @Override
-    public int getItemCount() {
-        return mCartItems.size();
-    }
-
-
-}

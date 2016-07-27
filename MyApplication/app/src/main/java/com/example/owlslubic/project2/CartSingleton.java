@@ -25,6 +25,17 @@ public class CartSingleton {
     }
     public void addToCartSingleton(Plant plant){
         cartList.add(plant);
-        
+    }
+
+    public void emptyCart(){
+        cartList.removeAll(cartList);
+    }
+
+
+    public void deleteFromCartSingleton(Plant plant){
+        cartList.remove(plant);
+    }
+    public int getNumberOfItemsInCart(){
+        return cartList.size();
     }
 }
