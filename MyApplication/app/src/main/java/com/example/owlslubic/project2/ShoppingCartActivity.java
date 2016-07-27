@@ -19,9 +19,12 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.util.List;
+
 public class ShoppingCartActivity extends AppCompatActivity {
     final DatabaseHelper helper = DatabaseHelper.getInstance(this);
 
+    CartSingleton cart = CartSingleton.getInstance();
     //not sure how i'll  be inflating this recyclerview just yet..... . . . .
 
 
@@ -29,55 +32,59 @@ public class ShoppingCartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
+        //this will give me a list of items i can manipulate
+      List<Plant> cartItems=cart.getCartList();
+
+
 
         //set up RecyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_shopping_cart);
         //tutorial suggests i use recyclerView.setHasFixedSize(true);
         LinearLayoutManager llm= new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
-        //  ShoppingCartRvAdapter adapter = new ShoppingCartRvAdapter(THIS WILL HOLD THE VARIABLE FOR THE LIST OF PLANT ITEMS);
-        //  recyclerView.setAdapter(adapter);
-
-
+          ShoppingCartRvAdapter adapter = new ShoppingCartRvAdapter(ShoppingCartActivity.this, cartItems);
+          recyclerView.setAdapter(adapter);
 
 
 
 
         //fab to place order
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_shoppingcartactivity);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //this should ultimately be a snackbar with an undo feature
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-                Toast.makeText(ShoppingCartActivity.this, "Your order has been placed!", Toast.LENGTH_SHORT).show();
-
-                //this will, as the name suggests, clear the info from the cart table
-                helper.clearCartTableUponCheckout();
-                //must I then also clear the carviews from the recyclerview?
-                //will finish achieve that?
-                finish();
-
-
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_shoppingcartactivity);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //this should ultimately be a snackbar with an undo feature
+////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+////                        .setAction("Action", null).show();
+//                Toast.makeText(ShoppingCartActivity.this, "Your order has been placed!", Toast.LENGTH_SHORT).show();
+//
+//                //this will, as the name suggests, clear the info from the cart table
+//                helper.clearCartTableUponCheckout();
+//                //must I then also clear the carviews from the recyclerview?
+//                //will finish achieve that?
+//                finish();
+//
+//
+//            }
+//        });
 
 
         //some sort of IF SHOPPINGCARTLIST.SIZE()==0, launch dialog -- need to make some sort of shoppingcartlist also
-        AlertDialog.Builder builder = new AlertDialog.Builder(ShoppingCartActivity.this);
-        builder.setNeutralButton(R.string.empty_cart_dialog_button,null)
-                .setTitle(R.string.empty_cart_dialog_title)
-                .setMessage(R.string.empty_cart_dialog_message);
-        final AlertDialog dialog = builder.create();
-        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ShoppingCartActivity.this, MainActivity.class)); //would it be better to do finish() for this?
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
+
+        //testing this out in the adapter
+//        AlertDialog.Builder builder = new AlertDialog.Builder(ShoppingCartActivity.this);
+//        builder.setNeutralButton(R.string.empty_cart_dialog_button,null)
+//                .setTitle(R.string.empty_cart_dialog_title)
+//                .setMessage(R.string.empty_cart_dialog_message);
+//        final AlertDialog dialog = builder.create();
+//        dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(ShoppingCartActivity.this, MainActivity.class)); //would it be better to do finish() for this?
+//                dialog.dismiss();
+//            }
+//        });
+//        dialog.show();
     }
 
 

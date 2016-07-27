@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/wisteria" />
+            android:src="@drawable/daylily" />
 
         <RelativeLayout
             android:layout_width="match_parent"

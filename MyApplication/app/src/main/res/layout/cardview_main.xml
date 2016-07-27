@@ -20,7 +20,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/wisteria" />
+                android:src="@drawable/daylily" />
 
             <TextView
                 android:id="@+id/textview_name_card_main"

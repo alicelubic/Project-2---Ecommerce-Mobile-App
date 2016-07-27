@@ -15,14 +15,12 @@
         <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
         <!--app:theme="@style/ThemeOverlay.AppCompat.ActionBar" />-->
 
-    <!--this is here temporarily just so i can see it in action-->
-    <include layout="@layout/cardview_shopping_cart" />
 
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/recycler_view_shopping_cart"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />

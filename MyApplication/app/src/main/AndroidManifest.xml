@@ -14,12 +14,13 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <!--Our next step is to add the intent-filter to the activity we want to perform the search in. This tells anything trying to perform a search in our app that the following activity is able to receive search queries.-->
-                <action android:name="android.intent.action.SEARCH"/>
+                <!-- Our next step is to add the intent-filter to the activity we want to perform the search in. This tells anything trying to perform a search in our app that the following activity is able to receive search queries. -->
+                <action android:name="android.intent.action.SEARCH" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <!--adding this metadata to tell the activity we want the search view to go to the SearchResultsActivity to perform the search-->
+            <!-- adding this metadata to tell the activity we want the search view to go to the SearchResultsActivity to perform the search -->
 
             <meta-data
                 android:name="android.app.default_searchable"
@@ -32,11 +33,12 @@
             android:name=".SearchResultsActivity"
             android:parentActivityName=".MainActivity">
 
-            <!--this tells it that we want the search results displayed here, and that it should use the settings we defined in the xml searchable-->
+            <!-- this tells it that we want the search results displayed here, and that it should use the settings we defined in the xml searchable -->
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
+        <activity android:name=".TempActivity"></activity>
     </application>
 
 </manifest>

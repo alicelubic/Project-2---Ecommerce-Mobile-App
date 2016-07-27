@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
+
         List<Plant> plantList = helper.getListOfAllPlants();
 
         //set up RecyclerView
@@ -79,40 +79,50 @@ public class MainActivity extends AppCompatActivity {
         helper.insertPlantData();
         Log.v("tag", "Data added!");
 
+
+        //        //this is to test my shopping cart table data...
+//        FloatingActionButton fabTemp = (FloatingActionButton) findViewById(R.id.fab_temp);
+//        fabTemp.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(MainActivity.this, TempActivity.class));
+//            }
+//        });
+
     }
 
 
 
 
-
-    //method to launch dialog from here, then just call the method in the onclick for the card view?
-    public void launchDetailDialog(Plant plant){
-        //build and set custom alert dialog for the item detail page
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View dialogLayout = inflater.inflate(R.layout.dialog_product_detail, null);
-        builder.setView(dialogLayout);
-        final android.support.v7.app.AlertDialog dialog = builder.create();
-        dialog.show();
-        ImageButton button = (ImageButton) dialogLayout.findViewById(R.id.button_cancel_dialog);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-            }
-        });
-        FloatingActionButton addToCart = (FloatingActionButton) dialogLayout.findViewById(R.id.fab_detail_dialog);
-        addToCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Added to cart!", Toast.LENGTH_SHORT).show();
-
-                // helper.addRowToCartTable(plantList.get(position));
-
-                dialog.dismiss();
-            }
-        });
-    }
+//i think i moved this to detaildialog class
+//    //method to launch dialog from here, then just call the method in the onclick for the card view?
+//    public void launchDetailDialog(Plant plant){
+//        //build and set custom alert dialog for the item detail page
+//        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
+//        LayoutInflater inflater = LayoutInflater.from(this);
+//        View dialogLayout = inflater.inflate(R.layout.dialog_product_detail, null);
+//        builder.setView(dialogLayout);
+//        final android.support.v7.app.AlertDialog dialog = builder.create();
+//        dialog.show();
+//        ImageButton button = (ImageButton) dialogLayout.findViewById(R.id.button_cancel_dialog);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                dialog.dismiss();
+//            }
+//        });
+//        FloatingActionButton addToCart = (FloatingActionButton) dialogLayout.findViewById(R.id.fab_detail_dialog);
+//        addToCart.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(MainActivity.this, "Added to cart!", Toast.LENGTH_SHORT).show();
+//
+//                // helper.addRowToCartTable(plantList.get(position));
+//
+//                dialog.dismiss();
+//            }
+//        });
+//    }
 
 
 
@@ -153,16 +163,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    //gonna use something like this method to set up my detail dialog
-    public void getPlantInfo(Plant plant) {
-        String commonName = plant.getmCommonName();
-        String latinName = plant.getmLatinName();
-        String plantType = plant.getPlantType();
-        String description = plant.getmDescription();
-        int image = plant.getmImage();
-        double price = plant.getmPrice();
-    }
 
 
 
