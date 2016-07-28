@@ -1,3 +1,5 @@
+TEST CASES
+
 Feature: The user can search through the products.
 
 Conditionals:
@@ -52,3 +54,9 @@ The user can touch an icon next to an item in the shopping cart activity to incr
 The user can see the price change in their subtotal to reflect the change in quantity.
 User Story:
 As a user, I want to change the quantity of an item in my cart.
+
+
+
+BUGS AND NOTES
+- Search feature does not launch Search Results Activity when using an Emulator ... but it does work on an actual device.
+- Upon launch, main recyclerview does not populate. if I stop and start again, there it is!
