@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<searchable xmlns:android="http://schemas.android.com/apk/res/android">
-android:label="Search View"
-    android:hint="Search by name or plant type..."
-</searchable>
+<searchable xmlns:android="http://schemas.android.com/apk/res/android"
+    android:label="@string/app_name"
+    android:hint="@string/search_hint" />

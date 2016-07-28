@@ -2,6 +2,7 @@ package com.example.owlslubic.project2;
 
 import android.app.AlertDialog;
 import android.app.SearchManager;
+import android.app.SearchableInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -94,10 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
-
-//i think i moved this to detaildialog class
+    //i think i moved this to detaildialog class
 //    //method to launch dialog from here, then just call the method in the onclick for the card view?
 //    public void launchDetailDialog(Plant plant){
 //        //build and set custom alert dialog for the item detail page
@@ -138,17 +136,19 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
+
         //in the demo we used return super.onCreateOptionsMenu(menu);
 
         //associate searchable configuration with the SearchView
-//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-//        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-//        ComponentName componentName = new ComponentName(this,SearchResultsActivity.class);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        ComponentName componentName = new ComponentName(this,SearchResultsActivity.class);
 //        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
+        SearchableInfo searchableInfo = searchManager.getSearchableInfo(componentName);
+        searchView.setSearchableInfo(searchableInfo);
+        searchView.setQueryHint("Search for plants!");
+        return true;
 
-
-        //return true; at the end -- only need this once
 
     }
 
@@ -157,11 +157,12 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.search) {
-            Toast.makeText(MainActivity.this, "Searchin'!", Toast.LENGTH_SHORT).show();
-            return true;
+//            Toast.makeText(MainActivity.this, "Searchin'!", Toast.LENGTH_SHORT).show();
+
             //hitting enter after typing in a search term should start up the searchresults activity  where the listview will display the query results
 
-            //startActivity(new Intent(MainActivity.this, SearchResultsActivity.class));
+           // startActivity(new Intent(MainActivity.this, SearchResultsActivity.class));
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

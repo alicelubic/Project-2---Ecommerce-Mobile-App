@@ -34,6 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_PLANT_REF_ID = "plant_id";
     public static final String COL_QUANTITY = "quantity";
 
+    public static final String[] PLANT_INFO_COLUMNS={COL_PLANT_ID,COL_LATIN_NAME,COL_COMMON_NAME,COL_PLANT_TYPE};
 
     private static DatabaseHelper sInstance;
     CartSingleton cart = CartSingleton.getInstance();
@@ -287,6 +288,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /////////DOWN HERE I'M GONNA MAKE SOME METHODS FOR GETTING PLANT INFO OUT OF SHOPPING CART TABLE
 
+    //put shopping cart in array listfor now
+
+    public ArrayList<TempCartObject> getCartItemsAsObjects(){
+        ArrayList<TempCartObject> cartList = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + PLANT_INFO_TABLE_NAME + " JOIN " + SHOPPING_CART_TABLE + " ON " +
+                SHOPPING_CART_TABLE + "." + COL_PLANT_REF_ID + " = " + PLANT_INFO_TABLE_NAME + "." + COL_PLANT_ID;
+        Cursor cursor = db.rawQuery(query,null);
+        cursor.moveToFirst();
+        if (cursor.moveToFirst()) {
+        while(!cursor.isAfterLast()) {
+            TempCartObject item = new TempCartObject(cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)), cursor.getInt(cursor.getColumnIndex(COL_QUANTITY)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)));
+            cartList.add(item);
+        }
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return cartList;
+
+    }
+
+
+    //do i need a separate array for each column? / or hsould i save them as objects not strings
+    public ArrayList<String> getCartData(){
+        ArrayList<String> arrayList = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT * FROM " + PLANT_INFO_TABLE_NAME + " JOIN " + SHOPPING_CART_TABLE + " ON " +
+                SHOPPING_CART_TABLE + "." + COL_PLANT_REF_ID + " = " + PLANT_INFO_TABLE_NAME + "." + COL_PLANT_ID;
+        Cursor cursor = db.rawQuery(query,null);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
+            arrayList.add(cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)));
+            arrayList.add(cursor.getString(cursor.getColumnIndex(COL_PRICE)));
+            arrayList.add(cursor.getString(cursor.getColumnIndex(COL_QUANTITY)));
+            arrayList.add(cursor.getString(cursor.getColumnIndex(COL_IMAGE)));
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return arrayList;
+    }
+
+
 
     public Cursor getPlantInfoFromShoppingCartTable() {
         SQLiteDatabase db = getReadableDatabase();
@@ -300,5 +343,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //String commonName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COL_COMMON_NAME));
 
     //mmaybe just one method to return cursor  that has all the data i might need, and then i can pick what i want to display later
+
+
+
+
+    ////FOR SEARCHABILITY
+    public Cursor searchPlants(String query){
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(PLANT_INFO_TABLE_NAME,
+                PLANT_INFO_COLUMNS,
+                COL_COMMON_NAME+" LIKE ?",
+                new String[]{"%"+query+"%"},
+                null,null,null);
+        return cursor;
+    }
+    public Cursor getPlantsListCursor(){
+        SQLiteDatabase db = getReadableDatabase();
+        return db.query(PLANT_INFO_TABLE_NAME,null,null,null,null,null,null);
+    }
 
 }

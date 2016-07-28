@@ -12,20 +12,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by owlslubic on 7/25/16.
  */
+
+
+/**moving this party to ShppingCartAdapter class**/
 public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartViewHolder> {
     Context mContext;
+    DatabaseHelper helper = DatabaseHelper.getInstance(mContext);
+  //  List<TempCartObject> cartList = helper.getCartItemsAsObjects();
+List<TempCartObject> cartList = new ArrayList<>();
 
-
-    //constructor
-    public ShoppingCartRvAdapter(Context context) {
+    //constructor - adding list parameter
+    public ShoppingCartRvAdapter(Context context, List<TempCartObject> cartList) {
         mContext = context;
+        this.cartList = cartList;
 
     }
+//    public ShoppingCartRvAdapter(Context context){mContext=context;}
+//    public void updateList(List<TempCartObject> cartList){
+//        mCartList = cartList;
+//        notifyDataSetChanged();
+//    }
 
 
     //this sets the layout for what each item in the recyclerview should use
@@ -39,6 +51,17 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
     //this specifies the contents of each item in the recyclerview
     @Override
     public void onBindViewHolder(final ShoppingCartViewHolder holder, final int position) {
+        //trying something new today (thursday)
+TempCartObject item = cartList.get(position);
+        holder.mName.setText(item.getmName()); //etc
+        holder.mPrice.setText(String.valueOf(item.getmPrice()));
+        holder.mQuantity.setText(String.valueOf(item.getmQuantity()));
+        holder.mPlantImage.setImageResource(item.getmImage());
+        Log.v("cart","onbindviewholder in rv adapter did the binding... of the views");
+        /**now go figure out how to make that actually display in the recyclerview**/
+
+
+
 //        if (CartSingleton.getInstance().getCartList().size() == 0) {
 //            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 //            builder.setNeutralButton(R.string.empty_cart_dialog_button, null)
@@ -57,7 +80,7 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
 
         //this is where i grab the info from the list in the singleton and set it to the cards in shoppingcart recyclerview
 
-        /**    holder.getAndSetPlantInfoToShoppingCartCardView(CartSingleton.getInstance().getCartList().get(position));**/
+   //     /**    holder.getAndSetPlantInfoToShoppingCartCardView(CartSingleton.getInstance().getCartList().get(position));**/
 
 
 
@@ -81,7 +104,6 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
                     removeItemByPosition(holder.getAdapterPosition());
               //  }
                 Log.v("cart","removeItemByPosition removed item from recyclerview from sc adapter");
-                //deletes the data from db and singleton
 
 
                 //problem

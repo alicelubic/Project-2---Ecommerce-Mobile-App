@@ -16,9 +16,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCartActivity extends AppCompatActivity {
@@ -36,13 +38,17 @@ public class ShoppingCartActivity extends AppCompatActivity {
         //NEED TO FIND ALTERNATIVE WAY TO GET DATA FROM SHOPPING CART TABLE TO DISPLAY HERE
 
 
+     //   ArrayList<String> arrayList = helper.getCartData();
+        ArrayList<TempCartObject> cartList = helper.getCartItemsAsObjects();
+
+
         //set up RecyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_shopping_cart);
-        //tutorial suggests i use recyclerView.setHasFixedSize(true);
         LinearLayoutManager llm= new LinearLayoutManager(this);
         recyclerView.setLayoutManager(llm);
-          ShoppingCartRvAdapter adapter = new ShoppingCartRvAdapter(ShoppingCartActivity.this);
+          ShoppingCartRvAdapter adapter = new ShoppingCartRvAdapter(ShoppingCartActivity.this, cartList);
           recyclerView.setAdapter(adapter);
+       // ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayList);
 
         //fab to place order
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_shoppingcartactivity);

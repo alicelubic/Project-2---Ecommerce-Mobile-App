@@ -59,6 +59,8 @@
     <string name="empty_cart_dialog_message">Looks like you haven\'t added any plants to your cart yet. Why not check out our store?</string>
     <string name="empty_cart_dialog_title">Shopping Cart is Empty!</string>
     <string name="empty_cart_dialog_button">Take me there!</string>
+    <string name="search_label">Search View</string>
+    <string name="search_hint">Search by name or plant type...</string>
 
 
 </resources>
