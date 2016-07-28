@@ -35,18 +35,19 @@ public class ShoppingCartViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void getAndSetPlantInfoToShoppingCartCardView(Plant plant) {
-        String commonName = plant.getmCommonName();
-        double price = plant.getmPrice();
-        int image = plant.getmImage();
+    public void getAndSetPlantInfoToShoppingCartCardView(TempCartObject item) {
+        String name = item.getmName();
+        double price = item.getmPrice();
+        int image = item.getmImage();
+        int quantity = item.getmQuantity();
         /**int quantity = plant. to get the quantity - gonna have to write a method that queries joined tables*/
         Log.v("cart", "it got and sot plant info to the cart cardview");
 
 
-        mName.setText(commonName);
+        mName.setText(name);
         mPlantImage.setImageResource(image);
         mPrice.setText(String.valueOf(price));
-//        mQuantity.setText(quantity);
+        mQuantity.setText(quantity);
     }
 
 

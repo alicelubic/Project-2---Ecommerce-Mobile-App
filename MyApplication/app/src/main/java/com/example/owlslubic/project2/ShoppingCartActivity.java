@@ -12,6 +12,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,6 +49,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(llm);
           ShoppingCartRvAdapter adapter = new ShoppingCartRvAdapter(ShoppingCartActivity.this, cartList);
           recyclerView.setAdapter(adapter);
+        Log.v("cart","cartList passed into adapter in ShoppingCartActivity");
        // ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, arrayList);
 
         //fab to place order

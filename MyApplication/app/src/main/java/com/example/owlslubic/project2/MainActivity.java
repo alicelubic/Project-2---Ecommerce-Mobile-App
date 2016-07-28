@@ -159,9 +159,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.search) {
 //            Toast.makeText(MainActivity.this, "Searchin'!", Toast.LENGTH_SHORT).show();
 
-            //hitting enter after typing in a search term should start up the searchresults activity  where the listview will display the query results
 
-           // startActivity(new Intent(MainActivity.this, SearchResultsActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

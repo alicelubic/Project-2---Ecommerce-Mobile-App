@@ -25,15 +25,22 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
     Context mContext;
     DatabaseHelper helper = DatabaseHelper.getInstance(mContext);
   //  List<TempCartObject> cartList = helper.getCartItemsAsObjects();
+
+
+
 List<TempCartObject> cartList = new ArrayList<>();
+//
+
 
     //constructor - adding list parameter
     public ShoppingCartRvAdapter(Context context, List<TempCartObject> cartList) {
         mContext = context;
         this.cartList = cartList;
+        Log.v("cart","constructor for rvadapter");
 
     }
 //    public ShoppingCartRvAdapter(Context context){mContext=context;}
+
 //    public void updateList(List<TempCartObject> cartList){
 //        mCartList = cartList;
 //        notifyDataSetChanged();
@@ -44,23 +51,23 @@ List<TempCartObject> cartList = new ArrayList<>();
     @Override
     public ShoppingCartViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_shopping_cart, parent, false);
-        ShoppingCartViewHolder shoppingCartViewHolder = new ShoppingCartViewHolder(view);
-        return shoppingCartViewHolder;
+        ShoppingCartViewHolder viewHolder = new ShoppingCartViewHolder(view);
+
+        Log.v("cart","onCreateViewHolder inflated the cardview");
+        return viewHolder;
     }
 
     //this specifies the contents of each item in the recyclerview
     @Override
     public void onBindViewHolder(final ShoppingCartViewHolder holder, final int position) {
-        //trying something new today (thursday)
-TempCartObject item = cartList.get(position);
-        holder.mName.setText(item.getmName()); //etc
+        TempCartObject item = cartList.get(position);
+        holder.mName.setText(item.getmName());
         holder.mPrice.setText(String.valueOf(item.getmPrice()));
         holder.mQuantity.setText(String.valueOf(item.getmQuantity()));
         holder.mPlantImage.setImageResource(item.getmImage());
         Log.v("cart","onbindviewholder in rv adapter did the binding... of the views");
-        /**now go figure out how to make that actually display in the recyclerview**/
 
-
+        if(cartList.size()==0){}
 
 //        if (CartSingleton.getInstance().getCartList().size() == 0) {
 //            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -120,7 +127,7 @@ TempCartObject item = cartList.get(position);
     }
         @Override
         public int getItemCount () {
-            return CartSingleton.getInstance().getCartList().size();
+            return cartList.size();
         }
 
 

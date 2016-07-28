@@ -7,13 +7,13 @@ import android.graphics.drawable.Drawable;
  */
 public abstract class Plant {//don't think i need to attach the id here but maybe
     String mCommonName, mLatinName, mDescription;
-    int mImage;
+    int mImage, mId;
     double mPrice;
-public Plant(String commonName, String latinName, String description, int image, double price) {
+public Plant(int id, String commonName, String latinName, String description, int image, double price) {
         mCommonName = commonName;
         mLatinName = latinName;
         mDescription = description;
-     //   mPlantType = plantType;
+    mId = id;
         mImage = image;
         mPrice = price;
     }
@@ -21,6 +21,7 @@ public Plant(String commonName, String latinName, String description, int image,
     public abstract String getPlantType();
     //returns R.string.vine or whatever
 
+    public int getId(){return mId;}
 
     //getter methods that you will use to setText of a text view etc
     public String getmCommonName() {

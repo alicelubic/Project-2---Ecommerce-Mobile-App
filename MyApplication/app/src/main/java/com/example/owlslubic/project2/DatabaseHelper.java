@@ -2,12 +2,10 @@ package com.example.owlslubic.project2;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +15,7 @@ import java.util.List;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
     //constants
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "plant_store.db";
 
     public static final String PLANT_INFO_TABLE_NAME = "plant_table";
@@ -37,7 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String[] PLANT_INFO_COLUMNS={COL_PLANT_ID,COL_LATIN_NAME,COL_COMMON_NAME,COL_PLANT_TYPE};
 
     private static DatabaseHelper sInstance;
-    CartSingleton cart = CartSingleton.getInstance();
+ //   CartSingleton cart = CartSingleton.getInstance();
 
     //constructor
     private DatabaseHelper(Context context) {
@@ -86,6 +84,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_SHOPPING_CART_TABLE = "DROP TABLE IF EXISTS " + SHOPPING_CART_TABLE;
 
 
+    //temp method to insert dummy data into cart table to make sure it's getting there
+
     public void insertPlantTableRow(Plant plant) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -107,16 +107,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         //i wanna make it so that it doesnt duplicate the database
 //        if(cart.getNumberOfItemsInCart()<=10) {
-        Plant wisteria = new Vine("Chinese Wisteria", "Wisteria sinensis", "This deciduous woody vine capable of growing to a height of 40 ft., good luck getting that down!", R.drawable.daylily, 19.99);
-        Plant knotweed = new Weed("Japanese Knotweed", "Reynoutria japonica", "This weed is classified as an invasive species in 39 of the 50 United States, so why not add yours to the list!", R.drawable.daylily, 24.99);
-        Plant ivy = new Vine("English Ivy", "Hedera helix", "English Ivy is a rampant, clinging evergreen vine that has been known to crowd out and choke other plants, creating an \"ivy desert\"", R.drawable.daylily, 12.99);
-        Plant ailanthus = new Tree("Tree of Heaven", "Ailanthus altissima", "This tree resprouts vigorously when cut, your neighbors' efforts to suppress this beast will drive them crazy for decades to come!", R.drawable.daylily, 99.99);
-        Plant garlicMustard = new Weed("Garlic Mustard", "Alliaria petiolata", "This stinky weed cannot be killed.", R.drawable.daylily, 10.98);
-        Plant daylily = new Angiosperm("Orange Daylily", "Hemerocallis fulva", "Its beautiful bright orange flowers will dazzle your neighbors, who will never suspect that these plants behave just as maddeningly as any perennial weed.", R.drawable.daylily, 21.99);
-        Plant kudzu = new Vine("Kudzu", "Pueraria lobata", "A lovely vine that will take over and deprive all other plants of resources", R.drawable.daylily, 110.00);
-        Plant paulownia = new Tree("Princess Tree", "Paulownia tomentosa", "Princess Tree is an showy and aggressive ornamental tree, so it should get along great with your neighbors!", R.drawable.daylily, 99.01);
-        Plant bittersweet = new Vine("Oriental Bittersweet", "Celastrus orbiculatus", "A vine that grows aggressively, smothering trees, shrubs, and other irritating entities like your neighbors. Just kidding.", R.drawable.daylily, 82.99);
-        Plant bamboo = new Grass("Bamboo", "Bambusoidae", "Bamboo is a giant grass, and a giant pain in the ass. Once established, it is impossible to control, for each sprout that shoots up from the ground can grow 12 inches a day. That'll teach 'em.", R.drawable.daylily, 20.00);
+
+
+        Plant wisteria = new Vine(1, "Chinese Wisteria", "Wisteria sinensis", "This deciduous woody vine capable of growing to a height of 40 ft., good luck getting that down!", R.drawable.wisteria, 19.99);
+        Plant knotweed = new Weed(2, "Japanese Knotweed", "Reynoutria japonica", "This weed is classified as an invasive species in 39 of the 50 United States, so why not add yours to the list!", R.drawable.knotweed, 24.99);
+        Plant ivy = new Vine(3, "English Ivy", "Hedera helix", "English Ivy is a rampant, clinging evergreen vine that has been known to crowd out and choke other plants, creating an \"ivy desert\"", R.drawable.ivy, 12.99);
+        Plant ailanthus = new Tree(4, "Tree of Heaven", "Ailanthus altissima", "This tree resprouts vigorously when cut, your neighbors' efforts to suppress this beast will drive them crazy for decades to come!", R.drawable.ailanthus, 99.99);
+        Plant garlicMustard = new Weed(5, "Garlic Mustard", "Alliaria petiolata", "This stinky weed cannot be killed.", R.drawable.garlicmustard, 10.98);
+        Plant daylily = new Angiosperm(6, "Orange Daylily", "Hemerocallis fulva", "Its beautiful bright orange flowers will dazzle your neighbors, who will never suspect that these plants behave just as maddeningly as any perennial weed.", R.drawable.daylily, 21.99);
+        Plant kudzu = new Vine(7, "Kudzu", "Pueraria lobata", "A lovely vine that will take over and deprive all other plants of resources", R.drawable.kudzu, 110.00);
+        Plant paulownia = new Tree(8, "Princess Tree", "Paulownia tomentosa", "Princess Tree is an showy and aggressive ornamental tree, so it should get along great with your neighbors!", R.drawable.paulownia, 99.01);
+        Plant bittersweet = new Vine(9, "Oriental Bittersweet", "Celastrus orbiculatus", "A vine that grows aggressively, smothering trees, shrubs, and other irritating entities like your neighbors. Just kidding.", R.drawable.daylily, 82.99);
+        Plant bamboo = new Grass(10, "Bamboo", "Bambusoidae", "Bamboo is a giant grass, and a giant pain in the ass. Once established, it is impossible to control, for each sprout that shoots up from the ground can grow 12 inches a day. That'll teach 'em.", R.drawable.bamboo, 20.00);
 
         insertPlantTableRow(wisteria);
         insertPlantTableRow(knotweed);
@@ -145,19 +147,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             while (!cursor.isAfterLast()) {
                 switch (cursor.getString(cursor.getColumnIndex(COL_PLANT_TYPE))) {
                     case "Angiosperm":
-                        Angiosperm angio = new Angiosperm(cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
+                        Angiosperm angio = new Angiosperm(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
                         plantList.add(angio);
                     case "Grass":
-                        Grass grass = new Grass(cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
+                        Grass grass = new Grass(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
                         plantList.add(grass);
                     case "Tree":
-                        Tree tree = new Tree(cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
+                        Tree tree = new Tree(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
                         plantList.add(tree);
                     case "Vine":
-                        Vine vine = new Vine(cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
+                        Vine vine = new Vine(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
                         plantList.add(vine);
                     case "Weed":
-                        Weed weed = new Weed(cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
+                        Weed weed = new Weed(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
                         plantList.add(weed);
                     default:
                         //do i need a default?
@@ -173,23 +175,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //FOR SHOPPING CART TABLE - have not tested these methods yet
     //need to get plant id to add it to shopping cart table
-    public Integer getPlantId(Plant plant) {
-        SQLiteDatabase db = getReadableDatabase();
-        Integer result = 0; //do i need to make this Integer because that's what the primary key is for that table...
-        String plantName = ("'%" + plant.getmCommonName() + "%'");
-        String query = "SELECT " +
-                COL_PLANT_ID + " FROM " +
-                PLANT_INFO_TABLE_NAME + " WHERE " + COL_COMMON_NAME + " LIKE " + plantName;
-        Cursor cursor = db.rawQuery(query, null);
-        if (cursor.moveToFirst()) {
-            while (!cursor.isAfterLast()) {
-                result += cursor.getInt((cursor.getColumnIndex(COL_PLANT_ID)));
-                cursor.moveToNext();
-            }
-        }
-        cursor.close();//is this gonna fuck me up again like in that lab?
-        return result;
-    }
+//    public Integer getId(Plant plant) {
+//        SQLiteDatabase db = getReadableDatabase();
+//        Integer result = 0; //do i need to make this Integer because that's what the primary key is for that table...
+//        String plantName = ("'%" + plant.getmCommonName() + "%'");
+//        String query = "SELECT " +
+//                COL_PLANT_ID + " FROM " +
+//                PLANT_INFO_TABLE_NAME + " WHERE " + COL_COMMON_NAME + " LIKE " + plantName;
+//        Cursor cursor = db.rawQuery(query, null);
+//        if (cursor.moveToFirst()) {
+//            while (!cursor.isAfterLast()) {
+//                result = cursor.getInt((cursor.getColumnIndex(COL_PLANT_ID)));
+//                cursor.moveToNext();
+//            }
+//        }
+//        cursor.close();//is this gonna fuck me up again like in that lab?
+//        return result;
+//    }
 
 
     //helper method adds a row to shopping cart table when "add to cart" fab is clicked
@@ -200,10 +202,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        int plantId = getPlantId(plant);
+        int plantId = plant.getId();
         values.put(COL_PLANT_REF_ID, plantId);
         values.put(COL_QUANTITY, 1); //then somewhere make a method that will change this value when increment buttons are hit
-        db.insertOrThrow(SHOPPING_CART_TABLE, null, values);
+        long id = db.insertOrThrow(SHOPPING_CART_TABLE, null, values);
         Log.v("cart", "Data added to shopping cart table");
         db.close();
     }
@@ -216,7 +218,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public void deleteItemFromCart(Plant plant) {
 
-        int id = getPlantId(plant);
+        int id = plant.getId();
 
         SQLiteDatabase db = getWritableDatabase();
         String selection = COL_PLANT_REF_ID + " = ?";
@@ -267,7 +269,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 //
-//    public Integer getPlantId(Plant plant) {
+//    public Integer getId(Plant plant) {
 //        SQLiteDatabase db = getReadableDatabase();
 //        Integer result = 0; //do i need to make this Integer because that's what the primary key is for that table...
 //        String plantName = ("'%" + plant.getmCommonName() + "%'");
@@ -292,17 +294,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<TempCartObject> getCartItemsAsObjects(){
         ArrayList<TempCartObject> cartList = new ArrayList<>();
-        SQLiteDatabase db = getWritableDatabase();
-        String query = "SELECT * FROM " + PLANT_INFO_TABLE_NAME + " JOIN " + SHOPPING_CART_TABLE + " ON " +
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT "+ COL_COMMON_NAME+","+COL_QUANTITY+","+COL_IMAGE+","+COL_PRICE +" FROM " + PLANT_INFO_TABLE_NAME + " JOIN " + SHOPPING_CART_TABLE + " ON " +
                 SHOPPING_CART_TABLE + "." + COL_PLANT_REF_ID + " = " + PLANT_INFO_TABLE_NAME + "." + COL_PLANT_ID;
         Cursor cursor = db.rawQuery(query,null);
-        cursor.moveToFirst();
+//        cursor.moveToFirst();
         if (cursor.moveToFirst()) {
         while(!cursor.isAfterLast()) {
             TempCartObject item = new TempCartObject(cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)), cursor.getInt(cursor.getColumnIndex(COL_QUANTITY)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)));
             cartList.add(item);
-        }
+
             cursor.moveToNext();
+        }
         }
         cursor.close();
         return cartList;
@@ -311,34 +314,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     //do i need a separate array for each column? / or hsould i save them as objects not strings
-    public ArrayList<String> getCartData(){
-        ArrayList<String> arrayList = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        String query = "SELECT * FROM " + PLANT_INFO_TABLE_NAME + " JOIN " + SHOPPING_CART_TABLE + " ON " +
-                SHOPPING_CART_TABLE + "." + COL_PLANT_REF_ID + " = " + PLANT_INFO_TABLE_NAME + "." + COL_PLANT_ID;
-        Cursor cursor = db.rawQuery(query,null);
-        cursor.moveToFirst();
-        while(!cursor.isAfterLast()){
-            arrayList.add(cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)));
-            arrayList.add(cursor.getString(cursor.getColumnIndex(COL_PRICE)));
-            arrayList.add(cursor.getString(cursor.getColumnIndex(COL_QUANTITY)));
-            arrayList.add(cursor.getString(cursor.getColumnIndex(COL_IMAGE)));
-            cursor.moveToNext();
-        }
-        cursor.close();
-        return arrayList;
-    }
+//    public ArrayList<String> getCartData(){
+//        ArrayList<String> arrayList = new ArrayList<>();
+//        SQLiteDatabase db = getReadableDatabase();
+//        String query = "SELECT * FROM " + PLANT_INFO_TABLE_NAME + " JOIN " + SHOPPING_CART_TABLE + " ON " +
+//                SHOPPING_CART_TABLE + "." + COL_PLANT_REF_ID + " = " + PLANT_INFO_TABLE_NAME + "." + COL_PLANT_ID;
+//        Cursor cursor = db.rawQuery(query,null);
+//        cursor.moveToFirst();
+//        while(!cursor.isAfterLast()){
+//            arrayList.add(cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)));
+//            arrayList.add(cursor.getString(cursor.getColumnIndex(COL_PRICE)));
+//            arrayList.add(cursor.getString(cursor.getColumnIndex(COL_QUANTITY)));
+//            arrayList.add(cursor.getString(cursor.getColumnIndex(COL_IMAGE)));
+//            cursor.moveToNext();
+//        }
+//        cursor.close();
+//        return arrayList;
+//    }
 
 
 
-    public Cursor getPlantInfoFromShoppingCartTable() {
-        SQLiteDatabase db = getReadableDatabase();
-        String query = "SELECT " + COL_COMMON_NAME+","+COL_PRICE+","+COL_IMAGE+","+COL_QUANTITY+
-                " FROM " + PLANT_INFO_TABLE_NAME + " JOIN " + SHOPPING_CART_TABLE + " ON " +
-                SHOPPING_CART_TABLE + "." + COL_PLANT_REF_ID + " = " + PLANT_INFO_TABLE_NAME + "." + COL_PLANT_ID;
-        Cursor cursor = db.rawQuery(query,null);
-        return cursor;
-    }
+//    public Cursor getPlantInfoFromShoppingCartTable() {
+//        SQLiteDatabase db = getReadableDatabase();
+//        String query = "SELECT " + COL_COMMON_NAME+","+COL_PRICE+","+COL_IMAGE+","+COL_QUANTITY+
+//                " FROM " + PLANT_INFO_TABLE_NAME + " JOIN " + SHOPPING_CART_TABLE + " ON " +
+//                SHOPPING_CART_TABLE + "." + COL_PLANT_REF_ID + " = " + PLANT_INFO_TABLE_NAME + "." + COL_PLANT_ID;
+//        Cursor cursor = db.rawQuery(query,null);
+//        return cursor;
+//    }
     //then when i call this method in my cursor adapter in the bindView
     //String commonName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COL_COMMON_NAME));
 
@@ -357,9 +360,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null,null,null);
         return cursor;
     }
-    public Cursor getPlantsListCursor(){
-        SQLiteDatabase db = getReadableDatabase();
-        return db.query(PLANT_INFO_TABLE_NAME,null,null,null,null,null,null);
-    }
+//    public Cursor getPlantsListCursor(){
+//        SQLiteDatabase db = getReadableDatabase();
+//        return db.query(PLANT_INFO_TABLE_NAME,null,null,null,null,null,null);
+//    }
 
 }
