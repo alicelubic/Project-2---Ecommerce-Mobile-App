@@ -17,7 +17,6 @@ public class ShoppingCartViewHolder extends RecyclerView.ViewHolder {
     ImageView mPlantImage;
     ImageButton mDecrement, mIncrement, mRemove;
 
-
     public ShoppingCartViewHolder(View itemView) {
         super(itemView);
 
@@ -30,26 +29,6 @@ public class ShoppingCartViewHolder extends RecyclerView.ViewHolder {
         mIncrement = (ImageButton) itemView.findViewById(R.id.imagebutton_increment);
         mRemove = (ImageButton) itemView.findViewById(R.id.imagebutton_remove_item);
 
-        /**is this where i can set onclicklisteners and stuff?**/
-
 
     }
-
-    public void getAndSetPlantInfoToShoppingCartCardView(TempCartObject item) {
-        String name = item.getmName();
-        double price = item.getmPrice();
-        int image = item.getmImage();
-        int quantity = item.getmQuantity();
-        /**int quantity = plant. to get the quantity - gonna have to write a method that queries joined tables*/
-        Log.v("cart", "it got and sot plant info to the cart cardview");
-
-
-        mName.setText(name);
-        mPlantImage.setImageResource(image);
-        mPrice.setText(String.valueOf(price));
-        mQuantity.setText(quantity);
-    }
-
-
-
 }

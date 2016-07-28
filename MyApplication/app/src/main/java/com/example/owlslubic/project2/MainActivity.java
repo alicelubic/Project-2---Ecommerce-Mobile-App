@@ -30,6 +30,7 @@ import android.widget.Toast;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String KEY = "key";
     Context context = this;
 
 
@@ -41,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         //this method is where the items are instantiated and added to the list
         DatabaseHelper helper = DatabaseHelper.getInstance(this);
         List<Plant> plantList = helper.getListOfAllPlants();
-
 
 
         //set up RecyclerView
@@ -77,58 +77,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-        //moved this method here instead of in the onCreate of the database helper, becuase calling it there led to getDatabase being called recursively because onCreate(db) already opens a db
-     //   DatabaseHelper helper = DatabaseHelper.getInstance(this);
         helper.insertPlantData();
-        Log.v("cart", "Data added! via insertPlantData()");
-
-
-        //        //this is to test my shopping cart table data...
-//        FloatingActionButton fabTemp = (FloatingActionButton) findViewById(R.id.fab_temp);
-//        fabTemp.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(MainActivity.this, TempActivity.class));
-//            }
-//        });
+        Log.d(KEY, "Data added! via insertPlantData()");
 
     }
-
-    //i think i moved this to detaildialog class
-//    //method to launch dialog from here, then just call the method in the onclick for the card view?
-//    public void launchDetailDialog(Plant plant){
-//        //build and set custom alert dialog for the item detail page
-//        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(this);
-//        LayoutInflater inflater = LayoutInflater.from(this);
-//        View dialogLayout = inflater.inflate(R.layout.dialog_product_detail, null);
-//        builder.setView(dialogLayout);
-//        final android.support.v7.app.AlertDialog dialog = builder.create();
-//        dialog.show();
-//        ImageButton button = (ImageButton) dialogLayout.findViewById(R.id.button_cancel_dialog);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                dialog.dismiss();
-//            }
-//        });
-//        FloatingActionButton addToCart = (FloatingActionButton) dialogLayout.findViewById(R.id.fab_detail_dialog);
-//        addToCart.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Toast.makeText(MainActivity.this, "Added to cart!", Toast.LENGTH_SHORT).show();
-//
-//                // helper.addRowToCartTable(plantList.get(position));
-//
-//                dialog.dismiss();
-//            }
-//        });
-//    }
-
-
-
-
-
 
 
     //menu stuff
@@ -137,13 +89,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
 
-        //in the demo we used return super.onCreateOptionsMenu(menu);
-
         //associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        ComponentName componentName = new ComponentName(this,SearchResultsActivity.class);
-//        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName));
+        ComponentName componentName = new ComponentName(this, SearchResultsActivity.class);
         SearchableInfo searchableInfo = searchManager.getSearchableInfo(componentName);
         searchView.setSearchableInfo(searchableInfo);
         searchView.setQueryHint("Search for plants!");
@@ -154,19 +103,12 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
 
-        if (id == R.id.search) {
-//            Toast.makeText(MainActivity.this, "Searchin'!", Toast.LENGTH_SHORT).show();
-
-
+        if (item.getItemId() == R.id.search) {
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-
 
 
 }

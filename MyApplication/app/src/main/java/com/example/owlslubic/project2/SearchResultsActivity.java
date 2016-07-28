@@ -18,10 +18,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 public class SearchResultsActivity extends AppCompatActivity {
-private CursorAdapter mCursorAdapter;
-    private ListView mListView;
+    CursorAdapter mCursorAdapter;
+    ListView mListView;
 
-    //simplecursoradapter that inflates a listview of the results, or add the results to a string array and use an arrayadapter to display them
 
     //onitemclicklisteners on search result items will open the detail dialog
 
@@ -31,13 +30,13 @@ private CursorAdapter mCursorAdapter;
         setContentView(R.layout.activity_search_results2);
 
         mListView = (ListView) findViewById(R.id.listview_search_results);
-        if(Intent.ACTION_SEARCH.equals(getIntent().getAction())){
+        if (Intent.ACTION_SEARCH.equals(getIntent().getAction())) {
             String query = getIntent().getStringExtra(SearchManager.QUERY);
             Cursor cursor = DatabaseHelper.getInstance(this).searchPlants(query);
-            mCursorAdapter = new CursorAdapter(this,cursor,CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER) {
+            mCursorAdapter = new CursorAdapter(this, cursor, CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER) {
                 @Override
                 public View newView(Context context, Cursor cursor, ViewGroup parent) {
-                    return LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1,parent,false);
+                    return LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, parent, false);
                 }
 
                 @Override
@@ -52,9 +51,6 @@ private CursorAdapter mCursorAdapter;
         }
 
 
-
-
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_searchresultactivity);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +58,6 @@ private CursorAdapter mCursorAdapter;
                 startActivity(new Intent(SearchResultsActivity.this, ShoppingCartActivity.class));
             }
         });
-
 
 
         //FOR SEARCHABILITY:
@@ -74,18 +69,10 @@ private CursorAdapter mCursorAdapter;
 //        }
 
 
-
-
-
-
-
-
 //        i want to be able to search by COMMON NAME, LATIN NAME, or PLANT TYPE
     }
 
     //figure out if this already has a toolbar with the searchview, and if not, inflate the menu here
-
-
 
 
 }

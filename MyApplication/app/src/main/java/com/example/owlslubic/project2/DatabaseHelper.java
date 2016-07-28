@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
     //constants
+    public static final String KEY = "key";
+
     public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "plant_store.db";
 
@@ -32,10 +34,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_PLANT_REF_ID = "plant_id";
     public static final String COL_QUANTITY = "quantity";
 
-    public static final String[] PLANT_INFO_COLUMNS={COL_PLANT_ID,COL_LATIN_NAME,COL_COMMON_NAME,COL_PLANT_TYPE};
+    public static final String[] PLANT_INFO_COLUMNS = {COL_PLANT_ID, COL_LATIN_NAME, COL_COMMON_NAME, COL_PLANT_TYPE};
 
     private static DatabaseHelper sInstance;
- //   CartSingleton cart = CartSingleton.getInstance();
 
     //constructor
     private DatabaseHelper(Context context) {
@@ -54,7 +55,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_PLANT_INFO_TABLE);
         db.execSQL(SQL_CREATE_SHOPPING_CART_TABLE);
-
     }
 
     @Override
@@ -84,14 +84,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_SHOPPING_CART_TABLE = "DROP TABLE IF EXISTS " + SHOPPING_CART_TABLE;
 
 
-    //temp method to insert dummy data into cart table to make sure it's getting there
-
     public void insertPlantTableRow(Plant plant) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COL_COMMON_NAME, plant.getmCommonName());
         values.put(COL_LATIN_NAME, plant.getmLatinName());
-        values.put(COL_PLANT_TYPE, plant.getPlantType()); //this is the abstract method that will return the string res name (int) of each subclass object type
+        values.put(COL_PLANT_TYPE, plant.getPlantType());
         values.put(COL_DESCRIPTION, plant.getmDescription());
         values.put(COL_IMAGE, plant.getmImage());
         values.put(COL_PRICE, plant.getmPrice());
@@ -132,8 +130,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         insertPlantTableRow(bamboo);
     }
 
-//    }
-
 
     //this method is for getting a list of Plant objects that I will be assigning to CardViews
     public List<Plant> getListOfAllPlants() {
@@ -172,34 +168,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return plantList;
     }
 
-
-    //FOR SHOPPING CART TABLE - have not tested these methods yet
-    //need to get plant id to add it to shopping cart table
-//    public Integer getId(Plant plant) {
-//        SQLiteDatabase db = getReadableDatabase();
-//        Integer result = 0; //do i need to make this Integer because that's what the primary key is for that table...
-//        String plantName = ("'%" + plant.getmCommonName() + "%'");
-//        String query = "SELECT " +
-//                COL_PLANT_ID + " FROM " +
-//                PLANT_INFO_TABLE_NAME + " WHERE " + COL_COMMON_NAME + " LIKE " + plantName;
-//        Cursor cursor = db.rawQuery(query, null);
-//        if (cursor.moveToFirst()) {
-//            while (!cursor.isAfterLast()) {
-//                result = cursor.getInt((cursor.getColumnIndex(COL_PLANT_ID)));
-//                cursor.moveToNext();
-//            }
-//        }
-//        cursor.close();//is this gonna fuck me up again like in that lab?
-//        return result;
-//    }
-
-
     //helper method adds a row to shopping cart table when "add to cart" fab is clicked
-    //also adds the item to the shopping cart singleton-might not need both, but this is how it's workin so far, so, chill
     public void addToCart(Plant plant) {
-        //   cart.addToCartSingleton(plant);
-        //   Log.v("cart","Data added to singleton list");
-
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         int plantId = plant.getId();
@@ -209,25 +179,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.v("cart", "Data added to shopping cart table");
         db.close();
     }
-    //method that deletes a single row of data (representing an item) from the table when the "x" on the item is hit - this is independent of its quantity
-    //delete single item from cart singleton as well as cart table
 
-    /**
-     * must be a problem here because it doesn't just delete the item that i hit... so
-     **/
-
-    public void deleteItemFromCart(Plant plant) {
-
-        int id = plant.getId();
-
+    public void deleteItemFromCart(CartObject item) {
+        int id = getPlantIdFromCartObject(item);
         SQLiteDatabase db = getWritableDatabase();
+
         String selection = COL_PLANT_REF_ID + " = ?";
         String[] selectionArgs = new String[]{String.valueOf(id)};
-
         db.delete(SHOPPING_CART_TABLE, selection, selectionArgs);
         db.close();
 
-        Log.v("cart", "deleteItemFromCart - runs deleteFromCartSingleton");
+        Log.d(KEY, "deleteItemFromCart - runs deleteFromCartSingleton");
+    }
+
+
+    public int getPlantIdFromCartObject(CartObject item) {
+        int id = 0;
+        String name = item.getmName();
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT " + COL_PLANT_ID + " FROM " + PLANT_INFO_TABLE_NAME +
+                " WHERE" + COL_COMMON_NAME + " = " + name;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                id = cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID));
+                cursor.moveToNext();
+            }
+        }
+        db.close();
+        return id;
     }
 
 
@@ -238,74 +218,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    //temp helper method to see what's in the database
-//    public List<TempCartObject> checkCartTableData() {
-//        List<TempCartObject> cartTableContents = new ArrayList<>();
-//        SQLiteDatabase db = getWritableDatabase();
-//        String query = "SELECT * FROM " +
-//                SHOPPING_CART_TABLE;
-//        Cursor cursor = db.rawQuery(query, null);
-//        if (cursor.moveToFirst()) {
-//            while (!cursor.isAfterLast()) {
-//                TempCartObject object = new TempCartObject(cursor.getInt(cursor.getColumnIndex(COL_ITEM_ID)),
-//                        cursor.getInt(cursor.getColumnIndex(COL_PLANT_REF_ID)), cursor.getInt(cursor.getColumnIndex(COL_QUANTITY)));
-//                cartTableContents.add(object);
-//                cursor.moveToNext();
-//            }
-//        }
-//        db.close();
-//
-//        return cartTableContents;
-//    }
-
-
-//write a method that updates the database wiht quantity changes -- and that sets it to 1 in the first place
-
-
-    //write helper methods to query the database for the searchview
-
-    //use onStop method to close the cursors
-    //make sure to close database when done
-
-
-//
-//    public Integer getId(Plant plant) {
-//        SQLiteDatabase db = getReadableDatabase();
-//        Integer result = 0; //do i need to make this Integer because that's what the primary key is for that table...
-//        String plantName = ("'%" + plant.getmCommonName() + "%'");
-//        String query = "SELECT " +
-//                COL_PLANT_ID + " FROM " +
-//                PLANT_INFO_TABLE_NAME + " WHERE " + COL_COMMON_NAME + " LIKE " + plantName;
-//        Cursor cursor = db.rawQuery(query, null);
-//        if (cursor.moveToFirst()) {
-//            while (!cursor.isAfterLast()) {
-//                result += cursor.getInt((cursor.getColumnIndex(COL_PLANT_ID)));
-//                cursor.moveToNext();
-//            }
-//        }
-//        cursor.close();//is this gonna fuck me up again like in that lab?
-//        return result;
-//    }
-
-
-    /////////DOWN HERE I'M GONNA MAKE SOME METHODS FOR GETTING PLANT INFO OUT OF SHOPPING CART TABLE
-
-    //put shopping cart in array listfor now
-
-    public ArrayList<TempCartObject> getCartItemsAsObjects(){
-        ArrayList<TempCartObject> cartList = new ArrayList<>();
+    //turns cart table into a list of cart objects to pass to the rv adapter
+    public ArrayList<CartObject> getCartItemsAsObjects() {
+        ArrayList<CartObject> cartList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        String query = "SELECT "+ COL_COMMON_NAME+","+COL_QUANTITY+","+COL_IMAGE+","+COL_PRICE +" FROM " + PLANT_INFO_TABLE_NAME + " JOIN " + SHOPPING_CART_TABLE + " ON " +
+        String query = "SELECT " + COL_COMMON_NAME + "," + COL_QUANTITY + "," + COL_IMAGE + "," + COL_PRICE +
+                " FROM " + PLANT_INFO_TABLE_NAME + " JOIN " + SHOPPING_CART_TABLE + " ON " +
                 SHOPPING_CART_TABLE + "." + COL_PLANT_REF_ID + " = " + PLANT_INFO_TABLE_NAME + "." + COL_PLANT_ID;
-        Cursor cursor = db.rawQuery(query,null);
-//        cursor.moveToFirst();
+        Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
-        while(!cursor.isAfterLast()) {
-            TempCartObject item = new TempCartObject(cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)), cursor.getInt(cursor.getColumnIndex(COL_QUANTITY)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)));
-            cartList.add(item);
+            while (!cursor.isAfterLast()) {
+                CartObject item = new CartObject(cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)), cursor.getInt(cursor.getColumnIndex(COL_QUANTITY)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)));
+                cartList.add(item);
 
-            cursor.moveToNext();
-        }
+                cursor.moveToNext();
+            }
         }
         cursor.close();
         return cartList;
@@ -313,56 +240,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    //do i need a separate array for each column? / or hsould i save them as objects not strings
-//    public ArrayList<String> getCartData(){
-//        ArrayList<String> arrayList = new ArrayList<>();
-//        SQLiteDatabase db = getReadableDatabase();
-//        String query = "SELECT * FROM " + PLANT_INFO_TABLE_NAME + " JOIN " + SHOPPING_CART_TABLE + " ON " +
-//                SHOPPING_CART_TABLE + "." + COL_PLANT_REF_ID + " = " + PLANT_INFO_TABLE_NAME + "." + COL_PLANT_ID;
-//        Cursor cursor = db.rawQuery(query,null);
-//        cursor.moveToFirst();
-//        while(!cursor.isAfterLast()){
-//            arrayList.add(cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)));
-//            arrayList.add(cursor.getString(cursor.getColumnIndex(COL_PRICE)));
-//            arrayList.add(cursor.getString(cursor.getColumnIndex(COL_QUANTITY)));
-//            arrayList.add(cursor.getString(cursor.getColumnIndex(COL_IMAGE)));
-//            cursor.moveToNext();
-//        }
-//        cursor.close();
-//        return arrayList;
-//    }
-
-
-
-//    public Cursor getPlantInfoFromShoppingCartTable() {
-//        SQLiteDatabase db = getReadableDatabase();
-//        String query = "SELECT " + COL_COMMON_NAME+","+COL_PRICE+","+COL_IMAGE+","+COL_QUANTITY+
-//                " FROM " + PLANT_INFO_TABLE_NAME + " JOIN " + SHOPPING_CART_TABLE + " ON " +
-//                SHOPPING_CART_TABLE + "." + COL_PLANT_REF_ID + " = " + PLANT_INFO_TABLE_NAME + "." + COL_PLANT_ID;
-//        Cursor cursor = db.rawQuery(query,null);
-//        return cursor;
-//    }
-    //then when i call this method in my cursor adapter in the bindView
-    //String commonName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COL_COMMON_NAME));
-
-    //mmaybe just one method to return cursor  that has all the data i might need, and then i can pick what i want to display later
-
-
-
-
-    ////FOR SEARCHABILITY
-    public Cursor searchPlants(String query){
+    //FOR SEARCHABILITY
+    public Cursor searchPlantsByName(String query) {
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.query(PLANT_INFO_TABLE_NAME,
                 PLANT_INFO_COLUMNS,
-                COL_COMMON_NAME+" LIKE ?",
-                new String[]{"%"+query+"%"},
-                null,null,null);
+                COL_COMMON_NAME + " LIKE ?",
+                new String[]{"%" + query + "%"},
+                null, null, null);
         return cursor;
     }
-//    public Cursor getPlantsListCursor(){
-//        SQLiteDatabase db = getReadableDatabase();
-//        return db.query(PLANT_INFO_TABLE_NAME,null,null,null,null,null,null);
-//    }
 
 }
+
+//use onStop method to close the cursors
+//make sure to close database when done
+

@@ -18,10 +18,11 @@ import java.util.List;
  * Created by owlslubic on 7/26/16.
  */
 public class DetailDialog {
+    public static final String KEY = "key";
+
     public TextView commonNameDetail, latinNameDetail, priceDetail, descriptionDetail;
     public ImageView picDetail;
 
-   // final List<Plant> plantList took this bad boy outta the parameters below then put it back
     public void launchDetailDialog(final Context context, final int position,final List<Plant> plantList) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -45,9 +46,6 @@ public class DetailDialog {
                 Toast.makeText(context, "Added to cart!", Toast.LENGTH_SHORT).show();
                 DatabaseHelper helper = DatabaseHelper.getInstance(context);
                 helper.addToCart(plantList.get(position));
-             //   helper.addToCart(CartSingleton.getInstance().getCartList().get(position));
-                Log.v("cart", "addToCart method worked from the dialog");
-
                 dialog.dismiss();
             }
         });
@@ -59,8 +57,6 @@ public class DetailDialog {
         picDetail = (ImageView) dialog.findViewById(R.id.imageview_dialog_detail);
 
         setDetailDialogInfo(plantList.get(position));
-//        setDetailDialogInfo(CartSingleton.getInstance().getCartList().get(position));
-
     }
 
 
