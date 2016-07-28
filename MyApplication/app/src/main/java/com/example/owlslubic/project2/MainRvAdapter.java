@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,7 @@ public class MainRvAdapter extends RecyclerView.Adapter<MainViewHolder> {
     @Override
     public void onBindViewHolder(MainViewHolder holder, final int position) {
         holder.getPlantInfoAndSetToView(plantList.get(position));
+        Log.d("key", plantList.size()+" size of plant list being passed to adapter");
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override

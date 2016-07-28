@@ -46,31 +46,35 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
     //this specifies the contents of each item in the recyclerview
     @Override
     public void onBindViewHolder(final ShoppingCartViewHolder holder, final int position) {
-        if (cartList.size() == 0) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-            builder.setNeutralButton(R.string.empty_cart_dialog_button, null)
-                    .setTitle(R.string.empty_cart_dialog_title)
-                    .setMessage(R.string.empty_cart_dialog_message);
-            final AlertDialog dialog = builder.create();
-            dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(mContext, "normally this would bring you to MainActivity", Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
-                }
-            });
-            Log.d(KEY,"empty cart dialog launched! or something");
 
-            dialog.show();
-        } else {
-            CartObject item = cartList.get(position);
-            holder.mName.setText(item.getmName());
-            holder.mPrice.setText(String.valueOf(item.getmPrice()));
-            holder.mQuantity.setText(String.valueOf(item.getmQuantity()));
-            holder.mPlantImage.setImageResource(item.getmImage());
+//
+//        if (cartList.size() == 0) {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+//            builder.setNeutralButton(R.string.empty_cart_dialog_button, null)
+//                    .setTitle(R.string.empty_cart_dialog_title)
+//                    .setMessage(R.string.empty_cart_dialog_message);
+//            final AlertDialog dialog = builder.create();
+//            dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    Toast.makeText(mContext, "normally this would bring you to MainActivity", Toast.LENGTH_SHORT).show();
+//                    dialog.dismiss();
+//                }
+//            });
+//            Log.d(KEY,"empty cart dialog launched! or something");
+//
+//            dialog.show();
+//
+//
+//        } else {
+        CartObject item = cartList.get(position);
+        holder.mName.setText(item.getmName());
+        holder.mPrice.setText(String.valueOf(item.getmPrice()));
+        holder.mQuantity.setText(String.valueOf(item.getmQuantity()));
+        holder.mPlantImage.setImageResource(item.getmImage());
 
-            Log.d(KEY, "onbindviewholder in rv adapter did the binding... of the views");
-        }
+        Log.d(KEY, cartList.size()+ "this is the size of the cart list upon being bound to the cardviews");
+        // }
 
 
         holder.mRemove.setOnClickListener(new View.OnClickListener() {
@@ -94,10 +98,11 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
 
 
     public void removeByPosition(int position) {
-       cartList.remove(position);
-        notifyItemRemoved(position);
+        cartList.remove(position);
 
-     //   DatabaseHelper.getInstance(mContext).deleteItemFromCart(cartList.get(position));
+        DatabaseHelper.getInstance(mContext).deleteItemFromCart(cartList.get(position));
+        Log.d(KEY, cartList.size()+" this is the size of cart list after an item is removed");
+        notifyItemRemoved(position);
 
 
     }

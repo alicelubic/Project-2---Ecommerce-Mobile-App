@@ -17,7 +17,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //constants
     public static final String KEY = "key";
 
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 7;
     public static final String DATABASE_NAME = "plant_store.db";
 
     public static final String PLANT_INFO_TABLE_NAME = "plant_table";
@@ -66,7 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //create tables
     private static final String SQL_CREATE_PLANT_INFO_TABLE = "CREATE TABLE " +
             PLANT_INFO_TABLE_NAME + " (" +
-            COL_PLANT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COL_PLANT_ID + " INTEGER PRIMARY KEY, " +
             COL_COMMON_NAME + " TEXT, " +
             COL_LATIN_NAME + " TEXT, " +
             COL_PLANT_TYPE + " TEXT, " +
@@ -97,39 +97,63 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+
+    public boolean doesDataAlreadyExistInDb() {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT " + COL_PLANT_ID + " FROM " + PLANT_INFO_TABLE_NAME;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.getCount() == 0) {
+            cursor.close();
+            return false;
+        } else if (cursor.getCount() > 10) {
+            cursor.close();
+            return true;
+        } else {
+            cursor.close();
+            return true;
+        }
+    }
+
+    public void clearPlantTableData() {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL("DELETE FROM " + PLANT_INFO_TABLE_NAME);
+        db.close();
+    }
+
+
     //instantiate the different plants, insert them into the table
     public void insertPlantData() {
 //        if we were still talkin bout using the R.strings thing:
 //        int resouceId = context.getResources().getIdentifier("bamboo_common_name","string",context.getPackageName());
 //        String bamboo_common_name = context.getString(resouceId);
 
-        //i wanna make it so that it doesnt duplicate the database
-//        if(cart.getNumberOfItemsInCart()<=10) {
 
+        if (!doesDataAlreadyExistInDb()) {
 
-        Plant wisteria = new Vine(1, "Chinese Wisteria", "Wisteria sinensis", "This deciduous woody vine capable of growing to a height of 40 ft., good luck getting that down!", R.drawable.wisteria, 19.99);
-        Plant knotweed = new Weed(2, "Japanese Knotweed", "Reynoutria japonica", "This weed is classified as an invasive species in 39 of the 50 United States, so why not add yours to the list!", R.drawable.knotweed, 24.99);
-        Plant ivy = new Vine(3, "English Ivy", "Hedera helix", "English Ivy is a rampant, clinging evergreen vine that has been known to crowd out and choke other plants, creating an \"ivy desert\"", R.drawable.ivy, 12.99);
-        Plant ailanthus = new Tree(4, "Tree of Heaven", "Ailanthus altissima", "This tree resprouts vigorously when cut, your neighbors' efforts to suppress this beast will drive them crazy for decades to come!", R.drawable.ailanthus, 99.99);
-        Plant garlicMustard = new Weed(5, "Garlic Mustard", "Alliaria petiolata", "This stinky weed cannot be killed.", R.drawable.garlicmustard, 10.98);
-        Plant daylily = new Angiosperm(6, "Orange Daylily", "Hemerocallis fulva", "Its beautiful bright orange flowers will dazzle your neighbors, who will never suspect that these plants behave just as maddeningly as any perennial weed.", R.drawable.daylily, 21.99);
-        Plant kudzu = new Vine(7, "Kudzu", "Pueraria lobata", "A lovely vine that will take over and deprive all other plants of resources", R.drawable.kudzu, 110.00);
-        Plant paulownia = new Tree(8, "Princess Tree", "Paulownia tomentosa", "Princess Tree is an showy and aggressive ornamental tree, so it should get along great with your neighbors!", R.drawable.paulownia, 99.01);
-        Plant bittersweet = new Vine(9, "Oriental Bittersweet", "Celastrus orbiculatus", "A vine that grows aggressively, smothering trees, shrubs, and other irritating entities like your neighbors. Just kidding.", R.drawable.daylily, 82.99);
-        Plant bamboo = new Grass(10, "Bamboo", "Bambusoidae", "Bamboo is a giant grass, and a giant pain in the ass. Once established, it is impossible to control, for each sprout that shoots up from the ground can grow 12 inches a day. That'll teach 'em.", R.drawable.bamboo, 20.00);
+            Plant wisteria = new Vine(1, "Chinese Wisteria", "Wisteria sinensis", "This deciduous woody vine capable of growing to a height of 40 ft., good luck getting that down!", R.drawable.wisteria, 19.99);
+            Plant knotweed = new Weed(2, "Japanese Knotweed", "Reynoutria japonica", "This weed is classified as an invasive species in 39 of the 50 United States, so why not add yours to the list!", R.drawable.knotweed, 24.99);
+            Plant ivy = new Vine(3, "English Ivy", "Hedera helix", "English Ivy is a rampant, clinging evergreen vine that has been known to crowd out and choke other plants, creating an \"ivy desert\"", R.drawable.ivy, 12.99);
+            Plant ailanthus = new Tree(4, "Tree of Heaven", "Ailanthus altissima", "This tree resprouts vigorously when cut, your neighbors' efforts to suppress this beast will drive them crazy for decades to come!", R.drawable.ailanthus, 99.99);
+            Plant garlicMustard = new Weed(5, "Garlic Mustard", "Alliaria petiolata", "This stinky weed cannot be killed.", R.drawable.garlicmustard, 10.98);
+            Plant daylily = new Angiosperm(6, "Orange Daylily", "Hemerocallis fulva", "Its beautiful bright orange flowers will dazzle your neighbors, who will never suspect that these plants behave just as maddeningly as any perennial weed.", R.drawable.daylily, 21.99);
+            Plant kudzu = new Vine(7, "Kudzu", "Pueraria lobata", "A lovely vine that will take over and deprive all other plants of resources", R.drawable.kudzu, 110.00);
+            Plant paulownia = new Tree(8, "Princess Tree", "Paulownia tomentosa", "Princess Tree is an showy and aggressive ornamental tree, so it should get along great with your neighbors!", R.drawable.paulownia, 99.01);
+            Plant bittersweet = new Vine(9, "Oriental Bittersweet", "Celastrus orbiculatus", "A vine that grows aggressively, smothering trees, shrubs, and other irritating entities like your neighbors. Just kidding.", R.drawable.daylily, 82.99);
+            Plant bamboo = new Grass(10, "Bamboo", "Bambusoidae", "Bamboo is a giant grass, and a giant pain in the ass. Once established, it is impossible to control, for each sprout that shoots up from the ground can grow 12 inches a day. That'll teach 'em.", R.drawable.bamboo, 20.00);
 
-        insertPlantTableRow(wisteria);
-        insertPlantTableRow(knotweed);
-        insertPlantTableRow(ivy);
-        insertPlantTableRow(ailanthus);
-        insertPlantTableRow(garlicMustard);
-        insertPlantTableRow(daylily);
-        insertPlantTableRow(kudzu);
-        insertPlantTableRow(paulownia);
-        insertPlantTableRow(bittersweet);
-        insertPlantTableRow(bamboo);
+            insertPlantTableRow(wisteria);
+            insertPlantTableRow(knotweed);
+            insertPlantTableRow(ivy);
+            insertPlantTableRow(ailanthus);
+            insertPlantTableRow(garlicMustard);
+            insertPlantTableRow(daylily);
+            insertPlantTableRow(kudzu);
+            insertPlantTableRow(paulownia);
+            insertPlantTableRow(bittersweet);
+            insertPlantTableRow(bamboo);
+        }
+
     }
-
 
     //this method is for getting a list of Plant objects that I will be assigning to CardViews
     public List<Plant> getListOfAllPlants() {
@@ -157,14 +181,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     case "Weed":
                         Weed weed = new Weed(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
                         plantList.add(weed);
-                    default:
-                        //do i need a default?
                 }
+                Log.d(KEY, cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)) + " these are the plant ids getting added to plantlist");
                 cursor.moveToNext();
             }
         }
-        /**where do I close cursor?*/
-        db.close();
+        cursor.close();
         return plantList;
     }
 
@@ -189,16 +211,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete(SHOPPING_CART_TABLE, selection, selectionArgs);
         db.close();
 
-        Log.d(KEY, "deleteItemFromCart - runs deleteFromCartSingleton");
+        Log.d(KEY, "deleted item from cart table");
     }
 
-
+    //this is for use in the deletefromcart method
     public int getPlantIdFromCartObject(CartObject item) {
         int id = 0;
-        String name = item.getmName();
+      //  String name = item.getmName();
+        //trying this with the image id because there wont be a space?
+        String imageId = String.valueOf(item.getmImage());
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT " + COL_PLANT_ID + " FROM " + PLANT_INFO_TABLE_NAME +
-                " WHERE" + COL_COMMON_NAME + " = " + name;
+                " WHERE " + COL_IMAGE + " LIKE " + imageId;
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
@@ -241,12 +265,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     //FOR SEARCHABILITY
-    public Cursor searchPlantsByName(String query) {
+    public Cursor searchPlants(String query) {
         SQLiteDatabase db = getReadableDatabase();
+        String where = " " + COL_COMMON_NAME + " LIKE ? OR " + COL_PLANT_TYPE + " LIKE ? OR " + COL_DESCRIPTION + " LIKE ? OR " + COL_LATIN_NAME + " LIKE ?";
         Cursor cursor = db.query(PLANT_INFO_TABLE_NAME,
                 PLANT_INFO_COLUMNS,
-                COL_COMMON_NAME + " LIKE ?",
-                new String[]{"%" + query + "%"},
+                where,
+                new String[]{"%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%"},
                 null, null, null);
         return cursor;
     }

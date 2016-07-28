@@ -6,6 +6,7 @@ import android.app.SearchableInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -31,6 +32,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public static final String KEY = "key";
+    public static final String FIRST_START = "first_start";
+    SharedPreferences mSharedPreferences;
     Context context = this;
 
 
@@ -39,15 +42,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //this method is where the items are instantiated and added to the list
+        //this method makes it so that i only insert plant data into the table if this is the first time
+        installChecks();
         DatabaseHelper helper = DatabaseHelper.getInstance(this);
+
+        // helper.clearPlantTableData();
+
+        //this method is where the items are instantiated and added to the list
         List<Plant> plantList = helper.getListOfAllPlants();
 
 
         //set up RecyclerView
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_main_store);
-        //tutorial suggests i use but im not sure if the size will be changing...
-        recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
         MainRvAdapter adapter = new MainRvAdapter(MainActivity.this, plantList); //this refers to the exact list created in dbhelper
@@ -77,9 +83,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        helper.insertPlantData();
-        Log.d(KEY, "Data added! via insertPlantData()");
-
     }
 
 
@@ -95,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         ComponentName componentName = new ComponentName(this, SearchResultsActivity.class);
         SearchableInfo searchableInfo = searchManager.getSearchableInfo(componentName);
         searchView.setSearchableInfo(searchableInfo);
-        searchView.setQueryHint("Search for plants!");
+        searchView.setQueryHint("Search for plants by name, type, or description...");
         return true;
 
 
@@ -110,6 +113,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void installChecks() {
+        mSharedPreferences = getSharedPreferences(FIRST_START, 0);
+        if (mSharedPreferences.getInt(FIRST_START, 0) < 1 == true) {
+           // Log.d(KEY,p)
+            DatabaseHelper.getInstance(this).insertPlantData();
+            int x = mSharedPreferences.getInt(FIRST_START, 0) + 1;
+        }
+    }
 
 }
 

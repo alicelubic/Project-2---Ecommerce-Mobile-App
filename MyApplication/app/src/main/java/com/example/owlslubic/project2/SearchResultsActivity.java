@@ -4,25 +4,23 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.CursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.List;
 
 public class SearchResultsActivity extends AppCompatActivity {
     CursorAdapter mCursorAdapter;
     ListView mListView;
 
-
-    //onitemclicklisteners on search result items will open the detail dialog
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +48,18 @@ public class SearchResultsActivity extends AppCompatActivity {
             mListView.setAdapter(mCursorAdapter);
         }
 
+        //launches a dialog for the wrong plant
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                DetailDialog dialog = new DetailDialog();
+                List<Plant> plantList = DatabaseHelper.getInstance(SearchResultsActivity.this).getListOfAllPlants();
+                dialog.launchDetailDialog(view.getContext(), position, plantList);
+
+
+            }
+        });
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_searchresultactivity);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -58,15 +68,6 @@ public class SearchResultsActivity extends AppCompatActivity {
                 startActivity(new Intent(SearchResultsActivity.this, ShoppingCartActivity.class));
             }
         });
-
-
-        //FOR SEARCHABILITY:
-        //we will make a query that returns a cursor in the DBhelper, and then here, we tell this activity to handle our search:
-//        if(Intent.ACTION_SEARCH.equals(getIntent().getAction())){
-//            String query = getIntent().getStringExtra(SearchManager.QUERY);
-//            Cursor cursor = DatabaseHelper.getInstance(this).searchPlants(query); --ps you still hvae to make a method that does this and returns a cursor
-//                    then we set this query to the listview
-//        }
 
 
 //        i want to be able to search by COMMON NAME, LATIN NAME, or PLANT TYPE
