@@ -73,8 +73,8 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
         holder.mQuantity.setText(String.valueOf(item.getmQuantity()));
         holder.mPlantImage.setImageResource(item.getmImage());
 
-        Log.d(KEY, cartList.size()+ "this is the size of the cart list upon being bound to the cardviews");
-        // }
+        Log.d(KEY, cartList.size()+ "this is the size of the cartlist upon being bound to the shopping cart");
+
 
 
         holder.mRemove.setOnClickListener(new View.OnClickListener() {
@@ -98,10 +98,12 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
 
 
     public void removeByPosition(int position) {
+        DatabaseHelper.getInstance(mContext).deleteItemFromCart(cartList.get(position));
         cartList.remove(position);
 
-        DatabaseHelper.getInstance(mContext).deleteItemFromCart(cartList.get(position));
+
         Log.d(KEY, cartList.size()+" this is the size of cart list after an item is removed");
+        //so it seems that this does work, but towards the end of the list, i get an index out of bounds
         notifyItemRemoved(position);
 
 

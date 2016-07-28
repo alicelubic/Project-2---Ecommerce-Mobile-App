@@ -14,7 +14,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class ShoppingCartActivity extends AppCompatActivity {
-    public static final String KEY="key";
+    public static final String KEY = "key";
 
     DatabaseHelper helper = DatabaseHelper.getInstance(this);
 
@@ -24,23 +24,23 @@ public class ShoppingCartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
         ArrayList<CartObject> cartList = helper.getCartItemsAsObjects();
-//        if (cartList.size() == 0) {
-//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//            builder//.setNeutralButton(R.string.empty_cart_dialog_button, null)
-//                    .setTitle(R.string.empty_cart_dialog_title)
-//                    .setMessage(R.string.empty_cart_dialog_message);
-//            final AlertDialog dialog = builder.create();
-//            dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Toast.makeText(ShoppingCartActivity.this, "normally this would bring you to MainActivity", Toast.LENGTH_SHORT).show();
-//                    dialog.dismiss();
-//                }
-//            });
-//            Log.d(KEY,"empty cart dialog launched! or something");
-//
-//            dialog.show();
-//        } else {
+        if (cartList.size() == 0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(ShoppingCartActivity.this);
+            builder.setPositiveButton("ok", null)
+                    .setTitle(R.string.empty_cart_dialog_title)
+                    .setMessage(R.string.empty_cart_dialog_message);
+            final AlertDialog dialog = builder.create();
+            dialog.show();
+            dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(ShoppingCartActivity.this, "normally this would bring you to MainActivity", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                }
+            });
+
+
+        }
 
 
             //set up RecyclerView

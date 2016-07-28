@@ -130,7 +130,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (!doesDataAlreadyExistInDb()) {
 
-            Plant wisteria = new Vine(1, "Chinese Wisteria", "Wisteria sinensis", "This deciduous woody vine capable of growing to a height of 40 ft., good luck getting that down!", R.drawable.wisteria, 19.99);
+            Plant wisteria = new Vine(1, "Chinese Wisteria", "Wisteria sinensis", "This deciduous woody vine is capable of growing to a height of 40 ft. Good luck getting that down!", R.drawable.wisteria, 19.99);
             Plant knotweed = new Weed(2, "Japanese Knotweed", "Reynoutria japonica", "This weed is classified as an invasive species in 39 of the 50 United States, so why not add yours to the list!", R.drawable.knotweed, 24.99);
             Plant ivy = new Vine(3, "English Ivy", "Hedera helix", "English Ivy is a rampant, clinging evergreen vine that has been known to crowd out and choke other plants, creating an \"ivy desert\"", R.drawable.ivy, 12.99);
             Plant ailanthus = new Tree(4, "Tree of Heaven", "Ailanthus altissima", "This tree resprouts vigorously when cut, your neighbors' efforts to suppress this beast will drive them crazy for decades to come!", R.drawable.ailanthus, 99.99);
@@ -169,18 +169,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     case "Angiosperm":
                         Angiosperm angio = new Angiosperm(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
                         plantList.add(angio);
+                        break;
                     case "Grass":
                         Grass grass = new Grass(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
                         plantList.add(grass);
+                        break;
                     case "Tree":
                         Tree tree = new Tree(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
                         plantList.add(tree);
+                        break;
                     case "Vine":
                         Vine vine = new Vine(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
                         plantList.add(vine);
+                        break;
                     case "Weed":
                         Weed weed = new Weed(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
                         plantList.add(weed);
+                        break;
                 }
                 Log.d(KEY, cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)) + " these are the plant ids getting added to plantlist");
                 cursor.moveToNext();
@@ -198,7 +203,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COL_PLANT_REF_ID, plantId);
         values.put(COL_QUANTITY, 1); //then somewhere make a method that will change this value when increment buttons are hit
         long id = db.insertOrThrow(SHOPPING_CART_TABLE, null, values);
-        Log.v("cart", "Data added to shopping cart table");
+     //   Log.v(KEY, "Data added to shopping cart table");
         db.close();
     }
 
@@ -218,7 +223,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int getPlantIdFromCartObject(CartObject item) {
         int id = 0;
       //  String name = item.getmName();
-        //trying this with the image id because there wont be a space?
+        //trying this with the image id because there wont be a space? -- worked
         String imageId = String.valueOf(item.getmImage());
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT " + COL_PLANT_ID + " FROM " + PLANT_INFO_TABLE_NAME +
@@ -267,11 +272,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //FOR SEARCHABILITY
     public Cursor searchPlants(String query) {
         SQLiteDatabase db = getReadableDatabase();
-        String where = " " + COL_COMMON_NAME + " LIKE ? OR " + COL_PLANT_TYPE + " LIKE ? OR " + COL_DESCRIPTION + " LIKE ? OR " + COL_LATIN_NAME + " LIKE ?";
+        String where = " " + COL_COMMON_NAME + " LIKE ? OR " + COL_PLANT_TYPE + " LIKE ? OR " + COL_LATIN_NAME + " LIKE ?";
         Cursor cursor = db.query(PLANT_INFO_TABLE_NAME,
                 PLANT_INFO_COLUMNS,
                 where,
-                new String[]{"%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%"},
+                new String[]{"%" + query + "%", "%" + query + "%", "%" + query + "%"},
                 null, null, null);
         return cursor;
     }

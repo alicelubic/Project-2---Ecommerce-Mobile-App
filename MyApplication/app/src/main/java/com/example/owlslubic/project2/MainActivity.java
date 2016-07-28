@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         // helper.clearPlantTableData();
 
         //this method is where the items are instantiated and added to the list
-        List<Plant> plantList = helper.getListOfAllPlants();
+        final List<Plant> plantList = helper.getListOfAllPlants();
 
 
         //set up RecyclerView
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
                 startActivity(new Intent(MainActivity.this, ShoppingCartActivity.class));
-
+                Toast.makeText(MainActivity.this, "The size "+plantList.size(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         ComponentName componentName = new ComponentName(this, SearchResultsActivity.class);
         SearchableInfo searchableInfo = searchManager.getSearchableInfo(componentName);
         searchView.setSearchableInfo(searchableInfo);
-        searchView.setQueryHint("Search for plants by name, type, or description...");
+        searchView.setQueryHint("Whatcha looking for?");
         return true;
 
 
