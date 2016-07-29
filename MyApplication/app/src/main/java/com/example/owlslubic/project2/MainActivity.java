@@ -44,11 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
         //this method makes it so that i only insert plant data into the table if this is the first time
         installChecks();
+
         DatabaseHelper helper = DatabaseHelper.getInstance(this);
-
-        // helper.clearPlantTableData();
-
-        //this method is where the items are instantiated and added to the list
         final List<Plant> plantList = helper.getListOfAllPlants();
 
 
@@ -78,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
                 startActivity(new Intent(MainActivity.this, ShoppingCartActivity.class));
-                Toast.makeText(MainActivity.this, "The size "+plantList.size(), Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(MainActivity.this, "The size "+plantList.size(), Toast.LENGTH_SHORT).show();
             }
         });
 

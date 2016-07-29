@@ -28,7 +28,6 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
     public ShoppingCartRvAdapter(Context context, List<CartObject> cartList) {
         mContext = context;
         this.cartList = cartList;
-        Log.v("cart", "constructor for rvadapter");
 
     }
 
@@ -37,8 +36,6 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
     public ShoppingCartViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_shopping_cart, parent, false);
         ShoppingCartViewHolder viewHolder = new ShoppingCartViewHolder(view);
-
-        Log.v("cart", "onCreateViewHolder inflated the cardview");
         return viewHolder;
     }
 
@@ -46,35 +43,13 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
     //this specifies the contents of each item in the recyclerview
     @Override
     public void onBindViewHolder(final ShoppingCartViewHolder holder, final int position) {
-
-//
-//        if (cartList.size() == 0) {
-//            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-//            builder.setNeutralButton(R.string.empty_cart_dialog_button, null)
-//                    .setTitle(R.string.empty_cart_dialog_title)
-//                    .setMessage(R.string.empty_cart_dialog_message);
-//            final AlertDialog dialog = builder.create();
-//            dialog.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Toast.makeText(mContext, "normally this would bring you to MainActivity", Toast.LENGTH_SHORT).show();
-//                    dialog.dismiss();
-//                }
-//            });
-//            Log.d(KEY,"empty cart dialog launched! or something");
-//
-//            dialog.show();
-//
-//
-//        } else {
-        CartObject item = cartList.get(position);
+        final CartObject item = cartList.get(position);
         holder.mName.setText(item.getmName());
         holder.mPrice.setText(String.valueOf(item.getmPrice()));
         holder.mQuantity.setText(String.valueOf(item.getmQuantity()));
         holder.mPlantImage.setImageResource(item.getmImage());
 
-        Log.d(KEY, cartList.size()+ "this is the size of the cartlist upon being bound to the shopping cart");
-
+        //  Log.d(KEY, cartList.size()+ "this is the size of the cartlist upon being bound to the shopping cart");
 
 
         holder.mRemove.setOnClickListener(new View.OnClickListener() {
@@ -83,9 +58,26 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
                 //this should remove from recyclerview and table
                 removeByPosition(holder.getAdapterPosition());
 
-                Log.d(KEY, "removeItemByPosition removed item from recyclerview from sc adapter");
+                //   Log.d(KEY, "removeItemByPosition removed item from recyclerview from sc adapter");
+                Toast.makeText(mContext, "Deleted from cart!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.mIncrement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //quantity db and textview, price textview, and total textview should reflect this
 
-                Toast.makeText(mContext, "Deleted item from cart!", Toast.LENGTH_SHORT).show();
+                holder.mPrice.setText(String.valueOf(addToPrice(item.getmPrice())));
+//                holder.mTotal.setText(String.valueOf());
+                holder.mQuantity.setText(String.valueOf(addQuantity(item.getmQuantity())));
+            }
+        });
+        holder.mDecrement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.mPrice.setText(String.valueOf(removeFromPrice(item.getmPrice())));
+//                holder.mTotal.setText(String.valueOf());
+                holder.mQuantity.setText(String.valueOf(removeQuantity(item.getmQuantity())));
             }
         });
 
@@ -101,12 +93,53 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
         DatabaseHelper.getInstance(mContext).deleteItemFromCart(cartList.get(position));
         cartList.remove(position);
 
-
-        Log.d(KEY, cartList.size()+" this is the size of cart list after an item is removed");
-        //so it seems that this does work, but towards the end of the list, i get an index out of bounds
+        Log.d(KEY, cartList.size() + " this is the size of cart list after an item is removed");
         notifyItemRemoved(position);
+    }
 
 
+
+
+    //ok all of these methods need some sort of counter to keep track of what they are adding to or nah
+
+
+    //method to affect price:
+
+    public double addToPrice(double price){
+       double newPrice = price + price;
+
+
+       // item.getmQuantity
+        //item.getmPrice()
+
+
+
+        return newPrice;
+    }
+
+    //method to affect total:
+    public double removeFromPrice(double price){
+        double newPrice = price - price;
+        return newPrice;
+    }
+
+//    //need some sort of counter to keep track
+//    public double updateTotal(double price){
+//        int newTotal = oldTotal + price;
+//        return newTotal;
+//    }
+//
+
+
+    //these must change in db as well
+
+    //method to affect quantity:
+    public int addQuantity(int quantity){
+        return quantity + 1;
+    }
+
+    public int removeQuantity(int quantity){
+        return quantity - 1;
     }
 
 }

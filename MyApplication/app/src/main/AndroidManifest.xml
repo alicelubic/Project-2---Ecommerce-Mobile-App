@@ -26,9 +26,11 @@
         </activity>
         <activity
             android:name=".ShoppingCartActivity"
+            android:label="Your Cart"
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".SearchResultsActivity"
+            android:label="Here's what we found..."
             android:parentActivityName=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />

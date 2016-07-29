@@ -26,7 +26,7 @@ public class ShoppingCartActivity extends AppCompatActivity {
         ArrayList<CartObject> cartList = helper.getCartItemsAsObjects();
         if (cartList.size() == 0) {
             AlertDialog.Builder builder = new AlertDialog.Builder(ShoppingCartActivity.this);
-            builder.setPositiveButton("ok", null)
+            builder.setPositiveButton(R.string.empty_cart_dialog_button, null)
                     .setTitle(R.string.empty_cart_dialog_title)
                     .setMessage(R.string.empty_cart_dialog_message);
             final AlertDialog dialog = builder.create();
@@ -34,8 +34,8 @@ public class ShoppingCartActivity extends AppCompatActivity {
             dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(ShoppingCartActivity.this, "normally this would bring you to MainActivity", Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
+                    finish();
+//                    dialog.dismiss();
                 }
             });
 

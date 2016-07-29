@@ -138,7 +138,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Plant daylily = new Angiosperm(6, "Orange Daylily", "Hemerocallis fulva", "Its beautiful bright orange flowers will dazzle your neighbors, who will never suspect that these plants behave just as maddeningly as any perennial weed.", R.drawable.daylily, 21.99);
             Plant kudzu = new Vine(7, "Kudzu", "Pueraria lobata", "A lovely vine that will take over and deprive all other plants of resources", R.drawable.kudzu, 110.00);
             Plant paulownia = new Tree(8, "Princess Tree", "Paulownia tomentosa", "Princess Tree is an showy and aggressive ornamental tree, so it should get along great with your neighbors!", R.drawable.paulownia, 99.01);
-            Plant bittersweet = new Vine(9, "Oriental Bittersweet", "Celastrus orbiculatus", "A vine that grows aggressively, smothering trees, shrubs, and other irritating entities like your neighbors. Just kidding.", R.drawable.daylily, 82.99);
+            Plant bittersweet = new Vine(9, "Oriental Bittersweet", "Celastrus orbiculatus", "A vine that grows aggressively, smothering trees, shrubs, and other irritating entities like your neighbors. Just kidding.", R.drawable.oriental_bittersweet, 82.99);
             Plant bamboo = new Grass(10, "Bamboo", "Bambusoidae", "Bamboo is a giant grass, and a giant pain in the ass. Once established, it is impossible to control, for each sprout that shoots up from the ground can grow 12 inches a day. That'll teach 'em.", R.drawable.bamboo, 20.00);
 
             insertPlantTableRow(wisteria);
@@ -207,6 +207,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+//    public Plant getPlantObjectByName(String name){
+//        SQLiteDatabase db = getReadableDatabase();
+//        String type = plant.getPlantType();
+//        String query = "SELECT * FROM "+PLANT_INFO_TABLE_NAME+" WHERE " + COL_COMMON_NAME + " LIKE ? "+name;
+//        Cursor cursor = db.rawQuery(query,null);
+//        if (cursor.moveToFirst()) {
+//            while (!cursor.isAfterLast()) {
+//                switch (cursor.getString(cursor.getColumnIndex(COL_PLANT_TYPE))) {
+//                    case "Angiosperm":
+//                        Plant angio = new Angiosperm(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
+//                        break;
+//                    case "Grass":
+//                        Plant grass = new Grass(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
+//                        break;
+//                    case "Tree":
+//                        Plant tree = new Tree(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
+//                        break;
+//                    case "Vine":
+//                        Plant vine = new Vine(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
+//                        break;
+//                    case "Weed":
+//                        Plant weed = new Weed(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
+//                        break;
+//                }
+//                Log.d(KEY, cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)) + " these are the plant ids getting added to plantlist");
+//                cursor.moveToNext();
+//            }
+//        }
+//        cursor.close();
+//        return plant;
+//
+//    }
+
     public void deleteItemFromCart(CartObject item) {
         int id = getPlantIdFromCartObject(item);
         SQLiteDatabase db = getWritableDatabase();
@@ -222,7 +255,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //this is for use in the deletefromcart method
     public int getPlantIdFromCartObject(CartObject item) {
         int id = 0;
-      //  String name = item.getmName();
+        //  String name = item.getmName();
         //trying this with the image id because there wont be a space? -- worked
         String imageId = String.valueOf(item.getmImage());
         SQLiteDatabase db = getReadableDatabase();
@@ -272,17 +305,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //FOR SEARCHABILITY
     public Cursor searchPlants(String query) {
         SQLiteDatabase db = getReadableDatabase();
-        String where = " " + COL_COMMON_NAME + " LIKE ? OR " + COL_PLANT_TYPE + " LIKE ? OR " + COL_LATIN_NAME + " LIKE ?";
+        String where = " " + COL_COMMON_NAME + " LIKE ? OR " + COL_PLANT_TYPE + " LIKE ?";
         Cursor cursor = db.query(PLANT_INFO_TABLE_NAME,
                 PLANT_INFO_COLUMNS,
                 where,
-                new String[]{"%" + query + "%", "%" + query + "%", "%" + query + "%"},
+                new String[]{"%" + query + "%", "%" + query + "%"},
                 null, null, null);
+        cursor.close();
         return cursor;
     }
 
 }
-
-//use onStop method to close the cursors
-//make sure to close database when done
-

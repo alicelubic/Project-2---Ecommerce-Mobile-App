@@ -55,7 +55,7 @@ public class SearchResultsActivity extends AppCompatActivity {
                 DetailDialog dialog = new DetailDialog();
                 List<Plant> plantList = DatabaseHelper.getInstance(SearchResultsActivity.this).getListOfAllPlants();
                 dialog.launchDetailDialog(view.getContext(), position, plantList);
-
+//pass in the name from the list into teh new launch method,
 
             }
         });

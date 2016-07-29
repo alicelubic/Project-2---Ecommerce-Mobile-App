@@ -13,7 +13,7 @@ import android.widget.TextView;
  */
 public class ShoppingCartViewHolder extends RecyclerView.ViewHolder {
     CardView mCardView;
-    TextView mPrice, mName, mQuantity;
+    TextView mPrice, mName, mQuantity, mTotal;
     ImageView mPlantImage;
     ImageButton mDecrement, mIncrement, mRemove;
 
@@ -28,6 +28,7 @@ public class ShoppingCartViewHolder extends RecyclerView.ViewHolder {
         mDecrement = (ImageButton) itemView.findViewById(R.id.imagebutton_decrement);
         mIncrement = (ImageButton) itemView.findViewById(R.id.imagebutton_increment);
         mRemove = (ImageButton) itemView.findViewById(R.id.imagebutton_remove_item);
+        mTotal = (TextView) itemView.findViewById(R.id.textview_cart_total_price);
 
 
     }
