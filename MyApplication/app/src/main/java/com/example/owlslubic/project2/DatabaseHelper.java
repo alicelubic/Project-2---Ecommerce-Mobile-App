@@ -14,10 +14,11 @@ import java.util.List;
  * Created by owlslubic on 7/23/16.
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
+
     //constants
     public static final String KEY = "key";
 
-    public static final int DATABASE_VERSION = 7;
+    public static final int DATABASE_VERSION = 8;
     public static final String DATABASE_NAME = "plant_store.db";
 
     public static final String PLANT_INFO_TABLE_NAME = "plant_table";
@@ -133,13 +134,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Plant wisteria = new Vine(1, "Chinese Wisteria", "Wisteria sinensis", "This deciduous woody vine is capable of growing to a height of 40 ft. Good luck getting that down!", R.drawable.wisteria, 19.99);
             Plant knotweed = new Weed(2, "Japanese Knotweed", "Reynoutria japonica", "This weed is classified as an invasive species in 39 of the 50 United States, so why not add yours to the list!", R.drawable.knotweed, 24.99);
             Plant ivy = new Vine(3, "English Ivy", "Hedera helix", "English Ivy is a rampant, clinging evergreen vine that has been known to crowd out and choke other plants, creating an \"ivy desert\"", R.drawable.ivy, 12.99);
-            Plant ailanthus = new Tree(4, "Tree of Heaven", "Ailanthus altissima", "This tree resprouts vigorously when cut, your neighbors' efforts to suppress this beast will drive them crazy for decades to come!", R.drawable.ailanthus, 99.99);
+            Plant ailanthus = new Tree(4, "Tree of Heaven", "Ailanthus altissima", "This tree resprouts vigorously when cut, so your neighbors' efforts to suppress this beast will drive them crazy for decades to come!", R.drawable.ailanthus, 99.99);
             Plant garlicMustard = new Weed(5, "Garlic Mustard", "Alliaria petiolata", "This stinky weed cannot be killed.", R.drawable.garlicmustard, 10.98);
-            Plant daylily = new Angiosperm(6, "Orange Daylily", "Hemerocallis fulva", "Its beautiful bright orange flowers will dazzle your neighbors, who will never suspect that these plants behave just as maddeningly as any perennial weed.", R.drawable.daylily, 21.99);
-            Plant kudzu = new Vine(7, "Kudzu", "Pueraria lobata", "A lovely vine that will take over and deprive all other plants of resources", R.drawable.kudzu, 110.00);
+            Plant daylily = new Angiosperm(6, "Orange Daylily", "Hemerocallis fulva", "Its beautiful bright orange blossoms will dazzle your neighbors, who will never suspect that these flowering plants are horrible weeds.", R.drawable.daylily, 21.99);
+            Plant kudzu = new Vine(7, "Kudzu", "Pueraria lobata", "A lovely vine that will take over and deprive all other plants of resources. Word.", R.drawable.kudzu, 110.99);
             Plant paulownia = new Tree(8, "Princess Tree", "Paulownia tomentosa", "Princess Tree is an showy and aggressive ornamental tree, so it should get along great with your neighbors!", R.drawable.paulownia, 99.01);
             Plant bittersweet = new Vine(9, "Oriental Bittersweet", "Celastrus orbiculatus", "A vine that grows aggressively, smothering trees, shrubs, and other irritating entities like your neighbors. Just kidding.", R.drawable.oriental_bittersweet, 82.99);
-            Plant bamboo = new Grass(10, "Bamboo", "Bambusoidae", "Bamboo is a giant grass, and a giant pain in the ass. Once established, it is impossible to control, for each sprout that shoots up from the ground can grow 12 inches a day. That'll teach 'em.", R.drawable.bamboo, 20.00);
+            Plant bamboo = new Grass(10, "Bamboo", "Bambusoidae", "This giant grass is a giant pain in the ass. Once established, it is impossible to control, for each sprout can grow 12 inches a day. That'll teach 'em.", R.drawable.bamboo, 20.20);
 
             insertPlantTableRow(wisteria);
             insertPlantTableRow(knotweed);
@@ -195,6 +196,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return plantList;
     }
 
+
     //helper method adds a row to shopping cart table when "add to cart" fab is clicked
     public void addToCart(Plant plant) {
         SQLiteDatabase db = getWritableDatabase();
@@ -203,10 +205,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COL_PLANT_REF_ID, plantId);
         values.put(COL_QUANTITY, 1); //then somewhere make a method that will change this value when increment buttons are hit
         long id = db.insertOrThrow(SHOPPING_CART_TABLE, null, values);
-     //   Log.v(KEY, "Data added to shopping cart table");
+        //   Log.v(KEY, "Data added to shopping cart table");
         db.close();
     }
 
+
+//
 //    public Plant getPlantObjectByName(String name){
 //        SQLiteDatabase db = getReadableDatabase();
 //        String type = plant.getPlantType();
@@ -231,7 +235,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //                        Plant weed = new Weed(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
 //                        break;
 //                }
-//                Log.d(KEY, cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)) + " these are the plant ids getting added to plantlist");
+//                Log.d(KEY, cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)) + " this is the plant id");
 //                cursor.moveToNext();
 //            }
 //        }
@@ -268,7 +272,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 cursor.moveToNext();
             }
         }
-       // db.close();
+        // db.close();
         return id;
     }
 
@@ -311,51 +315,58 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 where,
                 new String[]{"%" + query + "%", "%" + query + "%"},
                 null, null, null);
-      //  cursor.close();
+        //  cursor.close();
         return cursor;
     }
 
 
-
     //to update cart table with quantity
     //get quanitity method also
-    public int getQuantityFromTable(CartObject item){
+    public int getQuantityFromTable(CartObject item) {
         SQLiteDatabase db = getReadableDatabase();
-        int quantity=0;
+        int quantity = 0;
         int plantId = getPlantIdFromCartObject(item);
-        String query = "SELECT "+ COL_QUANTITY+" FROM "+SHOPPING_CART_TABLE+" WHERE "+COL_PLANT_REF_ID+" = "+ plantId;
-        Cursor cursor = db.rawQuery(query,null);
+        String query = "SELECT " + COL_QUANTITY + " FROM " + SHOPPING_CART_TABLE + " WHERE " + COL_PLANT_REF_ID + " = " + plantId;
+        Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 quantity = cursor.getInt(cursor.getColumnIndex(COL_QUANTITY));
-                Log.d(KEY,"the current quantity is "+quantity);
+                Log.d(KEY, "the current quantity is " + quantity);
                 cursor.moveToNext();
             }
 
-            }
-     //   cursor.close();
+        }
+        //   cursor.close();
         return quantity;
     }
 
 
-
-    public void increaseQty(CartObject item){
+    public void increaseQty(CartObject item) {
         SQLiteDatabase db = getWritableDatabase();
         int plantId = getPlantIdFromCartObject(item);
         int currentQty = getQuantityFromTable(item);
-        String update = "UPDATE "+SHOPPING_CART_TABLE+" SET "+COL_QUANTITY+" = "+(currentQty+1)+" WHERE "+COL_PLANT_REF_ID+" = "+plantId;
-        db.execSQL(update);
-        db.close();
-    }
-    public void decreaseQty(CartObject item){
-        SQLiteDatabase db = getWritableDatabase();
-        int plantId = getPlantIdFromCartObject(item);
-        int currentQty = getQuantityFromTable(item);
-        String update = "UPDATE "+SHOPPING_CART_TABLE+" SET "+COL_QUANTITY+" = "+(currentQty-1)+" WHERE "+COL_PLANT_REF_ID+" = "+plantId;
+        String update = "UPDATE " + SHOPPING_CART_TABLE + " SET " + COL_QUANTITY + " = " + (currentQty + 1) + " WHERE " + COL_PLANT_REF_ID + " = " + plantId;
         db.execSQL(update);
         db.close();
     }
 
+    public void decreaseQty(CartObject item) {
+        SQLiteDatabase db = getWritableDatabase();
+        int plantId = getPlantIdFromCartObject(item);
+        int currentQty = getQuantityFromTable(item);
+        String update = "UPDATE " + SHOPPING_CART_TABLE + " SET " + COL_QUANTITY + " = " + (currentQty - 1) + " WHERE " + COL_PLANT_REF_ID + " = " + plantId;
+        db.execSQL(update);
+        db.close();
+    }
+
+
+
+    public Cursor getPlantIds(){
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT "+COL_PLANT_ID+" FROM " + PLANT_INFO_TABLE_NAME;
+        Cursor cursor = db.rawQuery(query, null);
+        return cursor;
+    }
 }
 
 //currentqty= getQuantityFromTable(item), currentqty+1=newquantity, return newquantity

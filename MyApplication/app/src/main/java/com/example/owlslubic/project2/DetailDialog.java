@@ -59,8 +59,9 @@ public class DetailDialog {
         setDetailDialogInfo(plantList.get(position));
     }
 
+ //   if(android.R.id.edit1.getText()==plantList.get(position).getmName())
 
-//    public void launchDialogFromSearch(final Context context, String plantName){
+//    public void launchDialogFromSearch(final Context context, int plantId){
 //        AlertDialog.Builder builder = new AlertDialog.Builder(context);
 //        LayoutInflater inflater = LayoutInflater.from(context);
 //        View dialogLayout = inflater.inflate(R.layout.dialog_product_detail, null);
@@ -93,7 +94,9 @@ public class DetailDialog {
 //        descriptionDetail = (TextView) dialog.findViewById(R.id.textview_description_detail);
 //        picDetail = (ImageView) dialog.findViewById(R.id.imageview_dialog_detail);
 //
+//
 //        setDetailDialogInfo(plants.get(position));
+//
 //
 //    }
 

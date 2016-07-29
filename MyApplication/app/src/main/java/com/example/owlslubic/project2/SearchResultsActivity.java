@@ -46,8 +46,9 @@ public class SearchResultsActivity extends AppCompatActivity {
                 }
             };
             mListView.setAdapter(mCursorAdapter);
-         //   cursor.close();
+            //   cursor.close();
         }
+
 
         //launches a dialog for the wrong plant
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -55,7 +56,6 @@ public class SearchResultsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 DetailDialog dialog = new DetailDialog();
                 List<Plant> plantList = DatabaseHelper.getInstance(SearchResultsActivity.this).getListOfAllPlants();
-
 
                 dialog.launchDetailDialog(view.getContext(), position, plantList);
 //pass in the name from the list into teh new launch method,

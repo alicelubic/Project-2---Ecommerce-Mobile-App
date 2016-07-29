@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         //this method makes it so that i only insert plant data into the table if this is the first time
         installChecks();
 
@@ -60,11 +61,12 @@ public class MainActivity extends AppCompatActivity {
         //set up toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.store_name);
+        getSupportActionBar().setTitle("");
+
 
         //trying to change content on collapsing toolbar, no luck yet
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        collapsingToolbarLayout.setTitle("");
+        collapsingToolbarLayout.setTitle("Invasive Species");
 
 
         //this fab takes us to shopping cart activity
