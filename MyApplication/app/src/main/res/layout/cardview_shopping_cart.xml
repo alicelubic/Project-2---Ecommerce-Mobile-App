@@ -9,7 +9,7 @@
         android:id="@+id/cardview_cart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="40dp">
+        android:elevation="20dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                 android:layout_height="60dp"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginRight="16dp"
+                android:layout_marginRight="5dp"
                 android:src="@drawable/daylily" />
 
             <TextView
@@ -36,7 +36,7 @@
                 android:layout_centerInParent="true"
                 android:layout_toRightOf="@id/imageview_card_cart"
                 android:text="@string/wisteria_common_name"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/textview_price_card_cart"
@@ -44,8 +44,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="13dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="45dp"
                 android:text="$99.99"
                 android:textSize="15sp"/>
 
@@ -55,16 +55,16 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:padding="10dp"
-                android:layout_marginRight="6dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="30dp"
                 android:orientation="horizontal"
                 android:gravity="center">
 
 
                 <ImageButton
                     android:id="@+id/imagebutton_decrement"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:contentDescription="@string/item_quantity_decrement"
                     android:backgroundTint="@android:color/white"
                     android:src="@drawable/ic_remove_black_24dp"
@@ -82,8 +82,8 @@
 
                 <ImageButton
                     android:id="@+id/imagebutton_increment"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:contentDescription="@string/item_quantity_increment"
                     android:backgroundTint="@android:color/white"
                     android:src="@drawable/ic_add_black_24dp" />

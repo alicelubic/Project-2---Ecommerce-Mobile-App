@@ -268,7 +268,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 cursor.moveToNext();
             }
         }
-        db.close();
+       // db.close();
         return id;
     }
 
@@ -311,8 +311,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 where,
                 new String[]{"%" + query + "%", "%" + query + "%"},
                 null, null, null);
-        cursor.close();
+      //  cursor.close();
         return cursor;
     }
 
+
+
+    //to update cart table with quantity
+    //get quanitity method also
+    public int getQuantityFromTable(CartObject item){
+        SQLiteDatabase db = getReadableDatabase();
+        int quantity=0;
+        int plantId = getPlantIdFromCartObject(item);
+        String query = "SELECT "+ COL_QUANTITY+" FROM "+SHOPPING_CART_TABLE+" WHERE "+COL_PLANT_REF_ID+" = "+ plantId;
+        Cursor cursor = db.rawQuery(query,null);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                quantity = cursor.getInt(cursor.getColumnIndex(COL_QUANTITY));
+                Log.d(KEY,"the current quantity is "+quantity);
+                cursor.moveToNext();
+            }
+
+            }
+     //   cursor.close();
+        return quantity;
+    }
+
+
+
+    public void increaseQty(CartObject item){
+        SQLiteDatabase db = getWritableDatabase();
+        int plantId = getPlantIdFromCartObject(item);
+        int currentQty = getQuantityFromTable(item);
+        String update = "UPDATE "+SHOPPING_CART_TABLE+" SET "+COL_QUANTITY+" = "+(currentQty+1)+" WHERE "+COL_PLANT_REF_ID+" = "+plantId;
+        db.execSQL(update);
+        db.close();
+    }
+    public void decreaseQty(CartObject item){
+        SQLiteDatabase db = getWritableDatabase();
+        int plantId = getPlantIdFromCartObject(item);
+        int currentQty = getQuantityFromTable(item);
+        String update = "UPDATE "+SHOPPING_CART_TABLE+" SET "+COL_QUANTITY+" = "+(currentQty-1)+" WHERE "+COL_PLANT_REF_ID+" = "+plantId;
+        db.execSQL(update);
+        db.close();
+    }
+
 }
+
+//currentqty= getQuantityFromTable(item), currentqty+1=newquantity, return newquantity

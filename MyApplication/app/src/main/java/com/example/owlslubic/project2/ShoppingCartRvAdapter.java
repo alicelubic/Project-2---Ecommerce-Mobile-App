@@ -22,6 +22,7 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
     public static final String KEY = "key";
     Context mContext;
     List<CartObject> cartList = new ArrayList<>();
+    DatabaseHelper helper = DatabaseHelper.getInstance(mContext);
 
 
     //constructor - adding list parameter
@@ -45,7 +46,7 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
     public void onBindViewHolder(final ShoppingCartViewHolder holder, final int position) {
         final CartObject item = cartList.get(position);
         holder.mName.setText(item.getmName());
-        holder.mPrice.setText(String.valueOf(item.getmPrice()));
+        holder.mPrice.setText("$"+item.getmPrice());
         holder.mQuantity.setText(String.valueOf(item.getmQuantity()));
         holder.mPlantImage.setImageResource(item.getmImage());
 
@@ -67,17 +68,19 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
             public void onClick(View view) {
                 //quantity db and textview, price textview, and total textview should reflect this
 
-                holder.mPrice.setText(String.valueOf(addToPrice(item.getmPrice())));
+                holder.mPrice.setText("$" + getNewPrice(item, holder));
 //                holder.mTotal.setText(String.valueOf());
-                holder.mQuantity.setText(String.valueOf(addQuantity(item.getmQuantity())));
+                helper.increaseQty(item);
+                holder.mQuantity.setText(String.valueOf(String.valueOf(helper.getQuantityFromTable(item))));
             }
         });
         holder.mDecrement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.mPrice.setText(String.valueOf(removeFromPrice(item.getmPrice())));
+                holder.mPrice.setText("$" + getNewPrice(item, holder));
 //                holder.mTotal.setText(String.valueOf());
-                holder.mQuantity.setText(String.valueOf(removeQuantity(item.getmQuantity())));
+                helper.decreaseQty(item);
+                holder.mQuantity.setText(String.valueOf(helper.getQuantityFromTable(item)));
             }
         });
 
@@ -88,40 +91,44 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
         return cartList.size();
     }
 
+    public void removeItem(ShoppingCartViewHolder holder, CartObject item){
+        int position = holder.getAdapterPosition();
+        removeByPosition(position);
+    }
 
     public void removeByPosition(int position) {
         DatabaseHelper.getInstance(mContext).deleteItemFromCart(cartList.get(position));
         cartList.remove(position);
-
         Log.d(KEY, cartList.size() + " this is the size of cart list after an item is removed");
         notifyItemRemoved(position);
     }
-
-
 
 
     //ok all of these methods need some sort of counter to keep track of what they are adding to or nah
 
 
     //method to affect price:
-
-    public double addToPrice(double price){
-       double newPrice = price + price;
-
-
-       // item.getmQuantity
-        //item.getmPrice()
-
-
-
-        return newPrice;
+    public double getNewPrice(CartObject item, ShoppingCartViewHolder holder) {
+        double newPrice;
+        int qty = helper.getQuantityFromTable(item);
+        int position = holder.getAdapterPosition();
+        if (qty <= 0) {
+            removeByPosition(position);
+            Log.d(KEY,"quantity hit 0, removed "+item.getmName());
+            return 0;
+        }
+        newPrice = item.getmPrice() * qty;
+        newPrice = Math.floor(newPrice * 100) / 100;
+            return newPrice;
     }
 
+
     //method to affect total:
-    public double removeFromPrice(double price){
+    public double removeFromPrice(double price) {
         double newPrice = price - price;
         return newPrice;
     }
+}
 
 //    //need some sort of counter to keep track
 //    public double updateTotal(double price){
@@ -130,18 +137,5 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
 //    }
 //
 
-
-    //these must change in db as well
-
-    //method to affect quantity:
-    public int addQuantity(int quantity){
-        return quantity + 1;
-    }
-
-    public int removeQuantity(int quantity){
-        return quantity - 1;
-    }
-
-}
 
 

@@ -48,7 +48,6 @@ public class MainRvAdapter extends RecyclerView.Adapter<MainViewHolder> {
             @Override
             public void onClick(View view) {
                DetailDialog detailDialog = new DetailDialog();
-             //   detailDialog.launchDetailDialog(view.getContext(),position,plantList);
                 detailDialog.launchDetailDialog(view.getContext(),position,plantList);
 
             }
