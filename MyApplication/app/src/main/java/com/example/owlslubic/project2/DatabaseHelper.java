@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //constants
     public static final String KEY = "key";
 
-    public static final int DATABASE_VERSION = 8;
+    public static final int DATABASE_VERSION = 9;
     public static final String DATABASE_NAME = "plant_store.db";
 
     public static final String PLANT_INFO_TABLE_NAME = "plant_table";
@@ -209,40 +209,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-
-//
-//    public Plant getPlantObjectByName(String name){
-//        SQLiteDatabase db = getReadableDatabase();
-//        String type = plant.getPlantType();
-//        String query = "SELECT * FROM "+PLANT_INFO_TABLE_NAME+" WHERE " + COL_COMMON_NAME + " LIKE ? "+name;
-//        Cursor cursor = db.rawQuery(query,null);
-//        if (cursor.moveToFirst()) {
-//            while (!cursor.isAfterLast()) {
-//                switch (cursor.getString(cursor.getColumnIndex(COL_PLANT_TYPE))) {
-//                    case "Angiosperm":
-//                        Plant angio = new Angiosperm(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
-//                        break;
-//                    case "Grass":
-//                        Plant grass = new Grass(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
-//                        break;
-//                    case "Tree":
-//                        Plant tree = new Tree(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
-//                        break;
-//                    case "Vine":
-//                        Plant vine = new Vine(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
-//                        break;
-//                    case "Weed":
-//                        Plant weed = new Weed(cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)), cursor.getString(cursor.getColumnIndex(COL_COMMON_NAME)), (cursor.getString(cursor.getColumnIndex(COL_LATIN_NAME))), cursor.getString(cursor.getColumnIndex(COL_DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(COL_IMAGE)), cursor.getDouble(cursor.getColumnIndex(COL_PRICE)));
-//                        break;
-//                }
-//                Log.d(KEY, cursor.getInt(cursor.getColumnIndex(COL_PLANT_ID)) + " this is the plant id");
-//                cursor.moveToNext();
-//            }
-//        }
-//        cursor.close();
-//        return plant;
-//
-//    }
 
     public void deleteItemFromCart(CartObject item) {
         int id = getPlantIdFromCartObject(item);
