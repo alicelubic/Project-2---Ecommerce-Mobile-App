@@ -56,6 +56,19 @@ As a user, I want to change the quantity of an item in my cart.
 
 
 
-BUGS AND NOTES
+NOTES/BUGS/THINGS I DIDN'T FINISH:
 - Search feature does not launch Search Results Activity when using an Emulator ... but it does work on an actual device.
-- Upon launch, main recyclerview does not populate. if I stop and start again, there it is!
+- Missing espresso tests
+- Total in the shopping cart does not reflect the price changes
+- Wrong dialog deploys from the search results
+- If I add the same item to the cart, it adds it separately rather than increasing the quantity of the existing one
+
+
+
+FEATURES:
+- You can scroll through the items, and get details about each by clicking it which deploys a dialog box. From there, you can add to cart.
+- The cart shows a dialog box if it is empty that takes you to the store.
+- When items are added to the cart, you can increment or decrement the quantity and see the price reflect the changes.
+- You can delete items from cart both by hitting the x in the top right corner and by decrementing down to 0
+- Search by name or plant type, list items can be clicked on to deploy the detail dialog again (except right now it shows the details for the wrong plant, but I can fix that)
+- When you hit the fab in the shopping cart, it "checks out" and clears the cart, along with its rows in the database
