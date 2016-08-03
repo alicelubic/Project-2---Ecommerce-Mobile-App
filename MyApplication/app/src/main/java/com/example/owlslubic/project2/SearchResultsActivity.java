@@ -58,7 +58,7 @@ public class SearchResultsActivity extends AppCompatActivity {
                 List<Plant> plantList = DatabaseHelper.getInstance(SearchResultsActivity.this).getListOfAllPlants();
 
                 dialog.launchDetailDialog(view.getContext(), position, plantList);
-//pass in the name from the list into teh new launch method,
+
 
             }
         });
@@ -73,10 +73,7 @@ public class SearchResultsActivity extends AppCompatActivity {
         });
 
 
-//        i want to be able to search by COMMON NAME, LATIN NAME, or PLANT TYPE
     }
-
-    //figure out if this already has a toolbar with the searchview, and if not, inflate the menu here
 
 
 }

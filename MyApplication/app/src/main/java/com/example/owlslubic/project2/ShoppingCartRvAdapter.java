@@ -89,6 +89,7 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
 //                holder.mTotal.setText("$"+total);
          //       total = total + holder.mPrice.getText();
 
+                //this is a dialog for when the qty gets to 0 so that it's not just an empty activity
                 if (cartList.size()==0){
                     AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                     builder.setPositiveButton("ok", null)
@@ -112,7 +113,6 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
 
     }
 
-    //method that takes whatever is in the setTexts and adds them...
 
     @Override
     public int getItemCount() {
@@ -153,6 +153,7 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
     }
 
 
+    //for the swipe and drag
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
         if (fromPosition < toPosition){

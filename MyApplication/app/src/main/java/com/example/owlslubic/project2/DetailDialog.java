@@ -45,19 +45,11 @@ public class DetailDialog {
             public void onClick(View view) {
 
                 DatabaseHelper helper = DatabaseHelper.getInstance(context);
-//                helper.addToCart(plantList.get(position));
-
-                //trying something here
                 Plant plant = plantList.get(position);
 
-
+                //to prevent adding duplicates
                 if(helper.isAlreadyInCart(plant) == true){
-
-                //helper.addToCart(plant);
-                    //increase quantity
-
-                    //for now, do nothing if it is already in cart
-                    Toast.makeText(context, "Already in cart!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Already in your cart!", Toast.LENGTH_SHORT).show();
 
                     }
                 else{

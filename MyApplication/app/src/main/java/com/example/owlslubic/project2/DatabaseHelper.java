@@ -141,6 +141,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Plant paulownia = new Tree(8, "Princess Tree", "Paulownia tomentosa", "Princess Tree is an showy and aggressive ornamental tree, so it should get along great with your neighbors!", R.drawable.paulownia, 99.01);
             Plant bittersweet = new Vine(9, "Oriental Bittersweet", "Celastrus orbiculatus", "A vine that grows aggressively, smothering trees, shrubs, and other irritating entities like your neighbors. Just kidding.", R.drawable.oriental_bittersweet, 82.99);
             Plant bamboo = new Grass(10, "Bamboo", "Bambusoidae", "This giant grass is a giant pain in the ass. Once established, it is impossible to control, for each sprout can grow 12 inches a day. That'll teach 'em.", R.drawable.bamboo, 20.20);
+            Plant creeper = new Vine(11, "Winter Creeper", "Euonymus fortunei", "Rapid growing vine, extremely tolerant of harsh conditions (unlike you, hence why you're here.", R.drawable.creeper, 20.20);
+            Plant honeysuckle = new Vine(12, "Japanese Honeysuckle", "Lonicera japonica", "These suckers are competitive... and like to twist around other plants to choke them out. Cute.", R.drawable.honey, 11.11);
 
             insertPlantTableRow(wisteria);
             insertPlantTableRow(knotweed);
@@ -152,6 +154,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             insertPlantTableRow(paulownia);
             insertPlantTableRow(bittersweet);
             insertPlantTableRow(bamboo);
+            insertPlantTableRow(creeper);
+            insertPlantTableRow(honeysuckle);
         }
 
     }
@@ -275,19 +279,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //FOR SEARCHABILITY
     public Cursor searchPlants(String query) {
         SQLiteDatabase db = getReadableDatabase();
-        String where = " " + COL_COMMON_NAME + " LIKE ? OR " + COL_PLANT_TYPE + " LIKE ?";
+        String where = " " + COL_COMMON_NAME + " LIKE ? OR " +
+                COL_PLANT_TYPE + " LIKE ? OR " + COL_LATIN_NAME + " LIKE ? OR " +
+                COL_DESCRIPTION + " LIKE ?";
         Cursor cursor = db.query(PLANT_INFO_TABLE_NAME,
                 PLANT_INFO_COLUMNS,
                 where,
-                new String[]{"%" + query + "%", "%" + query + "%"},
+                new String[]{"%" + query + "%", "%" + query + "%", "%" + query + "%", "%" + query + "%"},
                 null, null, null);
         //  cursor.close();
         return cursor;
     }
 
 
-    //to update cart table with quantity
-    //get quanitity method also
     public int getQuantityFromTable(CartObject item) {
         SQLiteDatabase db = getReadableDatabase();
         int quantity = 0;
@@ -307,6 +311,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+    //for using the increment and decrement buttons in the shopping cart items
     public void increaseQty(CartObject item) {
         SQLiteDatabase db = getWritableDatabase();
         int plantId = getPlantIdFromCartObject(item);

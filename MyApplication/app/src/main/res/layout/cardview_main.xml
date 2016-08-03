@@ -5,13 +5,14 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:layout_margin="6dp">
+    android:layout_margin="16dp">
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardview_main_activity"
-        android:layout_width="160dp"
+        android:layout_width="220dp"
         android:layout_height="175dp"
-        card_view:cardElevation="2dp"
+        card_view:cardElevation="3dp"
+
         card_view:cardUseCompatPadding="true">
 
 

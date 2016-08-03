@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         DatabaseHelper helper = DatabaseHelper.getInstance(this);
         final List<Plant> plantList = helper.getListOfAllPlants();
-     //   helper.clearPlantTableData();
+//        helper.clearPlantTableData();
 
 
         //set up RecyclerView
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         ComponentName componentName = new ComponentName(this, SearchResultsActivity.class);
         SearchableInfo searchableInfo = searchManager.getSearchableInfo(componentName);
         searchView.setSearchableInfo(searchableInfo);
-        searchView.setQueryHint("Whatcha looking for?");
+        searchView.setQueryHint("Whatcha lookin' for?");
         return true;
 
 
