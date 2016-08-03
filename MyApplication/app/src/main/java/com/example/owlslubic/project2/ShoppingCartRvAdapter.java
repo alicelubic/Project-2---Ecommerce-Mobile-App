@@ -57,17 +57,17 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
 
         //  Log.d(KEY, cartList.size()+ "this is the size of the cartlist upon being bound to the shopping cart");
 
-        total += helper.getQuantityFromTable(item) * item.getmPrice();
-        holder.mRemove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //this should remove from recyclerview and table
-                removeByPosition(holder.getAdapterPosition());
-
-                //   Log.d(KEY, "removeItemByPosition removed item from recyclerview from sc adapter");
-                Toast.makeText(mContext, "Adios, " + item.getmName() + "!", Toast.LENGTH_SHORT).show();
-            }
-        });
+      //  total += helper.getQuantityFromTable(item) * item.getmPrice();
+//        holder.mRemove.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //this should remove from recyclerview and table
+//                removeByPosition(holder.getAdapterPosition());
+//
+//                //   Log.d(KEY, "removeItemByPosition removed item from recyclerview from sc adapter");
+//                Toast.makeText(mContext, "Adios, " + item.getmName() + "!", Toast.LENGTH_SHORT).show();
+//            }
+//        });
         holder.mIncrement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

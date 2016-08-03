@@ -27,7 +27,7 @@ public class ShoppingCartViewHolder extends RecyclerView.ViewHolder {
         mPlantImage = (ImageView) itemView.findViewById(R.id.imageview_card_cart);
         mDecrement = (ImageButton) itemView.findViewById(R.id.imagebutton_decrement);
         mIncrement = (ImageButton) itemView.findViewById(R.id.imagebutton_increment);
-        mRemove = (ImageButton) itemView.findViewById(R.id.imagebutton_remove_item);
+       // mRemove = (ImageButton) itemView.findViewById(R.id.imagebutton_remove_item);
         mTotal = (TextView) itemView.findViewById(R.id.textview_cart_total_price);
 
 
