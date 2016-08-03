@@ -89,6 +89,24 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
 //                holder.mTotal.setText("$"+total);
          //       total = total + holder.mPrice.getText();
 
+                if (cartList.size()==0){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setPositiveButton("ok", null)
+                            .setTitle(R.string.empty_cart_dialog_title)
+                            .setMessage("Your cart is now empty. Add some plants?");
+                    final AlertDialog dialog = builder.create();
+                    dialog.show();
+                    dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                    if(mContext instanceof ShoppingCartActivity ){
+                        ((ShoppingCartActivity)mContext).finish();
+                    }
+
+                        }
+                    });
+                }
+
             }
         });
 
