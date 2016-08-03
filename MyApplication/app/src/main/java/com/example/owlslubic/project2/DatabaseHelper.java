@@ -204,8 +204,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int plantId = plant.getId();
         values.put(COL_PLANT_REF_ID, plantId);
         values.put(COL_QUANTITY, 1); //then somewhere make a method that will change this value when increment buttons are hit
-        long id = db.insertOrThrow(SHOPPING_CART_TABLE, null, values);
-        //   Log.v(KEY, "Data added to shopping cart table");
+        db.insertOrThrow(SHOPPING_CART_TABLE, null, values);
+           Log.v(KEY, "Data added to shopping cart table");
         db.close();
     }
 

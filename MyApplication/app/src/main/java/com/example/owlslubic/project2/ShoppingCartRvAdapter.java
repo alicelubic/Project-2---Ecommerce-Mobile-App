@@ -12,13 +12,14 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by owlslubic on 7/25/16.
  */
 
-public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartViewHolder> {
+public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartViewHolder> implements ItemTouchHelperAdapter{
     public static final String KEY = "key";
     Context mContext;
     List<CartObject> cartList = new ArrayList<>();
@@ -70,7 +71,7 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
         holder.mIncrement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                total += helper.getQuantityFromTable(item) * item.getmPrice();
+             //  total += helper.getQuantityFromTable(item) * item.getmPrice();
                 helper.increaseQty(item);
                 holder.mQuantity.setText(String.valueOf(String.valueOf(helper.getQuantityFromTable(item))));
                 holder.mPrice.setText("$" + getNewPrice(item, holder));
@@ -134,5 +135,24 @@ public class ShoppingCartRvAdapter extends RecyclerView.Adapter<ShoppingCartView
     }
 
 
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition){
+            for(int i = fromPosition;i<toPosition;i++){
+                Collections.swap(cartList, i, i+1);
+            }
+        }else{
+            for (int i = fromPosition; i > toPosition; i--){
+                Collections.swap(cartList, i, i-1);
+            }
+        }
+        notifyItemMoved(fromPosition,toPosition);
+        return true;
+    }
 
+    @Override
+    public void onItemDismiss(int position) {
+        removeByPosition(position);
+
+    }
 }
