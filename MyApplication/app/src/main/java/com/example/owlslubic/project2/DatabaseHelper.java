@@ -205,7 +205,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COL_PLANT_REF_ID, plantId);
         values.put(COL_QUANTITY, 1); //then somewhere make a method that will change this value when increment buttons are hit
         db.insertOrThrow(SHOPPING_CART_TABLE, null, values);
-           Log.v(KEY, "Data added to shopping cart table");
+        Log.v(KEY, "Data added to shopping cart table");
         db.close();
     }
 
@@ -326,13 +326,58 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+//    public Cursor getPlantIds(){
+//        SQLiteDatabase db = getReadableDatabase();
+//        String query = "SELECT "+COL_PLANT_ID+" FROM " + PLANT_INFO_TABLE_NAME;
+//        Cursor cursor = db.rawQuery(query, null);
+//        return cursor;
+//    }
 
-    public Cursor getPlantIds(){
+
+    public boolean isAlreadyInCart(Plant plant) {
+        int plantId = plant.getId();
+        int cartItemId = 0;
         SQLiteDatabase db = getReadableDatabase();
-        String query = "SELECT "+COL_PLANT_ID+" FROM " + PLANT_INFO_TABLE_NAME;
+        String query = "SELECT " + COL_PLANT_REF_ID + " FROM " + SHOPPING_CART_TABLE +
+                " WHERE " + COL_PLANT_REF_ID + " LIKE " + plantId;
         Cursor cursor = db.rawQuery(query, null);
-        return cursor;
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                cartItemId = cursor.getInt(cursor.getColumnIndex(COL_PLANT_REF_ID));
+                cursor.moveToNext();
+            }
+        }
+        if (cursor.getCount() >= 1) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }
 
-//currentqty= getQuantityFromTable(item), currentqty+1=newquantity, return newquantity
+//    public void increaseQtyByPlantObject(Plant plant) {
+//        int plantId = plant.getId();
+//        int cartItemId = 0;
+//        SQLiteDatabase db = getWritableDatabase();
+//        String query = "SELECT " + COL_PLANT_REF_ID + " FROM " + SHOPPING_CART_TABLE +
+//                " WHERE " + COL_PLANT_REF_ID + " LIKE " + plantId;
+//        Cursor cursor = db.rawQuery(query, null);
+//        if (cursor.moveToFirst()) {
+//            while (!cursor.isAfterLast()) {
+//                cartItemId = cursor.getInt(cursor.getColumnIndex(COL_PLANT_REF_ID));
+//                cursor.moveToNext();
+//            }
+//        }
+//
+//    }
+//}
+
+//
+//    SQLiteDatabase db = getWritableDatabase();
+//    int plantId = getPlantIdFromCartObject(item);
+//    int currentQty = getQuantityFromTable(item);
+//    String update = "UPDATE " + SHOPPING_CART_TABLE + " SET " + COL_QUANTITY + " = " + (currentQty + 1) + " WHERE " + COL_PLANT_REF_ID + " = " + plantId;
+//db.execSQL(update);
+//        db.close();
+//        }

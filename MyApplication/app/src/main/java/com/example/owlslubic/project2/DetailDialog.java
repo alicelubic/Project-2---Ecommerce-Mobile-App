@@ -43,9 +43,27 @@ public class DetailDialog {
         addToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Added to cart!", Toast.LENGTH_SHORT).show();
+
                 DatabaseHelper helper = DatabaseHelper.getInstance(context);
-                helper.addToCart(plantList.get(position));
+//                helper.addToCart(plantList.get(position));
+
+                //trying something here
+                Plant plant = plantList.get(position);
+
+
+                if(helper.isAlreadyInCart(plant) == true){
+
+                //helper.addToCart(plant);
+                    //increase quantity
+
+                    //for now, do nothing if it is already in cart
+                    Toast.makeText(context, "Already in cart!", Toast.LENGTH_SHORT).show();
+
+                    }
+                else{
+                    helper.addToCart(plant);
+                    Toast.makeText(context, "Added to cart!", Toast.LENGTH_SHORT).show();}
+
                 dialog.dismiss();
             }
         });
